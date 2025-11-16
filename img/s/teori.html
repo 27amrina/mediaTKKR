@@ -1,0 +1,1054 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teori Dasar Perawatan • Materi</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet"><!-- opsional -->
+
+  <style>
+    :root {
+      --navbar-h: 55px;
+      --footer-h: 30px;
+      /* footer sedikit lebih tinggi agar nyaman */
+      --brand: #ff3f8e;
+      --sidebar-w: 255px;
+      /* samakan dengan lebar sidebar */
+      --sidebar-gap: 1px;
+      /* jarak konten dari sidebar */
+    }
+
+    /* ===== App shell ===== */
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      padding-bottom: var(--footer-h);
+      background: #fff;
+    }
+
+    .main-pad {
+      padding-top: var(--navbar-h);
+    }
+
+    main.app-shell {
+      height: calc(100vh - var(--navbar-h) - var(--footer-h));
+      overflow: hidden;
+    }
+
+    /* ===== Navbar & Footer ===== */
+    .navbar,
+    .footer {
+      background: #fff;
+    }
+
+    .footer {
+      border-top: 1px solid #eee;
+    }
+
+    /* ===== Grid helpers ===== */
+    .no-top-gap>[class^="col-"],
+    .no-top-gap>aside,
+    .no-top-gap>section {
+      padding-top: 0 !important;
+    }
+
+    /* ===== Sidebar ===== */
+    .menu-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+    }
+
+    .menu-title {
+      padding: .75rem 1rem;
+      border-bottom: 1px solid #eee;
+      font-weight: 600;
+    }
+
+    .menu-item {
+      display: block;
+      padding: .6rem 1rem;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .menu-item:hover {
+      background: #fafafa;
+    }
+
+    .menu-item.active {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .hover-zoom {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-zoom:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (min-width:768px) {
+      .sidebar-fixed {
+        position: fixed;
+        top: var(--navbar-h);
+        left: 0;
+        width: var(--sidebar-w);
+        height: calc(100vh - var(--navbar-h));
+        overflow-y: auto;
+      }
+
+      .content-with-fixed {
+        margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+      }
+    }
+
+    /* ===== Buttons ===== */
+    .btn-brand {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .btn-brand:hover {
+      color: #fff;
+      filter: brightness(.95);
+    }
+
+    /* ===== Layout: hanya area card yang scroll ===== */
+    .content-col {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .content-scroll {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .materi-card .card-header {
+      flex: 0 0 auto;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      padding: .5rem 1rem .4rem !important;
+    }
+
+    .materi-card {
+      display: flex;
+      flex-direction: column;
+      height: 580px;
+    }
+
+    .materi-card .card-body.scrollable {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+    }
+
+
+
+    /* Pusatkan isi di dalam sticky-cta */
+    .sticky-cta .content-with-fixed .d-flex {
+      justify-content: center;
+      /* pusat */
+      align-items: center;
+      gap: .5rem;
+      /* jarak antar tombol */
+      flex-wrap: wrap;
+      /* responsif di layar kecil */
+      width: 100%;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #f8f9fa, #eef2f7)
+    }
+
+    .question-block {
+      border-left: 4px solid #0d6efd;
+      padding-left: 1rem
+    }
+
+    .drag-item {
+      padding: .5rem .75rem;
+      border: 1px dashed #adb5bd;
+      border-radius: .5rem;
+      background: #fff;
+      cursor: grab
+    }
+
+    .drop-zone {
+      min-height: 60px;
+      border: 2px dashed #ced4da;
+      border-radius: .75rem;
+      padding: .5rem
+    }
+
+    .drop-zone.correct {
+      border-color: #198754;
+      background: #e9f7ef
+    }
+
+    .drop-zone.wrong {
+      border-color: #dc3545;
+      background: #fde7ea
+    }
+
+    /* Flip cards */
+    .flip {
+      perspective: 1000px
+    }
+
+    .flip-inner {
+      position: relative;
+      transition: transform .6s;
+      transform-style: preserve-3d;
+      height: 100%
+    }
+
+    .flip.show .flip-inner {
+      transform: rotateY(180deg)
+    }
+
+    .flip-front,
+    .flip-back {
+      backface-visibility: hidden;
+      position: absolute;
+      inset: 0;
+      padding: 1.25rem
+    }
+
+    .flip-back {
+      transform: rotateY(180deg)
+    }
+
+    /* Jenis Pewarna (layout & height fix to avoid overlap) */
+    .jenis-card {
+      height: 260px;
+      border: 0
+    }
+
+    /* ====== RESPONSIVE LAYOUT FIXES (override) ====== */
+
+    /* 1) Mobile: biarkan halaman memanjang normal */
+    @media (max-width: 767.98px) {
+
+      /* jangan kunci tinggi halaman di HP */
+      main.app-shell {
+        height: auto;
+        overflow: visible;
+      }
+
+      .content-col,
+      .content-scroll {
+        height: auto;
+        overflow: visible;
+      }
+
+      /* kartu ikut tinggi natural agar isi tidak terpotong */
+      .materi-card {
+        height: auto;
+      }
+
+      .materi-card .card-body.scrollable {
+        min-height: 0;
+        max-height: none;
+        overflow: visible;
+      }
+
+      /* sidebar muncul di atas konten, tidak fixed */
+      .sidebar-fixed {
+        position: static;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+      }
+
+      /* sticky CTA biar rapi penuh di HP */
+      .sticky-cta {
+        position: static;
+        margin-top: .5rem;
+      }
+    }
+
+    /* 2) Tablet & Desktop: pakai 100dvh agar akurat vs toolbar browser */
+    @media (min-width: 768px) {
+      main.app-shell {
+        height: calc(100dvh - var(--navbar-h) - var(--footer-h));
+        overflow: hidden;
+      }
+
+      /* sidebar tetap fixed, konten bergeser */
+      .sidebar-fixed {
+        position: fixed;
+        top: var(--navbar-h);
+        left: 0;
+        width: var(--sidebar-w);
+        height: calc(100dvh - var(--navbar-h));
+        overflow-y: auto;
+      }
+
+      .content-with-fixed {
+        margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+      }
+
+      /* area isi: hanya body card yang scroll */
+      .content-col,
+      .content-scroll {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      /* tinggi kartu fleksibel, tidak kaku 580px */
+      .materi-card {
+        height: clamp(480px, 66vh, 760px);
+        /* enak di berbagai layar */
+      }
+
+      .materi-card .card-body.scrollable {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* CTA melayang rapi */
+      .sticky-cta {
+        position: fixed;
+        bottom: calc(var(--footer-h) + 8px);
+        left: calc(var(--sidebar-w) + var(--sidebar-gap));
+        right: 12px;
+        z-index: 1030;
+        /* di atas card */
+      }
+    }
+
+    /* 3) Large desktop: beri napas ekstra pada konten */
+    @media (min-width: 1200px) {
+      .materi-card {
+        height: clamp(570px, 62vh, 820px);
+      }
+    }
+
+    /* 4) Minor polish */
+    .navbar {
+      will-change: transform;
+    }
+
+    /* lebih halus saat scroll iOS */
+
+    /* ===== Minor polish ===== */
+    .min-vh-0 {
+      min-height: 0 !important;
+    }
+
+    .hover-zoom {
+      transition: transform .3s ease, box-shadow .3s ease
+    }
+
+    .hover-zoom:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .15)
+    }
+
+    .jenis-icon {
+      font-size: 2.25rem;
+      margin-bottom: .5rem
+    }
+
+    /* --- Jenis Pewarna: gaya baru --- */
+    .hover-zoom {
+      transition: transform .3s ease, box-shadow .3s ease
+    }
+
+    .hover-zoom:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .15)
+    }
+
+    .jenis-card .card-body {
+      padding: 2rem 1.25rem
+    }
+
+    .jenis-icon {
+      font-size: 2.25rem;
+      margin-bottom: .5rem
+    }
+
+    @media (min-width:768px) {
+      .sticky-cta {
+        left: calc(var(--sidebar-w) + var(--sidebar-gap));
+        right: 12px;
+      }
+    }
+
+    /* ===== Minor polish ===== */
+    .min-vh-0 {
+      min-height: 0 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR (fixed) -->
+  <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+        <i class="bi bi-brush" style="font-size:1.25rem; color:var(--brand)"></i>
+        <strong>Pewarnaan Rambut</strong> <span class="fw-normal">• Single Application</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navs">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navs">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link active fw-semibold" style="color:var(--brand)"
+              href="../materi/apersepsi.html">Materi</a></li>
+          <li class="nav-item"><a class="nav-link" href="../latihan.html">Latihan</a></li>
+          <li class="nav-item"><a class="nav-link" href="../kd.html">Tujuan Pembelajaran</a></li>
+          <li class="nav-item"><a class="nav-link" href="../peta.html">Peta Konsep</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- KONTEN: hanya area card yang scroll -->
+  <main class="main-pad app-shell">
+    <div class="container-fluid ">
+      <div class="row g-1 no-top-gap h-100">
+        <!-- SIDEBAR -->
+        <aside class="col-12 col-md-auto order-1 order-md-0 p-0">
+          <nav class="menu-card sidebar-fixed shadow-sm">
+            <div class="menu-title"><i class="bi bi-journal-bookmark"></i> Materi</div>
+
+            <a class="menu-item" href="./apersepsi.html">
+              <i class="bi bi-lightbulb"></i> Apersepsi
+            </a>
+
+            <!-- TOMBOL INDUK TERBUKA TEORI-->
+            <button class="menu-item active d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+              data-bs-toggle="collapse" data-bs-target="#submenu-teori" aria-expanded="true"
+              aria-controls="submenu-teori" href="./peralatan.html">
+
+              <span class="me-2"><i class="bi bi-droplet-half"></i></span>
+              <span class="flex-grow-1 text-start">A. Teori Dasar</span>
+              <i class="bi bi-chevron-down small"></i>
+            </button>
+
+            <!-- SUBMENU TERBUKA -->
+            <div class="collapse show" id="submenu-teori"> <!-- penting -->
+              <ul class="nav flex-column ps-4 my-1">
+                <li>
+                  <a class="menu-item py-1" href="./teori.html#pengertian"><span>1. Pengertian Pewarnaan</span></a>
+                </li>
+                <li>
+                  <!-- ITEM SEDANG DIBACA -->
+                  <a class="menu-item py-1" href="./teori.html#tujuan">
+                    <span>2. Tujuan Pewarnaan</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="menu-item py-1" href="./teori.html#jenis">3. Jenis Warna</a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+            <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+              data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
+              aria-controls="submenu-peralatan">
+              <span class="me-2"><i class="bi bi-scissors"></i></span>
+              <span class="flex-grow-1 text-start">B. Peralatan</span>
+              <i class="bi bi-chevron-down small"></i>
+              <a>
+            </button>
+
+            <!-- SUBMENU TERBUKA -->
+            <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+              <ul class="nav flex-column ps-4 my-1">
+                <li>
+                  <a class="menu-item py-1" href="./peralatan.html#peralatan"><span>1. Peralatan Pewarnaan</span></a>
+                </li>
+                <li>
+                  <!-- ITEM SEDANG DIBACA -->
+                  <a class="menu-item py-1" href="./peralatan.html#kosmetik">
+                    <span>2. Kosmetika untuk Pewarnaan</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </nav>
+        </aside>
+        <!-- KANAN (scroll) -->
+        <section class="col-12 col-md-9 col-xl-10 content-col content-with-fixed order-2 order-md-0">
+          <div class="content-scroll">
+            <div class="card shadow-sm materi-card">
+              <div class="card-header d-flex align-items-center gap-2">
+                <i class="bi bi-lightbulb" style="color:var(--brand); font-size:1.25rem;"></i>
+                <div class="d-flex flex-wrap align-items-baseline gap-2">
+                  <h3 class="h5 mb-0 fw-bold">Teori Dasar Perawatan</h3>
+                  <span class="text-muted">• Pewarnaan Rambut (Single Application)</span>
+                </div>
+              </div>
+
+              <div class="card-body scrollable flex-grow-1 min-vh-0" id="apersepsi-hair-coloring">
+
+                <section class="pengertian mb-4">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h2 class="h4 icon-title"><i class="bi bi-lightbulb-fill" style="color: #ff3f8e;"></i>1)
+                        Pengertian Pewarnaan</h2>
+                      <p>Pewarnaan rambut <em>(hair coloring)</em> ialah suatu pekerjaan yang bertujuan untuk memberi
+                        warna baru atau mengubah warna rambut asli menjadi warna yang baru. Secara luas, pewarnaan
+                        rambut tidak hanya memberi warna baru atau mengubah warna saja, tetapi juga menambah serta
+                        menghilangkan atau memudakan warna rambut serta menipiskan bagian luar batang rambut. Pewarnaan
+                        rambut <i>single application</i> merupakan jenis teknik pewarnaan yang mengubah warna rambut
+                        dengan satu kali tindakan pewarnaan. Berbeda dengan teknik yang lain, jenis pewarnaan aplikasi
+                        tunggal ini tidak memerlukan waktu banyak dalam melakukannya.
+                      </p>
+
+
+                      <!-- Interaksi: Pengertian (kuis mini) -->
+                      <div class="mt-4" style="background-color: #f7f4f5;">
+                        <div class="question-block">
+                          <p class="fw-semibold mb-2">
+                            <i class="bi bi-clipboard-check" style="color: #ff3f8e;"></i>
+                            Kuis Mini – Pengertian Pewarnaan
+                          </p>
+
+                          <!-- Q1: Pilihan ganda -->
+                          <div class="mb-3">
+                            <label class="form-label">1. Apa tujuan utama pewarnaan rambut?</label>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="qPengertian1" id="qP1a" value="akar">
+                              <label class="form-check-label" for="qP1a">Menyuburkan akar rambut</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="qPengertian1" id="qP1b"
+                                value="ubahwarna">
+                              <label class="form-check-label" for="qP1b">Memberi/mengeubah warna rambut menjadi warna
+                                baru</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="qPengertian1" id="qP1c"
+                                value="cepatpanjang">
+                              <label class="form-check-label" for="qP1c">Membuat rambut cepat panjang</label>
+                            </div>
+                          </div>
+
+                          <!-- Q2: Benar/Salah -->
+                          <div class="mb-3">
+                            <label class="form-label">2. Teknik <em>single application</em> berarti satu kali tindakan
+                              pewarnaan.</label>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="qPengertian2" id="qP2true"
+                                value="true">
+                              <label class="form-check-label" for="qP2true">Benar</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="qPengertian2" id="qP2false"
+                                value="false">
+                              <label class="form-check-label" for="qP2false">Salah</label>
+                            </div>
+                          </div>
+
+                          <!-- Q3: Isian singkat -->
+                          <div class="mb-3">
+                            <label for="qPengertian3" class="form-label">3. Istilah bahasa Inggris untuk pewarnaan
+                              rambut adalah...</label>
+                            <input id="qPengertian3" class="form-control"
+                              placeholder="Tulis istilahnya (contoh: hair coloring)">
+                            <div class="form-text">Tidak peka huruf besar/kecil.</div>
+                          </div>
+
+                          <!-- Tombol -->
+                          <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-primary btn-sm" style="background-color: #ff3f8e;"
+                              onclick="simpanPengertian()">
+                              <i class="bi bi-check-circle"></i> Simpan Dulu (Cek)
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetPengertian()">
+                              <i class="bi bi-arrow-counterclockwise"></i> Reset Aktivitas
+                            </button>
+                          </div>
+
+                          <!-- Feedback -->
+                          <div id="pengertianFb" class="mt-2 alert alert-gray d-none"></div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <hr class="my-4">
+                </section>
+
+
+                <!-- 2. Tujuan -->
+                <section class="mb-4">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h2 class="h4">2) Tujuan Pewarnaan</h2>
+                      <ul>
+                        <li>Mengubah warna sesuai keinginan (lebih gelap/terang).</li>
+                        <li>Menutupi uban.</li>
+                        <li>Meningkatkan kepercayaan diri.</li>
+                        <li>Memberi kesan rambut lebih tebal / koreksi penampilan.</li>
+                      </ul>
+                      <p class="mb-1">Cocokkan tujuan dengan contoh kasus berikut.</p>
+                      <div class="row g-3">
+                        <div class="col-lg-6">
+                          <div id="poolTujuan">
+                            <div class="drag-item" draggable="true" data-target="dz1">Menutupi uban</div>
+                            <div class="drag-item mt-2" draggable="true" data-target="dz2">Mengubah warna sesuai
+                              keinginan</div>
+                            <div class="drag-item mt-2" draggable="true" data-target="dz3">Meningkatkan kepercayaan diri
+                            </div>
+                            <div class="drag-item mt-2" draggable="true" data-target="dz4">Koreksi penampilan</div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="mb-3">
+                            <div class="small text-muted">Kasus A</div>
+                            <div id="dz1" class="drop-zone"></div>
+                            <div class="form-text">Rambut abu-abu menjadi hitam merata.</div>
+                          </div>
+                          <div class="mb-3">
+                            <div class="small text-muted">Kasus B</div>
+                            <div id="dz2" class="drop-zone"></div>
+                            <div class="form-text">Dari cokelat tua ke chestnut terang.</div>
+                          </div>
+                          <div class="mb-3">
+                            <div class="small text-muted">Kasus C</div>
+                            <div id="dz3" class="drop-zone"></div>
+                            <div class="form-text">Tampilan lebih segar dan percaya diri.</div>
+                          </div>
+                          <div>
+                            <div class="small text-muted">Kasus D</div>
+                            <div id="dz4" class="drop-zone"></div>
+                            <div class="form-text">Ilusi visual agar bentuk wajah proporsional.</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-3 d-flex gap-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm"
+                          onclick="cekDragTujuan()">Periksa</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetDragTujuan()">Reset
+                          Aktivitas</button>
+                      </div>
+                      <div id="dragFb" class="mt-2"></div>
+                    </div>
+                  </div>
+                  <hr class="my-4">
+
+                </section>
+
+                <!-- 3. Jenis Pewarna (gaya baru + tetap interaktif) -->
+                <section class="mb-4">
+                  <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                      <h2 class="h4 mb-4"><i class="bi bi-palette-fill text-primary"></i> 3) Jenis Pewarna Rambut</h2>
+
+
+                      <!-- KARTU 3 KOLOM -->
+                      <div class="row g-4 text-center">
+                        <!-- Sementara -->
+                        <div class="col-md-4">
+                          <div class="card jenis-card flip shadow-sm hover-zoom" id="flipTemp"
+                            style="background:linear-gradient(135deg,#e3f2fd,#ffffff);">
+                            <div class="flip-inner">
+                              <div
+                                class="flip-front d-flex flex-column align-items-center justify-content-center text-center">
+                                <i class="bi bi-droplet-fill text-info jenis-icon"></i>
+                                <h5 class="fw-bold text-primary mb-1">Sementara</h5>
+                                <p class="text-muted mb-3 px-3">Color rinse, hair spray, crayon.</p>
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                  onclick="toggleFlip('flipTemp')"><i class="bi bi-info-circle"></i> Info</button>
+                              </div>
+                              <div
+                                class="flip-back d-flex flex-column align-items-center justify-content-center text-center bg-light rounded-3">
+                                <p class="mb-0 px-3">Mudah hilang saat dicuci/menyikat; hanya menutupi permukaan rambut.
+                                </p>
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-2"
+                                  onclick="toggleFlip('flipTemp')"><i class="bi bi-x-circle"></i> Tutup</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Semi-permanen -->
+                        <div class="col-md-4">
+                          <div class="card jenis-card flip shadow-sm hover-zoom" id="flipSemi"
+                            style="background:linear-gradient(135deg,#fff3cd,#ffffff);">
+                            <div class="flip-inner">
+                              <div
+                                class="flip-front d-flex flex-column align-items-center justify-content-center text-center">
+                                <i class="bi bi-hourglass-split text-warning jenis-icon"></i>
+                                <h5 class="fw-bold text-warning mb-1">Semi-permanen</h5>
+                                <p class="text-muted mb-3 px-3">Tanpa amonia; bertahan ±4–6 minggu.</p>
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                  onclick="toggleFlip('flipSemi')"><i class="bi bi-info-circle"></i> Info</button>
+                              </div>
+                              <div
+                                class="flip-back d-flex flex-column align-items-center justify-content-center text-center bg-light rounded-3">
+                                <p class="mb-0 px-3">Menyamarkan warna; lebih ramah kutikula, tidak mencerahkan.</p>
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-2"
+                                  onclick="toggleFlip('flipSemi')"><i class="bi bi-x-circle"></i> Tutup</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Permanen -->
+                        <div class="col-md-4">
+                          <div class="card jenis-card flip shadow-sm hover-zoom" id="flipPerm"
+                            style="background:linear-gradient(135deg,#e8f5e9,#ffffff);">
+                            <div class="flip-inner">
+                              <div
+                                class="flip-front d-flex flex-column align-items-center justify-content-center text-center">
+                                <i class="bi bi-gem text-success jenis-icon"></i>
+                                <h5 class="fw-bold text-success mb-1">Permanen</h5>
+                                <p class="text-muted mb-3 px-3">Menggunakan developer (H<sub>2</sub>O<sub>2</sub>).</p>
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                  onclick="toggleFlip('flipPerm')"><i class="bi bi-info-circle"></i> Info</button>
+                              </div>
+                              <div
+                                class="flip-back d-flex flex-column align-items-center justify-content-center text-center bg-light rounded-3">
+                                <p class="mb-0 px-3">Pigmen masuk ke korteks rambut; hasil tahan lama.</p>
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-2"
+                                  onclick="toggleFlip('flipPerm')"><i class="bi bi-x-circle"></i> Tutup</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <hr class="my-4">
+                      <!-- Kuis Cepat -->
+                      <div class="question-block mt-4">
+                        <p class="fw-semibold mb-2"><i class="bi bi-question-circle text-primary"></i> Kuis Cepat</p>
+                        <p>Jenis pewarna yang bertahan 4–6 minggu tanpa amonia adalah...</p>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="qJenis" id="qj1">
+                          <label class="form-check-label" for="qj1">Sementara</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="qJenis" id="qj2">
+                          <label class="form-check-label" for="qj2">Semi-permanen</label>
+                        </div>
+                        <div class="form-check mb-2">
+                          <input class="form-check-input" type="radio" name="qJenis" id="qj3">
+                          <label class="form-check-label" for="qj3">Permanen</label>
+                        </div>
+                        <div class="d-flex gap-2">
+                          <button type="button" class="btn btn-outline-primary btn-sm" onclick="cekJenis()">
+                            <i class="bi bi-check-circle"></i> Periksa
+                          </button>
+                          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetJenis()">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset Aktivitas
+                          </button>
+                        </div>
+                        <div id="jenisFb" class="mt-2"></div>
+                      </div>
+                </section>
+
+                <!-- 4. Faktor yang Mempengaruhi -->
+                <section class="mb-4">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h2 class="h4">4) Faktor yang Mempengaruhi Hasil</h2>
+                      <p>Ketebalan, tekstur, dan kondisi kutikula menentukan daya serap warna. Rambut halus cenderung
+                        lebih cepat menyerap, sedangkan rambut kasar/lebat memerlukan waktu lebih lama.</p>
+                      <div class="row g-3 align-items-end">
+                        <div class="col-md-6">
+                          <label for="tipeRambut" class="form-label">Pilih tipe rambut</label>
+                          <select id="tipeRambut" class="form-select">
+                            <option value="">-- pilih --</option>
+                            <option value="halus">Halus & tipis</option>
+                            <option value="normal">Normal</option>
+                            <option value="kasar">Kasar & tebal</option>
+                            <option value="kutikulaTerbuka">Kutikula terbuka / rusak</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <button type="button" class="btn btn-outline-primary" onclick="simulasiFaktor()">Lihat
+                            Simulasi</button>
+                          <button type="button" class="btn btn-outline-secondary ms-2" onclick="resetFaktor()">Reset
+                            Aktivitas</button>
+                        </div>
+                      </div>
+                      <div id="faktorFb" class="alert alert-secondary mt-3 d-none"></div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- 5. Menanya (Diskusi) -->
+                <section class="mb-4">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h2 class="h4">5) Menanya (Diskusi)</h2>
+                      <p>Tulis satu pertanyaan tentang bagian yang belum kamu pahami, lalu coba jawab berdasarkan
+                        pemahamanmu.</p>
+                      <div class="row g-2">
+                        <div class="col-md-6"><textarea id="tanya" class="form-control" rows="2"
+                            placeholder="Pertanyaanmu..."></textarea></div>
+                        <div class="col-md-6"><textarea id="jawab" class="form-control" rows="2"
+                            placeholder="Jawaban/dugaanmu..."></textarea></div>
+                      </div>
+                      <div class="mt-2 d-flex gap-2">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="simpanDiskusi()">Simpan</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetDiskusi()">Reset
+                          Aktivitas</button>
+                      </div>
+                      <div id="diskusiFb" class="form-text mt-2"></div>
+                    </div>
+                  </div>
+                </section>
+
+
+                <!-- 6. Refleksi -->
+                <section class="mb-4">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <h2 class="h4">6) Refleksi</h2>
+                      <p>Tuliskan langkah-langkah persiapan sebelum proses pewarnaan permanen pada klien.</p>
+                      <textarea id="refleksi" class="form-control" rows="3"
+                        placeholder="Contoh: konsultasi warna, uji alergi (patch test), siapkan APD, dsb."></textarea>
+                      <div class="mt-2 d-flex gap-2">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="simpanRefleksi()">Simpan</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="resetRefleksi()">Reset
+                          Aktivitas</button>
+                      </div>
+                      <div id="refleksiFb" class="form-text mt-2"></div>
+                    </div>
+                  </div>
+                </section>
+
+              </div>
+        </section>
+      </div><!-- /card-body.scrollable -->
+    </div><!-- /card.materi-card -->
+    </div><!-- /content-scroll -->
+    </section>
+    </div>
+
+    </div>
+
+  </main>
+
+  <!-- CTA tetap di atas footer -->
+  <div class="sticky-cta">
+    <div class="container">
+      <div class="col-12 col-md-10 content-col content-with-fixed mx-auto">
+        <div class="d-flex justify-content-center align-items-center flex-wrap gap-2 w-100">
+          <a class="btn btn-outline-secondary" href="apersepsi.html"><i class="bi bi-arrow-left"></i> Sebelumnya</a>
+          <a class="btn btn-brand" href="peralatan.html">Berikutnya <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer fixed-bottom py-2">
+    <div class="container d-flex justify-content-between align-items-center small">
+      <span>SMKS ISFI BANJARMASIN • Hair Coloring</span>
+      <span class="text-muted">© 2025 • Single Application</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    //menu
+    document.addEventListener('DOMContentLoaded', function () {
+      const herePath = location.pathname.replace(/\/+$/, '');   // normalisasi
+      const hereHash = location.hash; // contoh: #tujuan
+
+      // Cari semua link di sidebar
+      document.querySelectorAll('.menu-card a.menu-item[href]').forEach(function (a) {
+        const url = new URL(a.href, location.origin);
+        const aPath = url.pathname.replace(/\/+$/, '');
+        const aHash = url.hash; // bisa kosong
+
+        // Kriteria match: path sama, dan jika link punya hash, harus cocok juga
+        const pathMatch = (aPath === herePath);
+        const hashMatch = (!aHash || aHash === hereHash);
+
+        if (pathMatch && hashMatch) {
+          // Tandai aktif + label "Sedang dibaca"
+          a.classList.add('active', 'is-reading');
+          if (!a.querySelector('.badge')) {
+            const badge = document.createElement('span');
+            badge.className = 'badge rounded-pill text-bg-primary-subtle ms-auto';
+            badge.textContent = 'Sedang dibaca';
+            a.classList.add('d-flex', 'align-items-center');
+            a.appendChild(badge);
+          }
+
+          // Buka parent collapse (jika ada)
+          const col = a.closest('.collapse');
+          if (col && !col.classList.contains('show')) {
+            col.classList.add('show');
+            const btn = document.querySelector(`[data-bs-target="#${col.id}"]`);
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+          }
+        }
+      });
+    });
+
+    const totalAkt = 6;
+    function getSet() { return new Set(JSON.parse(localStorage.getItem('doneSet') || '[]')) }
+    function saveSet(s) { localStorage.setItem('doneSet', JSON.stringify([...s])) }
+    function markDone(n) { const s = getSet(); s.add(n); saveSet(s); updateProgress(); }
+    function unmarkDone(n) { const s = getSet(); s.delete(n); saveSet(s); updateProgress(); }
+    function updateProgress() { const s = getSet(); const p = Math.round((s.size / totalAkt) * 100); document.getElementById('progressBar').style.width = p + '%'; document.getElementById('progressBar').innerText = p + '%'; document.getElementById('progressText').innerText = `${s.size}/${totalAkt} aktivitas`; }
+
+    // 1 Intro
+    function simpanIntro() { const v = document.getElementById('qIntro').value.trim(); if (!v) { document.getElementById('introFb').innerHTML = '<span class="text-danger">Isi dulu ya.</span>'; return } localStorage.setItem('qIntro', v); document.getElementById('introFb').innerHTML = '<span class="text-success">Tersimpan.</span>'; markDone(1) }
+    function resetIntro() { localStorage.removeItem('qIntro'); document.getElementById('qIntro').value = ''; document.getElementById('introFb').innerHTML = ''; unmarkDone(1) }
+    // ===== Data Bank Soal =====
+    const MCQ = [
+      { id: 'mcq-1', q: 'Apa tujuan utama pewarnaan rambut?', options: ['Menyuburkan akar rambut', 'Memberi warna baru atau mengubah warna rambut asli', 'Mempercepat pertumbuhan rambut', 'Menghilangkan ketombe secara permanen'], answer: 1, explain: 'Pewarnaan bertujuan memberi warna baru atau mengubah warna rambut asli menjadi warna baru.' },
+      { id: 'mcq-2', q: 'Istilah bahasa Inggris untuk pewarnaan rambut adalah...', options: ['hair cutting', 'hair coloring', 'hair styling', 'hair steaming'], answer: 1, explain: 'Di teks, pewarnaan rambut disebut juga hair coloring.' },
+      { id: 'mcq-3', q: 'Teknik single application adalah...', options: ['Teknik pewarnaan dengan dua kali aplikasi pewarna', 'Teknik pewarnaan yang dilakukan dengan satu kali tindakan pewarnaan', 'Teknik bleaching sebelum pewarnaan', 'Teknik perawatan rambut rontok'], answer: 1, explain: 'Single application berarti satu kali tindakan pewarnaan.' },
+      { id: 'mcq-4', q: 'Dibanding teknik lain, single application umumnya...', options: ['Memerlukan waktu lebih lama', 'Tidak memerlukan waktu banyak', 'Selalu lebih mahal', 'Hanya untuk rambut pria'], answer: 1, explain: 'Jenis aplikasi tunggal tidak memerlukan waktu banyak.' },
+      { id: 'mcq-5', q: 'Selain mengubah warna, pewarnaan rambut juga dapat...', options: ['Menambah atau memudakan/menipiskan bagian luar batang rambut', 'Mempertebal kuku', 'Memanjangkan rambut dalam sehari', 'Menghilangkan uban permanen tanpa pewarna'], answer: 0, explain: 'Tidak hanya mengubah warna; juga menambah/memudakan warna & menipiskan bagian luar batang rambut.' }
+    ];
+
+
+    const TF = [
+      { id: 'tf-1', q: 'Single application selalu membutuhkan dua tahap aplikasi pewarna.', answer: false, explain: 'Justru hanya satu kali tindakan pewarnaan.' },
+      { id: 'tf-2', q: 'Pewarnaan rambut termasuk pekerjaan yang bertujuan memberi warna baru.', answer: true, explain: 'Sesuai definisi pada teks.' },
+      { id: 'tf-3', q: 'Istilah hair coloring artinya pemotongan rambut.', answer: false, explain: 'Hair coloring = pewarnaan rambut, bukan memotong.' }
+    ];
+    // 2 Drag tujuan
+    let dragRef = null; document.addEventListener('dragstart', e => { if (e.target.classList.contains('drag-item')) { dragRef = e.target } });
+    document.addEventListener('dragover', e => { if (e.target.classList.contains('drop-zone')) e.preventDefault() });
+    document.addEventListener('drop', e => { if (e.target.classList.contains('drop-zone')) { e.preventDefault(); e.target.innerHTML = ''; e.target.appendChild(dragRef) } });
+    function cekDragTujuan() { let ok = true; document.querySelectorAll('.drop-zone').forEach(z => { const d = z.querySelector('.drag-item'); if (!d) { ok = false; z.classList.add('wrong'); return } if (d.dataset.target === z.id) { z.classList.add('correct'); z.classList.remove('wrong') } else { z.classList.add('wrong'); z.classList.remove('correct'); ok = false } }); document.getElementById('dragFb').innerHTML = ok ? '<span class="text-success">Benar semua!</span>' : '<span class="text-danger">Masih ada yang keliru.</span>'; if (ok) { markDone(2); localStorage.setItem('dragTujuan', 'ok') } }
+    function resetDragTujuan() { document.getElementById('dragFb').innerHTML = ''; document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('correct', 'wrong')); const pool = document.getElementById('poolTujuan'); document.querySelectorAll('#poolTujuan .drag-item, .drop-zone .drag-item').forEach(i => pool.appendChild(i)); localStorage.removeItem('dragTujuan'); unmarkDone(2) }
+
+    // 3 Jenis pewarna (kuis tetap)
+    function toggleFlip(id) { document.getElementById(id).classList.toggle('show') }
+    function cekJenis() { const ans = document.getElementById('qj2').checked; document.getElementById('jenisFb').innerHTML = ans ? '<span class="text-success">Tepat! Semi-permanen.</span>' : '<span class="text-danger">Coba lagi ya.</span>'; if (ans) { localStorage.setItem('qJenis', 'benar'); markDone(3) } }
+    function resetJenis() { document.querySelectorAll('input[name="qJenis"]').forEach(r => r.checked = false); document.getElementById('jenisFb').innerHTML = ''; localStorage.removeItem('qJenis'); unmarkDone(3) }
+    // 4 Faktor
+    function simulasiFaktor() { const v = document.getElementById('tipeRambut').value; const box = document.getElementById('faktorFb'); if (!v) { box.classList.add('d-none'); return } let teks = ''; if (v === 'halus') teks = 'Rambut halus cepat menyerap warna; waktu proses lebih singkat.'; if (v === 'normal') teks = 'Penyerapannya sedang; ikuti petunjuk standar.'; if (v === 'kasar') teks = 'Rambut kasar/tebal lambat menyerap; butuh waktu/developer sesuai anjuran.'; if (v === 'kutikulaTerbuka') teks = 'Kutikula terbuka menyerap cepat tapi warna bisa tidak merata; perlu perawatan pra-warna.'; box.textContent = teks; box.classList.remove('d-none'); localStorage.setItem('faktor', v); markDone(4) }
+    function resetFaktor() { document.getElementById('tipeRambut').value = ''; const box = document.getElementById('faktorFb'); box.classList.add('d-none'); box.textContent = ''; localStorage.removeItem('faktor'); unmarkDone(4) }
+
+    // 5 Diskusi
+    function simpanDiskusi() { const t = document.getElementById('tanya').value.trim(); const j = document.getElementById('jawab').value.trim(); if (!t || !j) { document.getElementById('diskusiFb').innerHTML = '<span class="text-danger">Lengkapi pertanyaan & jawaban.</span>'; return } localStorage.setItem('diskusi', JSON.stringify({ t, j })); document.getElementById('diskusiFb').innerHTML = '<span class="text-success">Tersimpan.</span>'; markDone(5) }
+    function resetDiskusi() { localStorage.removeItem('diskusi'); document.getElementById('tanya').value = ''; document.getElementById('jawab').value = ''; document.getElementById('diskusiFb').innerHTML = ''; unmarkDone(5) }
+
+
+    // 6 Refleksi
+    function simpanRefleksi() { const v = document.getElementById('refleksi').value.trim(); if (!v) { document.getElementById('refleksiFb').innerHTML = '<span class="text-danger">Isi dulu ya.</span>'; return } localStorage.setItem('refleksi', v); document.getElementById('refleksiFb').innerHTML = '<span class="text-success">Tersimpan.</span>'; markDone(6) }
+    function resetRefleksi() { localStorage.removeItem('refleksi'); document.getElementById('refleksi').value = ''; document.getElementById('refleksiFb').innerHTML = ''; unmarkDone(6) }
+
+
+    // Restore
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('qIntro').value = localStorage.getItem('qIntro') || '';
+      const dt = localStorage.getItem('dragTujuan'); if (dt) { markDone(2) }
+      if (localStorage.getItem('qJenis')) { markDone(3) }
+      const fv = localStorage.getItem('faktor'); if (fv) { document.getElementById('tipeRambut').value = fv; simulasiFaktor() }
+      const d = localStorage.getItem('diskusi'); if (d) { const { t, j } = JSON.parse(d); document.getElementById('tanya').value = t; document.getElementById('jawab').value = j; markDone(5) }
+      document.getElementById('refleksi').value = localStorage.getItem('refleksi') || '';
+      if (document.getElementById('qIntro').value) markDone(1);
+      updateProgress();
+    });
+
+    // ==== Interaksi: Pengertian Pewarnaan (kuis mini) ====
+    // kunci jawaban:
+    // Q1 = "ubahwarna", Q2 = true, Q3 = "hair coloring" (case-insensitive)
+    function getPengertianState() {
+      return JSON.parse(localStorage.getItem('pengertianQuiz') || '{"q1":"","q2":"","q3":""}');
+    }
+    function setPengertianState(s) {
+      localStorage.setItem('pengertianQuiz', JSON.stringify(s));
+    }
+
+    // cek & simpan
+    function simpanPengertian() {
+      const q1 = document.querySelector('input[name="qPengertian1"]:checked')?.value || '';
+      const q2 = document.querySelector('input[name="qPengertian2"]:checked')?.value || '';
+      const q3 = (document.getElementById('qPengertian3').value || '').trim().toLowerCase();
+
+      const st = { q1, q2, q3 };
+      setPengertianState(st);
+
+      // penilaian cepat
+      let score = 0;
+      if (q1 === 'ubahwarna') score++;
+      if (q2 === 'true') score++;
+      if (q3 === 'hair coloring') score++;
+
+      const fb = document.getElementById('pengertianFb');
+      fb.classList.remove('d-none');
+      fb.classList.remove('alert-gray');
+      fb.classList.add('alert-pink'); // tema pink
+
+      // teks umpan balik
+      let detail = [];
+      detail.push(`Q1: ${q1 ? (q1 === 'ubahwarna' ? 'Benar' : 'Salah') : 'Belum dijawab'}`);
+      detail.push(`Q2: ${q2 ? (q2 === 'true' ? 'Benar' : 'Salah') : 'Belum dijawab'}`);
+      detail.push(`Q3: ${q3 ? (q3 === 'hair coloring' ? 'Benar' : 'Salah') : 'Belum dijawab'}`);
+
+      fb.innerHTML = `<strong>Tersimpan.</strong> Skor ${score}/3<br>${detail.join(' • ')}`;
+
+      // tandai progres aktivitas 1 jika semua benar (opsional)
+      try { if (score === 3) markDone(1); } catch (_) { }
+    }
+
+    // reset
+    function resetPengertian() {
+      // hapus penyimpanan
+      localStorage.removeItem('pengertianQuiz');
+
+      // kosongkan UI
+      document.querySelectorAll('input[name="qPengertian1"]').forEach(i => i.checked = false);
+      document.querySelectorAll('input[name="qPengertian2"]').forEach(i => i.checked = false);
+      const inp = document.getElementById('qPengertian3'); if (inp) inp.value = '';
+      const fb = document.getElementById('pengertianFb');
+      if (fb) { fb.classList.add('d-none'); fb.textContent = ''; }
+
+      // progres (opsional)
+      try { unmarkDone(1); } catch (_) { }
+    }
+
+    // restore saat load halaman
+    document.addEventListener('DOMContentLoaded', () => {
+      const st = getPengertianState();
+      if (st.q1) {
+        const el = document.querySelector(`input[name="qPengertian1"][value="${st.q1}"]`);
+        if (el) el.checked = true;
+      }
+      if (st.q2) {
+        const el2 = document.querySelector(`input[name="qPengertian2"][value="${st.q2}"]`);
+        if (el2) el2.checked = true;
+      }
+      if (st.q3) document.getElementById('qPengertian3').value = st.q3;
+
+      // tampilkan ringkasannya bila pernah tersimpan
+      if (st.q1 || st.q2 || st.q3) {
+        const fb = document.getElementById('pengertianFb');
+        if (fb) {
+          fb.classList.remove('d-none');
+          fb.classList.add('alert-gray');
+          fb.innerHTML = 'Jawabanmu sudah tersimpan. Tekan <em>Simpan Dulu (Cek)</em> untuk menilai ulang.';
+        }
+      }
+    });
+
+  </script>
+</body>
+
+</html>

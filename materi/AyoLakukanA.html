@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Apersepsi • Materi</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet"><!-- opsional -->
+
+    <style>
+        :root {
+            --navbar-h: 55px;
+            --footer-h: 40px;
+            /* footer sedikit lebih tinggi agar nyaman */
+            --brand: #ff3f8e;
+            --sidebar-w: 255px;
+            --line: #e5e7eb;
+            --card: #ffffff;
+            --card-border: #eeeeee;
+            --sidebar-gap: 1px;
+        }
+
+        /* ===== App shell ===== */
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            padding-bottom: var(--footer-h);
+            background: #fff;
+        }
+
+        .main-pad {
+            padding-top: var(--navbar-h);
+        }
+
+        main.app-shell {
+            height: calc(100vh - var(--navbar-h) - var(--footer-h));
+            overflow: hidden;
+        }
+
+        /* ===== Navbar & Footer ===== */
+        .navbar,
+        .footer {
+            background: #fff;
+        }
+
+        .footer {
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== Grid helpers ===== */
+        .no-top-gap>[class^="col-"],
+        .no-top-gap>aside,
+        .no-top-gap>section {
+            padding-top: 0 !important;
+        }
+
+        /* ===== Sidebar ===== */
+        .menu-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+        }
+
+        .menu-title {
+            padding: .75rem 1rem;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            display: block;
+            padding: .6rem 1rem;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .menu-item:hover {
+            background: #fafafa;
+        }
+
+        .menu-item.active {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        @media (min-width:768px) {
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100vh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+        }
+
+        /* ===== Buttons ===== */
+        .btn-brand {
+            background: var(--brand);
+            border: 1px solid var(--brand);
+            color: #fff;
+            border-radius: 12px;
+        }
+
+        .btn-brand:hover {
+            color: #fff;
+            filter: brightness(.95);
+        }
+
+        .btn-outline-brand {
+            background: #fff;
+            color: var(--brand);
+            border: 2px solid var(--brand);
+            border-radius: 12px;
+        }
+
+        .btn-outline-brand:hover {
+            background: var(--brand);
+            color: #fff;
+        }
+
+        /* ===== Layout: hanya area card yang scroll ===== */
+        .content-col {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .content-scroll {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .materi-card .card-header {
+            flex: 0 0 auto;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: .5rem 1rem .4rem !important;
+        }
+
+        /* Pusatkan isi di dalam sticky-cta */
+        .sticky-cta .content-with-fixed .d-flex {
+            justify-content: center;
+            align-items: center;
+            gap: .5rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        /* ====== RESPONSIVE LAYOUT FIXES ====== */
+
+        @media (max-width: 767.98px) {
+
+            main.app-shell {
+                height: auto;
+                overflow: visible;
+            }
+
+            .content-col,
+            .content-scroll {
+                height: auto;
+                overflow: visible;
+            }
+
+            .materi-card {
+                height: auto;
+            }
+
+            .materi-card .card-body.scrollable {
+                min-height: 0;
+                max-height: none;
+                overflow: visible;
+            }
+
+            .sidebar-fixed {
+                position: static;
+                width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+
+            .sticky-cta {
+                position: static;
+                margin-top: .5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            main.app-shell {
+                height: calc(100dvh - var(--navbar-h) - var(--footer-h));
+                overflow: hidden;
+            }
+
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100dvh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+
+            .content-col,
+            .content-scroll {
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .materi-card {
+                height: clamp(480px, 66vh, 760px);
+            }
+
+            .materi-card .card-body.scrollable {
+                flex: 1 1 auto;
+                min-height: 0;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .sticky-cta {
+                position: fixed;
+                bottom: calc(var(--footer-h) + 8px);
+                left: calc(var(--sidebar-w) + var(--sidebar-gap));
+                right: 12px;
+                z-index: 1030;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .materi-card {
+                height: clamp(570px, 62vh, 820px);
+            }
+        }
+
+        .card {
+            border-radius: 14px;
+        }
+
+        #al-table td[contenteditable="true"]:empty:before {
+            content: attr(data-placeholder);
+            color: #adb5bd;
+        }
+
+        #al-table td[contenteditable="true"] {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+                <i class="bi bi-brush" style="font-size:1.25rem; color:var(--brand)"></i>
+                <strong>Pewarnaan Rambut</strong> <span class="fw-normal">• Single Application</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navs">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navs">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-semibold" style="color:var(--brand)"
+                            aria-current="page" href="./apersepsi.html">Materi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../latihan.html">Latihan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../kd.html">Tujuan Pembelajaran</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../peta.html">Peta Konsep</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KONTEN -->
+    <main class="main-pad app-shell">
+        <div class="container-fluid">
+            <div class="row g-1 no-top-gap h-100">
+                <!-- SIDEBAR -->
+                <aside class="col-12 col-md-auto order-1 order-md-0 p-0">
+
+                    <nav class="menu-card sidebar-fixed shadow-sm">
+                        <div class="menu-title"><i class="bi bi-journal-bookmark"></i> Materi</div>
+
+                        <a class="menu-item " aria-current="page" href="PengetahuanDasarRambut.html"><i
+                                class="bi bi-lightbulb"></i> Pengetahuan Dasar Rambut</a>
+
+                        <!-- TOMBOL INDUK TERBUKA TEORI-->
+                        <div class="menu-item active">
+
+                            <button class=" d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#submenu-teori" aria-expanded="true"
+                                aria-controls="submenu-teori" href="./peralatan.html">
+
+                                <span class="me-2"><i class="bi bi-droplet-half"></i></span>
+                                <span class="flex-grow-1 text-start" aria-current="page">A. Pewarnaan
+                                    Rambut</span>
+                                <i class="bi bi-chevron-down small"></i>
+                            </button>
+                        </div>
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-teori"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+
+                                    <a class="menu-item py-1 " aria-current="page" href="Sejarah.html"><span>1.
+                                            Sejarah</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengertianPewarnaan.html"><span>2. Pengertian
+                                            Pewarnaan </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="TujuanPewarnaan.html">3. Tujuan Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="TipePewarnaan.html">4. Tipe Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="Desainteknik.html">5. Istilah Desain dan Teknik
+                                        Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1 active" href="AyoLakukanA.html">6. Ayo Lakukan
+                                        Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
+                            aria-controls="submenu-peralatan">
+                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="flex-grow-1 text-start">B. Teori Warna</span>
+                            <i class="bi bi-chevron-down small"></i>
+                            <a>
+                        </button>
+
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1 " href="PengetahuanWarna.html"><span>1. Pengetahuan
+                                            Warna</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KegunaanSegitiga.html"> <span>2. Kegunaan
+                                            Segitiga</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KoreksiWarna.html"> <span>3. Koreksi
+                                            Warna</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>4. Pengaruh
+                                            Modifikasi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>5. Warna Dingin
+                                            dan
+                                            Hanga</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="AyoLakukanB.html">6. Ayo Lakukan Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
+                            aria-controls="submenu-peralatan">
+                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="flex-grow-1 text-start">C. Pewarnaan Korektif</span>
+                            <i class="bi bi-chevron-down small"></i>
+                            <a>
+                        </button>
+
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1 " href="PewarnaanKorektif.html"><span>1. Pewarnaan
+                                            Korektif</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KesalahanDalamPewarnaan.html"> <span>2.
+                                            Kesalahan
+                                            Dalam Pewarnaan</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="AyoLakukanC.html">3. Ayo Lakukan Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </aside>
+
+                <!-- KONTEN KANAN -->
+                <section class="col-12 col-md-9 col-xl-10 content-col content-with-fixed order-2 order-md-0">
+                    <div class="content-scroll">
+                        <div class="card shadow-sm materi-card">
+                            <div class="card-header d-flex align-items-center gap-2">
+                                <i class="bi bi-lightbulb" style="color:var(--brand); font-size:1.25rem;"></i>
+                                <div class="d-flex flex-wrap align-items-baseline gap-2">
+                                    <h3 class="h5 mb-0 fw-bold">Pengetahuan Dasar Pewarnaan Rambut</h3>
+                                </div>
+                            </div>
+
+                            <div class="card-body scrollable flex-grow-1 min-vh-0" id="apersepsi-hair-coloring">
+                                <!-- ================== KONTEN ================== -->
+                                <section class="pengertian mb-3">
+
+                                    <!-- AYO LAKUKAN / LEMBAR KERJA -->
+                                    <section class="card shadow-sm mb-4" id="ayo-lakukan">
+                                        <div class="card-body">
+                                            <div
+                                                class="d-flex align-items-start justify-content-between flex-wrap gap-2">
+                                                <div>
+                                                    <h5 class="fw-bold mb-1">
+                                                        <i class="bi bi-journal-text"></i> Lembar Kerja Kelompok
+                                                    </h5>
+                                                    <p class="small text-muted mb-2">
+                                                        Isilah nama teknik (mis. <em>Balayage, Ombre, Highlight</em>)
+                                                        dan
+                                                        deskripsi/hasil pewarnaannya. Data dapat
+                                                        <strong>disimpan</strong> di perangkatmu.
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <button class="btn btn-brand btn-sm" id="al-save">
+                                                        <i class="bi bi-save"></i> Simpan
+                                                    </button>
+                                                    <button class="btn btn-outline-brand btn-sm" id="al-add">
+                                                        <i class="bi bi-plus-lg"></i> Tambah Baris
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary btn-sm" id="al-clear">
+                                                        <i class="bi bi-arrow-counterclockwise"></i> Refresh
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary btn-sm" id="al-print">
+                                                        <i class="bi bi-printer"></i> Cetak
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive mt-3">
+                                                <table class="table table-bordered align-middle text-center mb-0"
+                                                    id="al-table">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th style="width:38%">Teknik Pewarnaan</th>
+                                                            <th>Deskripsi / Hasil Pewarnaan</th>
+                                                            <th style="width:56px">Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="contoh: Balayage"></td>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="contoh: gradasi alami dari akar ke ujung">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-outline-secondary al-del"
+                                                                    title="Hapus">
+                                                                    <i class="bi bi-x-lg"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="contoh: Highlight"></td>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="contoh: mencerahkan sebagian helai">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-outline-secondary al-del"
+                                                                    title="Hapus">
+                                                                    <i class="bi bi-x-lg"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td contenteditable="true" data-placeholder="contoh: Ombre">
+                                                            </td>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="contoh: gelap → terang dari akar ke ujung">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-outline-secondary al-del"
+                                                                    title="Hapus">
+                                                                    <i class="bi bi-x-lg"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="alert alert-light border mt-2 mb-0">
+                                                <div class="d-flex align-items-start gap-2">
+                                                    <i class="bi bi-lightbulb" style="color:var(--brand)"></i>
+                                                    <div class="small">
+                                                        Ide teknik: <em>Bleaching, Toning, Balayage, Sombre, Ombre,
+                                                            Highlight, Lowlight, Money Piece, Splashlight</em>.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!-- Toast Simpan & Error (dipakai semua bagian) -->
+                                    <div class="position-fixed bottom-0 end-0 p-3" style="z-index:1080">
+                                        <div id="toastSave"
+                                            class="toast align-items-center text-bg-success border-0 mb-2" role="alert">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    <i class="bi bi-check2-circle me-1"></i> Tersimpan ke perangkat.
+                                                </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast"></button>
+                                            </div>
+                                        </div>
+                                        <div id="toastWarn" class="toast align-items-center text-bg-danger border-0"
+                                            role="alert">
+                                            <div class="d-flex">
+                                                <div class="toast-body">
+                                                    <i class="bi bi-exclamation-triangle me-1"></i>
+                                                    Tidak boleh ada kolom kosong!
+                                                </div>
+                                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                    data-bs-dismiss="toast"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Jelajah Internet -->
+                                    <section class="card shadow-sm mb-4">
+                                        <div class="card-body">
+                                            <h5 class="section-title">
+                                                <i class="bi bi-wifi"></i> Jelajah Internet
+                                            </h5>
+                                            <p>
+                                                Untuk lebih memahami mengenai teknik pewarnaan rambut, mari kita simak
+                                                video pembelajaran di bawah ini. Klik tombol atau scan QR code:
+                                            </p>
+
+                                            <div class="row justify-content-center text-center">
+                                                <div class="col-md-4 mb-3">
+                                                    <div class="fw-semibold mb-1">QR Code</div>
+                                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://www.youtube.com/watch?v=e6FnE0E8CWc"
+                                                        alt="QR Youtube" class="img-fluid mb-1 rounded shadow-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center mb-3">
+                                                <small class="text-muted">
+                                                    Sumber:
+                                                    <a href="https://youtube.com/watch?v=e6FnE0E8CWc" target="_blank">
+                                                        youtube.com/watch?v=e6FnE0E8CWc
+                                                    </a>
+                                                </small>
+                                            </div>
+
+                                            <hr>
+                                            <h6 class="fw-semibold mb-1">
+                                                <i class="bi bi-pencil-square"></i> Ringkasan setelah menonton video
+                                            </h6>
+                                            <p class="small text-muted mb-2">
+                                                Tuliskan isi video dengan bahasamu sendiri: poin penting teknik
+                                                pewarnaan, langkah-langkah, atau tips yang menurutmu penting.
+                                            </p>
+                                            <textarea id="ji-summary" class="form-control mb-2" rows="3"
+                                                placeholder="Tulis ringkasan video di sini..."></textarea>
+
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-brand btn-sm" id="ji-save">
+                                                    <i class="bi bi-save"></i> Simpan
+                                                </button>
+                                                <button class="btn btn-outline-secondary btn-sm" id="ji-refresh">
+                                                    <i class="bi bi-arrow-counterclockwise"></i> Refresh
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!-- Kolaborasi dan Komunikasi -->
+                                    <section class="card shadow-sm mb-4">
+                                        <div class="card-body">
+                                            <h5 class="section-title">
+                                                <i class="bi bi-people"></i> Kolaborasi dan Komunikasi
+                                            </h5>
+                                            <p>
+                                                Bentuk kelompok (3–5 orang) dan diskusikan topik tentang anatomi serta
+                                                fisiologi rambut. Gunakan pertanyaan di bawah ini sebagai panduan:
+                                            </p>
+                                            <ol>
+                                                <li>Apa saja yang ada pada struktur rambut?</li>
+                                                <li>Apa saja ciri-ciri dari rambut kering, normal, dan berminyak?</li>
+                                                <li>Bagaimana cara kerja dari pewarna rambut di batang rambut?</li>
+                                            </ol>
+
+                                            <p class="mt-3">
+                                                Tuliskan hasil diskusi kalian di tabel berikut, lalu tekan
+                                                <strong>Simpan</strong> agar tersimpan di perangkatmu.
+                                            </p>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered align-middle text-center"
+                                                    id="tbl-diskusi">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th style="width:25%">Pertanyaan</th>
+                                                            <th>Jawaban / Hasil Diskusi</th>
+                                                            <th style="width:60px">Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Struktur rambut</td>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="Isi jawaban di sini"></td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-outline-secondary del">
+                                                                    <i class="bi bi-x-lg"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Ciri-ciri rambut</td>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="Isi jawaban di sini"></td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-outline-secondary del">
+                                                                    <i class="bi bi-x-lg"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Cara kerja pewarna</td>
+                                                            <td contenteditable="true"
+                                                                data-placeholder="Isi jawaban di sini"></td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-outline-secondary del">
+                                                                    <i class="bi bi-x-lg"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                                <button class="btn btn-brand btn-sm" id="save-disc">
+                                                    <i class="bi bi-save"></i> Simpan
+                                                </button>
+                                                <button class="btn btn-outline-secondary btn-sm" id="clear-disc">
+                                                    <i class="bi bi-arrow-counterclockwise"></i> Refresh
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    <!-- Uji Kompetensi -->
+                                    <section class="card shadow-sm mb-4">
+                                        <div class="card-body">
+                                            <h5 class="section-title">
+                                                <i class="bi bi-journal-check"></i> Uji Kompetensi
+                                            </h5>
+                                            <p>Jawablah pertanyaan di bawah ini dengan benar!</p>
+
+                                            <ol id="quiz">
+                                                <li class="mb-3">
+                                                    Apa saja bahan alami yang digunakan untuk mewarnai rambut pada zaman
+                                                    dahulu?<br>
+                                                    <textarea class="form-control mt-1" rows="2"></textarea>
+                                                </li>
+                                                <li class="mb-3">
+                                                    Bedakan bahan pencuci rambut orang Yunani abad ke-4 SM dengan bangsa
+                                                    Romawi!<br>
+                                                    <textarea class="form-control mt-1" rows="2"></textarea>
+                                                </li>
+                                                <li class="mb-3">
+                                                    Jelaskan formula dari pewarna rambut wanita pada tahun 1694!<br>
+                                                    <textarea class="form-control mt-1" rows="2"></textarea>
+                                                </li>
+                                                <li class="mb-3">
+                                                    Apa saja pewarna rambut bangsa Tiongkok Kuno dan penduduk
+                                                    Amerika?<br>
+                                                    <textarea class="form-control mt-1" rows="2"></textarea>
+                                                </li>
+                                                <li class="mb-3">
+                                                    Apa saja jenis pewarna yang ditemukan oleh Eugene Schueller?<br>
+                                                    <textarea class="form-control mt-1" rows="2"></textarea>
+                                                </li>
+                                            </ol>
+
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-brand btn-sm" id="save-quiz">
+                                                    <i class="bi bi-save"></i> Simpan
+                                                </button>
+                                                <button class="btn btn-outline-secondary btn-sm" id="clear-quiz">
+                                                    <i class="bi bi-arrow-counterclockwise"></i> Refresh
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                </section>
+                                <!-- ================== /KONTEN ================== -->
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- CTA tetap di atas footer -->
+    <div class="sticky-cta">
+        <div class="container">
+            <div class="col-12 col-md-10 content-col content-with-fixed mx-auto">
+                <div class="d-flex justify-content-center align-items-center flex-wrap gap-2 w-100">
+                    <a class="btn btn-outline-secondary" href="Desainteknik.html">
+                        <i class="bi bi-arrow-left"></i> Sebelumnya
+                    </a>
+                    <a class="btn btn-brand" href="PengetahuanWarna.html">
+                        Berikutnya <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer fixed-bottom py-2">
+        <div class="container d-flex justify-content-between align-items-center small">
+            <span>SMKS ISFI BANJARMASIN • Hair Coloring</span>
+            <span class="text-muted">© 2025 • Single Application</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Ayo Lakukan (tabel teknik) -->
+    <script>
+        (() => {
+            const KEY = 'ayo-lakukan-v1';
+            const $ = (s, r = document) => r.querySelector(s);
+            const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+            const tBody = $('#al-table tbody');
+            const toastSave = new bootstrap.Toast($('#toastSave'), { delay: 1400 });
+            const toastWarn = new bootstrap.Toast($('#toastWarn'), { delay: 1800 });
+
+            const readTable = () =>
+                $$('tr', tBody).map(tr => {
+                    const tds = $$('td', tr);
+                    return { teknik: tds[0].innerText.trim(), deskripsi: tds[1].innerText.trim() };
+                });
+
+            const validateTable = () => {
+                let valid = true;
+                $$('tr', tBody).forEach(tr => {
+                    const [a, b] = $$('td', tr);
+                    if (!a.innerText.trim() || !b.innerText.trim()) valid = false;
+                });
+                return valid;
+            };
+
+            const writeTable = (rows = []) => {
+                tBody.innerHTML = '';
+                rows.forEach(r => addRow(r.teknik, r.deskripsi));
+                if (rows.length === 0) {
+                    addRow('', '');
+                    addRow('', '');
+                    addRow('', '');
+                }
+            };
+
+            const save = () => {
+                if (!validateTable()) { toastWarn.show(); return; }
+                localStorage.setItem(KEY, JSON.stringify(readTable()));
+                toastSave.show();
+            };
+
+            const load = () => {
+                try {
+                    const data = JSON.parse(localStorage.getItem(KEY) || '[]');
+                    if (Array.isArray(data)) writeTable(data);
+                } catch { }
+            };
+
+            function addRow(tek = '', desk = '') {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td contenteditable="true" data-placeholder="contoh: Balayage"></td>
+                    <td contenteditable="true" data-placeholder="contoh: gradasi alami dari akar ke ujung"></td>
+                    <td><button class="btn btn-sm btn-outline-secondary al-del" title="Hapus">
+                        <i class="bi bi-x-lg"></i></button></td>
+                `;
+                tBody.appendChild(tr);
+                const [c1, c2] = $$('td[contenteditable]', tr);
+                c1.textContent = tek; c2.textContent = desk;
+            }
+
+            $('#al-save').addEventListener('click', save);
+            $('#al-add').addEventListener('click', () => { addRow('', ''); });
+
+            tBody.addEventListener('click', e => {
+                if (e.target.closest('.al-del')) {
+                    e.target.closest('tr')?.remove();
+                    if ($$('tr', tBody).length === 0) addRow('', '');
+                }
+            });
+
+            $('#al-clear').addEventListener('click', () => {
+                if (confirm('Refresh akan menghapus semua isi tabel. Lanjutkan?')) {
+                    localStorage.removeItem(KEY);
+                    writeTable([]);
+                }
+            });
+
+            $('#al-print').addEventListener('click', () => window.print());
+
+            load();
+        })();
+    </script>
+
+    <!-- Jelajah Internet, Kolaborasi & Uji Kompetensi -->
+    <script>
+        (() => {
+            const toastSave = new bootstrap.Toast(document.getElementById('toastSave'), { delay: 1500 });
+            const toastWarn = new bootstrap.Toast(document.getElementById('toastWarn'), { delay: 1500 });
+
+            const tDiskusi = document.querySelector('#tbl-diskusi tbody');
+            const keyDisc = 'pewarnaan-diskusi-v1',
+                keyQuiz = 'pewarnaan-quiz-v1',
+                keyJelajah = 'pewarnaan-jelajah-v1';
+
+            /* ==== Jelajah Internet (ringkasan video) ==== */
+            function loadJelajah() {
+                const area = document.getElementById('ji-summary');
+                if (!area) return;
+                try {
+                    const saved = localStorage.getItem(keyJelajah) || '';
+                    area.value = saved;
+                } catch { }
+            }
+
+            const jiArea = document.getElementById('ji-summary');
+            const btnJiSave = document.getElementById('ji-save');
+            const btnJiRefresh = document.getElementById('ji-refresh');
+
+            if (jiArea && btnJiSave && btnJiRefresh) {
+                btnJiSave.onclick = () => {
+                    if (!jiArea.value.trim()) {
+                        toastWarn.show();
+                        return;
+                    }
+                    localStorage.setItem(keyJelajah, jiArea.value.trim());
+                    toastSave.show();
+                };
+
+                btnJiRefresh.onclick = () => {
+                    localStorage.removeItem(keyJelajah);
+                    jiArea.value = '';
+                };
+            }
+
+            /* ==== Kolaborasi & Komunikasi (tabel diskusi) ==== */
+            function getDiskusi() {
+                return Array.from(tDiskusi.rows).map(r => ({
+                    q: r.cells[0].innerText.trim(),
+                    a: r.cells[1].innerText.trim()
+                }));
+            }
+
+            function setDiskusi(d) {
+                localStorage.setItem(keyDisc, JSON.stringify(d));
+            }
+
+            function loadDiskusi() {
+                try {
+                    let d = JSON.parse(localStorage.getItem(keyDisc) || '[]');
+                    if (d.length) d.forEach((v, i) => {
+                        if (tDiskusi.rows[i]) tDiskusi.rows[i].cells[1].innerText = v.a;
+                    });
+                } catch { }
+            }
+
+            function validateDiskusi() {
+                return Array.from(tDiskusi.rows).every(r => r.cells[1].innerText.trim() !== '');
+            }
+
+            document.getElementById('save-disc').onclick = () => {
+                if (!validateDiskusi()) { toastWarn.show(); return; }
+                setDiskusi(getDiskusi());
+                toastSave.show();
+            };
+
+            document.getElementById('clear-disc').onclick = () => {
+                if (!confirm('Refresh akan menghapus semua jawaban diskusi. Lanjutkan?')) return;
+                localStorage.removeItem(keyDisc);
+                Array.from(tDiskusi.rows).forEach(r => r.cells[1].innerText = '');
+            };
+
+            tDiskusi.addEventListener('click', e => {
+                if (e.target.closest('.del')) {
+                    e.target.closest('tr').remove();
+                }
+            });
+
+            /* ==== Uji Kompetensi (textarea) ==== */
+            const tQuiz = document.querySelectorAll('#quiz textarea');
+
+            function getQuiz() {
+                return Array.from(tQuiz).map(t => t.value.trim());
+            }
+
+            function setQuiz(d) {
+                localStorage.setItem(keyQuiz, JSON.stringify(d));
+            }
+
+            function loadQuiz() {
+                try {
+                    let d = JSON.parse(localStorage.getItem(keyQuiz) || '[]');
+                    d.forEach((v, i) => { if (tQuiz[i]) tQuiz[i].value = v; });
+                } catch { }
+            }
+
+            function validateQuiz() {
+                return Array.from(tQuiz).every(t => t.value.trim() !== '');
+            }
+
+            document.getElementById('save-quiz').onclick = () => {
+                if (!validateQuiz()) { toastWarn.show(); return; }
+                setQuiz(getQuiz());
+                toastSave.show();
+            };
+
+            document.getElementById('clear-quiz').onclick = () => {
+                if (!confirm('Refresh akan menghapus semua jawaban uji kompetensi. Lanjutkan?')) return;
+                localStorage.removeItem(keyQuiz);
+                tQuiz.forEach(t => t.value = '');
+            };
+
+            /* Load data tersimpan */
+            loadDiskusi();
+            loadQuiz();
+            loadJelajah();
+        })();
+    </script>
+
+</body>
+
+</html>

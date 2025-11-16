@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Beranda • Pewarnaan Rambut</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Opsional: tetap boleh pakai file eksternal -->
+  <link href="css/style.css" rel="stylesheet" />
+  <style>
+    /* === Pink–Gray–White Theme (Hair Coloring) === */
+    :root {
+      --brand: #ff3f8e;
+      /* pink */
+      --brand-strong: #db2777;
+      /* deeper pink */
+      --ink: #111827;
+      /* gray-900 */
+      --muted: #6b7280;
+      /* gray-500 */
+      --line: #e5e7eb;
+      /* gray-200 */
+      --soft: #f9fafb;
+      /* gray-50 */
+      --nav-h: 64px;
+      /* real navbar height */
+      --foot-h: 48px;
+      /* real footer height */
+      --radius: 18px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--soft);
+      color: var(--ink);
+    }
+
+    a {
+      text-decoration: none
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: #fff !important;
+      border-bottom: 1px solid var(--line);
+      height: var(--nav-h);
+    }
+
+    .navbar .nav-link {
+      color: var(--ink) !important
+    }
+
+    .navbar .nav-link.active,
+    .navbar .nav-link:hover {
+      color: var(--brand) !important
+    }
+
+    .navbar-brand span {
+      color: #f472b6 !important
+    }
+
+
+    /* MAIN spacing accounts for fixed nav + fixed footer */
+    main {
+      padding-top: calc(var(--nav-h) + 28px);
+      padding-bottom: calc(var(--foot-h) + 28px);
+    }
+
+    .container-limit {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    /* HERO */
+    .hero-title {
+      letter-spacing: .4px;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+    }
+
+    /* CARDS */
+    .card {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .card-img-top {
+      aspect-ratio: 16/10;
+      object-fit: cover;
+    }
+
+    /* BUTTONS */
+    .btn-brand {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-brand:hover {
+      filter: brightness(.95);
+      color: #fff;
+    }
+
+    .btn-outline-brand {
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+
+    .btn-outline-brand:hover {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      height: var(--foot-h);
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+        <i class="bi bi-brush" style="font-size:1.25rem; color:var(--brand)"></i>
+        <strong>Pewarnaan Rambut</strong> <span class="fw-normal">• Single Application</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navs"
+        aria-label="Buka menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navs">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active fw-semibold" style="color:var(--brand)"
+              href="index.html">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="materi/PengertianPewarnaan.html">Materi</a></li>
+          <li class="nav-item"><a class="nav-link" href="latihan.html">Latihan</a></li>
+          <li class="nav-item"><a class="nav-link" href="kd.html">Tujuan Pembelajaran</a></li>
+          <li class="nav-item"><a class="nav-link" href="peta.html">Peta Konsep</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <section class="py-1 text-center">
+        <h2 class="fw-bold hero-title">PEWARNAAN RAMBUT</h2>
+        <p class="hero-sub mb-5">Single Application • Kelas XI</p>
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img class="card-img-top"
+                src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop"
+                alt="Materi" />
+              <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-brush me-1" style="color:var(--brand)"></i> Materi</h5>
+                <p class="card-text text-muted">Teori dasar, jenis pewarna, peralatan, & K3.</p>
+                <a class="btn btn-brand" href="materi/PengetahuanDasarRambut.html">Buka Materi</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img class="card-img-top"
+                src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=1600&auto=format&fit=crop"
+                alt="Latihan" />
+              <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-ui-checks me-1" style="color:var(--brand)"></i> Latihan &
+                  Evaluasi</h5>
+                <p class="card-text text-muted">Kuis pilihan ganda sederhana.</p>
+                <a class="btn btn-outline-brand" href="latihan.html">Mulai Latihan</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+              <img class="card-img-top"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1600&auto=format&fit=crop"
+                alt="KD & Peta" />
+              <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-diagram-3 me-1" style="color:var(--brand)"></i> Kompetensi & Peta
+                  Konsep</h5>
+                <p class="card-text text-muted">Tujuan pembelajaran & gambaran materi.</p>
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                  <a class="btn btn-outline-secondary" href="kd.html">Lihat KD</a>
+                  <a class="btn btn-outline-secondary" href="peta.html">Peta Konsep</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer fixed-bottom py-2">
+    <div class="container d-flex justify-content-between align-items-center small" style="height:100%">
+      <span>SMKS ISFI BANJARMASIN • Hair Coloring</span>
+      <span class="text-muted">© 2025 • Single Application</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

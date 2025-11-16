@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Latihan • Pewarnaan Rambut</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    /* === Pink–Gray–White Theme (Hair Coloring) === */
+    :root {
+      --brand: #ff3f8e;
+      /* pink */
+      --brand-strong: #db2777;
+      /* deeper pink */
+      --ink: #111827;
+      /* gray-900 */
+      --muted: #6b7280;
+      /* gray-500 */
+      --line: #e5e7eb;
+      /* gray-200 */
+      --soft: #f9fafb;
+      /* gray-50 */
+      --nav-h: 64px;
+      /* real navbar height */
+      --foot-h: 48px;
+      /* real footer height */
+      --radius: 18px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--soft);
+      color: var(--ink);
+    }
+
+    a {
+      text-decoration: none
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: #fff !important;
+      border-bottom: 1px solid var(--line);
+      height: var(--nav-h);
+    }
+
+    .navbar .nav-link {
+      color: var(--ink) !important
+    }
+
+    .navbar .nav-link.active,
+    .navbar .nav-link:hover {
+      color: var(--brand) !important
+    }
+
+    .navbar-brand span {
+      color: #f472b6 !important
+    }
+
+
+    /* MAIN spacing accounts for fixed nav + fixed footer */
+    main {
+      padding-top: calc(var(--nav-h) + 28px);
+      padding-bottom: calc(var(--foot-h) + 28px);
+    }
+
+    /* CARDS */
+    .card {
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .card-body {
+      background: #fff;
+      padding: 1.75rem;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow);
+    }
+
+    /* QUIZ UI */
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .5rem;
+    }
+
+    .num {
+      border: 1px solid #dee2e6;
+      border-radius: .6rem;
+      padding: .5rem 0;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .num--white {
+      background: #fff;
+      color: #212529;
+    }
+
+    .num--orange {
+      background: #ffc107;
+      color: #212529;
+    }
+
+    .num--green {
+      background: #198754;
+      color: #fff;
+    }
+
+    .option {
+      border: 1px solid #e5e7eb;
+      border-radius: .75rem;
+      padding: .75rem 1rem;
+      width: 100%;
+      text-align: left;
+      transition: box-shadow .15s, border-color .15s;
+    }
+
+    .option:hover {
+      border-color: var(--brand);
+    }
+
+    .option.active {
+      border-color: #198754;
+      box-shadow: 0 0 0 .2rem rgba(25, 135, 84, .25);
+    }
+
+    .badge-soft {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    @media (max-width: 576px) {
+      .number-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+        <i class="bi bi-brush" style="font-size:1.25rem; color:var(--brand)"></i>
+        <strong>Pewarnaan Rambut</strong> <span class="fw-normal">• Single Application</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navs"
+        aria-label="Buka menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navs">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="materi/teori.html">Materi</a></li>
+          <li class="nav-item"><a class="nav-link active fw-semibold" style="color:var(--brand)"
+              href="latihan.html">Latihan</a></li>
+          <li class="nav-item"><a class="nav-link" href="kd.html">Tujuan Pembelajaran</a></li>
+          <li class="nav-item"><a class="nav-link" href="peta.html">Peta Konsep</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="row g-4">
+        <!-- Kiri: Soal -->
+        <div class="col-lg-8">
+          <div class="card shadow-sm" id="leftCard">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge badge-soft" id="position">Soal 1/25</span>
+                  <span class="badge text-bg-secondary" id="timer" aria-live="polite">60:00</span>
+                </div>
+                <small class="text-muted" id="progress">0/25 terjawab</small>
+              </div>
+              <h5 id="question" class="mb-3"></h5>
+              <div id="choices" class="vstack gap-2" role="group" aria-label="Pilihan jawaban"></div>
+              <div class="d-flex justify-content-between mt-4 flex-wrap gap-2">
+                <div class="d-flex gap-2">
+                  <a href="index.html" class="btn btn-outline-secondary btn-sm"><i class="bi bi-house"></i> Halaman
+                    Awal</a>
+                  <button id="prevBtn" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i>
+                    Sebelumnya</button>
+                </div>
+                <div class="d-flex gap-2">
+                  <button id="resetBtn" class="btn btn-outline-danger btn-sm">Reset Progres</button>
+                  <button id="finishBtn" class="btn btn-success" disabled>Selesai & Lihat Skor</button>
+                  <button id="nextBtn" class="btn btn-primary">Selanjutnya <i class="bi bi-arrow-right"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Kanan: Nomor Soal -->
+        <div class="col-lg-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h6 class="mb-3 d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-grid-3x3-gap me-1" style="color:var(--brand)"></i>Nomor Soal</span>
+                <span class="small text-muted"><span id="totalLabel">25</span> Soal</span>
+              </h6>
+              <div class="number-grid" id="numberGrid"></div>
+              <hr />
+              <div class="small">
+                <span class="badge bg-light text-dark me-2">Putih: belum</span>
+                <span class="badge bg-warning text-dark me-2">Oranye: sedang</span>
+                <span class="badge bg-success">Hijau: sudah</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer fixed-bottom py-2"
+    style="background:#fff; border-top:1px solid var(--line); height:var(--foot-h);">
+    <div class="container d-flex justify-content-between align-items-center small" style="height:100%">
+      <span>SMKS ISFI BANJARMASIN • Hair Coloring</span>
+      <span class="text-muted">© 2025 • Single Application</span>
+    </div>
+  </footer>
+
+  <script>
+    // ====== Konfigurasi ======
+    const SHOW_COUNT = 25;                 // jumlah soal ditampilkan
+    const DURATION_MS = 60 * 60 * 1000;    // 60 menit
+
+    // ====== Pool Soal (50). Tambahkan/ubah sesuai kebutuhan ======
+    const pool = [
+      { q: 'Teknik single application berarti…', c: ['Perubahan warna dalam satu kali tindakan', 'Pewarnaan 3 sesi', 'Retouch akar saja', 'Mewarnai ujung'], a: 0 },
+      { q: 'Pewarna semipermanen…', c: ['Mengandung amonia & mencerahkan warna', 'Tanpa amonia/peroksida; bertahan 6–8 keramas', 'Selalu hilang sekali bilas', 'Hanya berbentuk krim'], a: 1 },
+      { q: 'Alat yang TIDAK boleh dari logam saat mencampur cat adalah…', c: ['Mangkuk', 'Sisir bagi', 'Jepit bebek plastik', 'Handuk'], a: 0 },
+      { q: 'Uji alergi (patch test) idealnya dilakukan…', c: ['Segera sebelum aplikasi', '24–48 jam sebelum pewarnaan', 'Sesudah dibilas', 'Saat pengeringan'], a: 1 },
+      { q: 'Fungsi developer/peroksida pada pewarnaan permanen adalah…', c: ['Melembapkan rambut', 'Mengoksidasi pigmen pewarna', 'Memberi aroma', 'Menutup kutikula'], a: 1 },
+      { q: 'Level ketinggian warna menggambarkan…', c: ['Nada hangat/dingin', 'Kecerahan/gelapnya warna', 'Jenis pigmen buatan', 'Porositas rambut'], a: 1 },
+      { q: 'Rasio campur umum krim warna : developer (cek label produk) biasanya…', c: ['1:1', '1:2', '2:1', '1:3'], a: 0 },
+      { q: 'Retouch akar untuk pewarnaan permanen umumnya diaplikasikan…', c: ['Ke seluruh batang hingga ujung', 'Hanya di kulit kepala', 'Pada bagian rambut yang tumbuh baru', 'Hanya pada ujung'], a: 2 },
+      { q: 'Tindakan pertama saat warna terlalu gelap setelah aplikasi adalah…', c: ['Cuci dengan clarifying shampoo', 'Tambah developer', 'Ulangi aplikasi warna gelap', 'Gunakan catok'], a: 0 },
+      { q: 'Rambut sangat berpori cenderung…', c: ['Menyerap warna lebih cepat', 'Menolak warna', 'Tidak perlu waktu proses', 'Membutuhkan suhu sangat tinggi'], a: 0 },
+      { q: 'Saat pewarnaan, kulit kepala terasa panas/sangat gatal. Tindakan paling aman…', c: ['Teruskan karena normal', 'Tunda dan bilas segera', 'Tambah developer', 'Tambahkan panas'], a: 1 },
+      { q: 'Tujuan sectioning (membagi rambut) adalah…', c: ['Mempercepat pengeringan', 'Mendapatkan distribusi warna merata', 'Menghemat produk', 'Menaikkan level warna'], a: 1 },
+      { q: 'Arah aplikasi untuk pewarnaan pertama kali pada rambut virgin biasanya…', c: ['Akar dulu karena lebih gelap', 'Batang dulu, akar terakhir', 'Ujung dulu agar rata', 'Acak sesuai kebutuhan'], a: 1 },
+      { q: 'Waktu proses dihitung sejak…', c: ['Produk dikeluarkan dari tube', 'Aplikasi selesai pada seluruh kepala', 'Developer dituang', 'Aplikasi dimulai pada bagian pertama'], a: 3 },
+      { q: 'Pigmen dasar rambut gelap (level 1–3) cenderung menghasilkan sisa nada…', c: ['Kuning pucat', 'Oranye/merah', 'Hijau', 'Violet'], a: 1 },
+      { q: 'Fungsi toner setelah bleaching adalah…', c: ['Menutup kutikula permanen', 'Menetralisir/menyesuaikan nada', 'Menambah porositas', 'Menghilangkan semua pigmen'], a: 1 },
+      { q: 'Produk yang membantu melindungi kulit di garis rambut saat pewarnaan…', c: ['Barrier cream', 'Hair spray', 'Serum silikon', 'Gel gula'], a: 0 },
+      { q: 'Indikator developer 20 Vol (6%) utamanya untuk…', c: ['Mengangkat 1–2 level & menutup uban', 'Bleaching ekstrim', 'Hanya deposit warna tanpa lift', 'Perawatan setelah warna'], a: 0 },
+      { q: 'Pewarna demi-permanen biasanya…', c: ['Masuk ke korteks lebih dalam', 'Tanpa amonia, dengan developer rendah', 'Melekat hanya di permukaan tanpa oksidasi', 'Tidak mengandung pigmen'], a: 1 },
+      { q: 'Sebelum aplikasi, rambut sebaiknya…', c: ['Kering & tidak berminyak sama sekali', 'Dalam keadaan kering/natural; tidak perlu keramas hari itu', 'Selalu basah kuyup', 'Disisir saat produk menempel'], a: 1 },
+      { q: 'Cross-contamination dapat dicegah dengan…', c: ['Menggunakan sarung tangan & alat terpisah', 'Mencampur semua warna sekaligus', 'Menggunakan sisir logam', 'Meletekkan mangkuk di kulit'], a: 0 },
+      { q: 'Untuk menetralkan nada oranye, pilih toner/nada…', c: ['Biru', 'Kuning', 'Merah', 'Hijau'], a: 0 },
+      { q: 'Tanda over-processing antara lain…', c: ['Rambut terasa kering/rapuh', 'Warna terlalu dingin', 'Kulit kepala lembab', 'Rambut semakin lemas & sehat'], a: 0 },
+      { q: 'Saat meratakan warna dari pertengahan hingga ujung, teknik yang sering dipakai…', c: ['Feathering/drag through', 'Backcombing kuat', 'Teasing penuh', 'Twist ketat'], a: 0 },
+      { q: 'Setelah selesai, bilasan yang disarankan…', c: ['Air panas sekali', 'Air hangat lalu kondisioner', 'Tidak perlu kondisioner', 'Shampoo anti-ketombe kuat'], a: 1 },
+      // Placeholder 26-50
+      { q: '[Placeholder] Pengetahuan pewarnaan 26', c: ['A', 'B', 'C', 'D'], a: 0 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 27', c: ['A', 'B', 'C', 'D'], a: 1 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 28', c: ['A', 'B', 'C', 'D'], a: 2 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 29', c: ['A', 'B', 'C', 'D'], a: 3 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 30', c: ['A', 'B', 'C', 'D'], a: 0 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 31', c: ['A', 'B', 'C', 'D'], a: 1 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 32', c: ['A', 'B', 'C', 'D'], a: 2 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 33', c: ['A', 'B', 'C', 'D'], a: 3 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 34', c: ['A', 'B', 'C', 'D'], a: 0 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 35', c: ['A', 'B', 'C', 'D'], a: 1 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 36', c: ['A', 'B', 'C', 'D'], a: 2 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 37', c: ['A', 'B', 'C', 'D'], a: 3 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 38', c: ['A', 'B', 'C', 'D'], a: 0 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 39', c: ['A', 'B', 'C', 'D'], a: 1 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 40', c: ['A', 'B', 'C', 'D'], a: 2 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 41', c: ['A', 'B', 'C', 'D'], a: 3 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 42', c: ['A', 'B', 'C', 'D'], a: 0 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 43', c: ['A', 'B', 'C', 'D'], a: 1 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 44', c: ['A', 'B', 'C', 'D'], a: 2 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 45', c: ['A', 'B', 'C', 'D'], a: 3 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 46', c: ['A', 'B', 'C', 'D'], a: 0 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 47', c: ['A', 'B', 'C', 'D'], a: 1 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 48', c: ['A', 'B', 'C', 'D'], a: 2 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 49', c: ['A', 'B', 'C', 'D'], a: 3 },
+      { q: '[Placeholder] Pengetahuan pewarnaan 50', c: ['A', 'B', 'C', 'D'], a: 0 },
+    ];
+
+    // ====== Keys localStorage ======
+    const KEY_PREFIX = 'single_app_quiz_v2';
+    const KEY_INDICES = KEY_PREFIX + '_indices';
+    const KEY_ANS = KEY_PREFIX + '_answers';
+    const KEY_CUR = KEY_PREFIX + '_current';
+    const KEY_END = KEY_PREFIX + '_endtime';
+    const KEY_DONE = KEY_PREFIX + '_done';
+    const KEY_SCORE = KEY_PREFIX + '_score';
+    const KEY_COOL = KEY_PREFIX + '_cooldown';
+
+    // ====== Util ======
+    function shufflePick(n, k) {
+      const arr = Array.from({ length: n }, (_, i) => i);
+      for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[arr[i], arr[j]] = [arr[j], arr[i]]; }
+      return arr.slice(0, k);
+    }
+    function $(id) { return document.getElementById(id) }
+    function pad(n) { return String(n).padStart(2, '0') }
+
+    // ====== Bootstrap State ======
+    let indices = JSON.parse(localStorage.getItem(KEY_INDICES) || 'null');
+    if (!indices || indices.length !== SHOW_COUNT) {
+      indices = shufflePick(pool.length, SHOW_COUNT);
+      localStorage.setItem(KEY_INDICES, JSON.stringify(indices));
+      localStorage.removeItem(KEY_ANS);
+      localStorage.removeItem(KEY_DONE);
+      localStorage.removeItem(KEY_SCORE);
+      localStorage.removeItem(KEY_END);
+      localStorage.removeItem(KEY_COOL);
+      localStorage.setItem(KEY_CUR, '0');
+    }
+
+    let answers = JSON.parse(localStorage.getItem(KEY_ANS) || '[]');
+    if (answers.length !== SHOW_COUNT) answers = Array(SHOW_COUNT).fill(null);
+
+    let current = Number(localStorage.getItem(KEY_CUR) || 0);
+
+    // Timer
+    let endTime = Number(localStorage.getItem(KEY_END) || 0);
+    if (!endTime) { endTime = Date.now() + DURATION_MS; localStorage.setItem(KEY_END, String(endTime)); }
+
+    let done = localStorage.getItem(KEY_DONE) === '1';
+
+    // ====== Elements ======
+    const questionEl = $('question');
+    const choicesEl = $('choices');
+    const gridEl = $('numberGrid');
+    const posEl = $('position');
+    const progEl = $('progress');
+    const timerEl = $('timer');
+    const totalLabel = $('totalLabel');
+    totalLabel.textContent = SHOW_COUNT;
+
+    function save() {
+      localStorage.setItem(KEY_ANS, JSON.stringify(answers));
+      localStorage.setItem(KEY_CUR, String(current));
+    }
+
+    function countAnswered() { return answers.filter(v => v !== null).length }
+    function itemAt(idx) { return pool[indices[idx]]; }
+
+    function renderQuestion() {
+      const item = itemAt(current);
+      posEl.textContent = `Soal ${current + 1}/${SHOW_COUNT}`;
+      progEl.textContent = `${countAnswered()}/${SHOW_COUNT} terjawab`;
+      questionEl.textContent = item.q;
+      choicesEl.innerHTML = '';
+      item.c.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option btn btn-light';
+        btn.type = 'button';
+        btn.setAttribute('aria-pressed', answers[current] === idx ? 'true' : 'false');
+        btn.innerHTML = `<div class="d-flex align-items-center gap-2"><span class="badge text-bg-light">${String.fromCharCode(65 + idx)}</span><span>${opt}</span></div>`;
+        if (answers[current] === idx) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          if (done) return;
+          answers[current] = idx;
+          save();
+          renderQuestion();
+          renderNumbers();
+          updateFinishEnabled();
+          updateNavButtons();
+        });
+        choicesEl.appendChild(btn);
+      });
+      renderNumbers();
+      updateFinishEnabled();
+      updateNavButtons();
+    }
+
+    function classForNum(i) {
+      if (i === current && answers[i] !== null) return 'num num--orange';
+      if (answers[i] !== null) return 'num num--green';
+      if (i === current) return 'num num--orange';
+      return 'num num--white';
+    }
+
+    function renderNumbers() {
+      gridEl.innerHTML = '';
+      for (let i = 0; i < SHOW_COUNT; i++) {
+        const el = document.createElement('button');
+        el.type = 'button';
+        el.className = classForNum(i);
+        el.textContent = i + 1;
+        el.addEventListener('click', () => { if (done) return; current = i; save(); renderQuestion(); });
+        gridEl.appendChild(el);
+      }
+    }
+
+    // Navigasi
+    $('prevBtn').addEventListener('click', () => { if (done) return; current = (current - 1 + SHOW_COUNT) % SHOW_COUNT; save(); renderQuestion(); });
+    $('nextBtn').addEventListener('click', () => { if (done) return; if (current < SHOW_COUNT - 1) { current++; save(); renderQuestion(); } });
+
+    function updateNavButtons() {
+      const nextBtn = $('nextBtn');
+      nextBtn.disabled = done || current >= SHOW_COUNT - 1; // Matikan jika di nomor terakhir
+    }
+
+    $('resetBtn').addEventListener('click', () => {
+      if (!confirm('Mulai ulang dengan set soal baru? Progres & timer akan dihapus.')) return;
+      localStorage.removeItem(KEY_INDICES);
+      localStorage.removeItem(KEY_ANS);
+      localStorage.removeItem(KEY_CUR);
+      localStorage.removeItem(KEY_END);
+      localStorage.removeItem(KEY_DONE);
+      localStorage.removeItem(KEY_SCORE);
+      localStorage.removeItem(KEY_COOL);
+      location.reload();
+    });
+
+    function updateFinishEnabled() { $('finishBtn').disabled = countAnswered() < SHOW_COUNT || done; }
+
+    // ====== Penilaian ======
+    function computeScore() {
+      let correct = 0; for (let i = 0; i < SHOW_COUNT; i++) { const it = itemAt(i); if (answers[i] === it.a) correct++; }
+      return { correct, total: SHOW_COUNT, percent: Math.round((correct / SHOW_COUNT) * 100) };
+    }
+
+    function showResult(reason) {
+      const { correct, total, percent } = computeScore();
+      localStorage.setItem(KEY_SCORE, JSON.stringify({ correct, total, percent, reason, at: Date.now() }));
+      localStorage.setItem(KEY_DONE, '1');
+      done = true;
+
+      // cooldown 5 menit: gunakan yang ada jika tersedia
+      const existing = Number(localStorage.getItem(KEY_COOL) || 0);
+      const coolEnd = existing > Date.now() ? existing : (Date.now() + 5 * 60 * 1000);
+      localStorage.setItem(KEY_COOL, String(coolEnd));
+
+      const html = `
+        <div class="p-3">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge text-bg-secondary">${reason === 'time' ? 'Waktu Habis' : 'Selesai'}</span>
+            <span class="badge text-bg-light">${new Date().toLocaleString()}</span>
+          </div>
+          <h4 class="mb-1">Skor: ${correct}/${total} • ${percent}%</h4>
+          <p class="text-muted">Anda dapat mencoba lagi setelah masa tunggu 5 menit.</p>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <button id="printBtn" class="btn btn-outline-primary"><i class="bi bi-printer"></i> Cetak</button>
+            <button id="retryBtn" class="btn btn-success" disabled>Mulai Ulang (<span id="retryTimer">05:00</span>)</button>
+            <a href="index.html" class="btn btn-outline-secondary"><i class="bi bi-house"></i> Halaman Awal</a>
+          </div>
+        </div>`;
+      const card = document.getElementById('leftCard');
+      card.innerHTML = `<div class="card-body">${html}</div>`;
+
+      document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+      // Countdown tombol ulang
+      function tickRetry() {
+        const end = Number(localStorage.getItem(KEY_COOL) || coolEnd);
+        const remain = Math.max(0, end - Date.now());
+        const s = Math.floor(remain / 1000); const mm = Math.floor(s / 60), ss = s % 60;
+        document.getElementById('retryTimer').textContent = `${pad(mm)}:${pad(ss)}`;
+        const btn = document.getElementById('retryBtn');
+        if (remain <= 0) { btn.disabled = false; clearInterval(iv); btn.textContent = 'Mulai Ulang'; }
+      }
+      const iv = setInterval(tickRetry, 1000); tickRetry();
+
+      document.getElementById('retryBtn').addEventListener('click', function () {
+        if (this.disabled) return;
+        // reset penuh untuk set baru & timer
+        localStorage.removeItem(KEY_INDICES);
+        localStorage.removeItem(KEY_ANS);
+        localStorage.removeItem(KEY_CUR);
+        localStorage.removeItem(KEY_END);
+        localStorage.removeItem(KEY_DONE);
+        localStorage.removeItem(KEY_SCORE);
+        localStorage.removeItem(KEY_COOL);
+        location.reload();
+      });
+    }
+
+    $('finishBtn').addEventListener('click', () => { if (countAnswered() >= SHOW_COUNT && !done) showResult('manual'); });
+
+    // ====== Timer ======
+    function tick() {
+      const remain = Math.max(0, endTime - Date.now());
+      const s = Math.floor(remain / 1000);
+      const mm = Math.floor(s / 60); const ss = s % 60;
+      timerEl.textContent = `${pad(mm)}:${pad(ss)}`;
+      if (remain <= 0) { clearInterval(ticking); if (!done) showResult('time'); }
+    }
+    const ticking = setInterval(tick, 1000); tick();
+
+    // Jika sudah selesai saat load, render hasil & lanjutkan cooldown yang ada
+    if (done && localStorage.getItem(KEY_SCORE)) {
+      const data = JSON.parse(localStorage.getItem(KEY_SCORE));
+      showResult(data.reason || 'manual');
+    }
+
+    // Init tampilan soal (kalau belum selesai)
+    if (!done) renderQuestion();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
