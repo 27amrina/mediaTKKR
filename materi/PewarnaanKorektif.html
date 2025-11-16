@@ -128,6 +128,12 @@
         }
 
         @media (max-width: 767.98px) {
+
+            /* HP: tidak perlu padding bawah besar karena footer tidak fixed */
+            body {
+                padding-bottom: 0;
+            }
+
             main.app-shell {
                 height: auto;
                 overflow: visible;
@@ -156,9 +162,15 @@
                 overflow: visible;
             }
 
+            /* tombol ikut alur di bawah konten */
             .sticky-cta {
                 position: static;
-                margin-top: .5rem;
+                margin-top: .75rem;
+            }
+
+            /* footer juga ikut alur (tidak fixed) saat HP */
+            .footer {
+                position: static !important;
             }
         }
 
@@ -246,11 +258,25 @@
             display: block;
         }
 
+        .figure {
+            text-align: center;
+            /* caption & gambar di tengah */
+        }
+
         .figure img {
-            max-width: 100%;
+            display: block;
+            width: 100%;
+            /* responsif */
+            max-width: 260px;
+            /* batas lebar di layar besar */
+            height: auto;
+            /* proporsi asli, tidak gepeng */
+            margin: 0 auto;
+            /* benar-benar di tengah */
             border-radius: 12px;
             border: 1px solid #e5e7eb;
         }
+
 
         #hasilDiskusi,
         #ringkasanVideo {
@@ -382,7 +408,7 @@
                         <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
                             data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
                             aria-controls="submenu-peralatan">
-                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="me-2"><i class="bi bi-palette"></i></span>
                             <span class="flex-grow-1 text-start">B. Teori Warna</span>
                             <i class="bi bi-chevron-down small"></i>
                             <a>
@@ -430,8 +456,8 @@
                         <div class="menu-item active">
 
                             <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent"
-                                type="button" data-bs-toggle="collapse" data-bs-target="#submenu-peralatan"
-                                aria-expanded="true" aria-controls="submenu-peralatan">
+                                type="button" data-bs-toggle="collapse" data-bs-target="#submenu-Pewarnaan"
+                                aria-expanded="true" aria-controls="submenu-Pewarnaan">
                                 <span class="me-2"><i class="bi bi-scissors"></i></span>
                                 <span class="flex-grow-1 text-start">C. Pewarnaan Korektif</span>
                                 <i class="bi bi-chevron-down small"></i>
@@ -440,7 +466,7 @@
                         </div>
 
                         <!-- SUBMENU TERBUKA -->
-                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                        <div class="collapse show" id="submenu-Pewarnaan"> <!-- penting -->
                             <ul class="nav flex-column ps-4 my-1">
                                 <li>
                                     <a class="menu-item py-1 active" href="PewarnaanKorektif.html"><span>1. Pewarnaan
@@ -509,7 +535,7 @@
                                                             memiliki
                                                             warna yang tidak merata setelah pewarnaan sebelumnya.
                                                             <figure class="figure mt-2">
-                                                                <img src="../img/perubahan-warna-tidak-diinginkan.jpg"
+                                                                <img src="../img/1,14.png"
                                                                     alt="Perubahan warna rambut yang tidak diinginkan"
                                                                     class="figure-img img-fluid">
                                                                 <figcaption class="figure-caption small">
@@ -538,7 +564,7 @@
                                                             dapat
                                                             dilakukan untuk menciptakan keseragaman warna.
                                                             <figure class="figure mt-2">
-                                                                <img src="../img/menyamakan-warna.jpg"
+                                                                <img src="../img/1,15.png"
                                                                     alt="Rambut dengan warna tidak sama akibat pewarnaan"
                                                                     class="figure-img img-fluid">
                                                                 <figcaption class="figure-caption small">
@@ -586,7 +612,7 @@
                                                             dapat dilakukan untuk memperbaiki tampilan sekaligus menjaga
                                                             kesehatan rambut.
                                                             <figure class="figure mt-2">
-                                                                <img src="../img/koreksi-warna.jpg"
+                                                                <img src="../img/1,16.png"
                                                                     alt="Proses koreksi warna rambut"
                                                                     class="figure-img img-fluid">
                                                                 <figcaption class="figure-caption small">
@@ -692,500 +718,8 @@
                                     </div>
                                 </section>
 
-                                <!-- KESALAHAN & SOLUSI (KARTU INTERAKTIF) -->
-                                <section class="mb-4">
-                                    <div class="card shadow-sm mb-4">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-2">Kesalahan Umum & Cara Mengoreksinya</h5>
-                                            <p class="small-muted mb-2">
-                                                Klik setiap kartu untuk menampilkan solusi koreksinya.
-                                            </p>
-                                            <div class="row g-3">
-                                                <div class="col-md-6">
-                                                    <div class="case-card" data-id="c1">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <strong class="small">1. Timbul Bercak-Bercak Tidak
-                                                                Teratur</strong>
-                                                            <span class="badge text-bg-light">Kesalahan aplikasi</span>
-                                                        </div>
-                                                        <p class="small mb-1 mt-1">
-                                                            Disebabkan oleh pembagian rambut terlalu besar, warna tidak
-                                                            merata,
-                                                            atau waktu pewarnaan terlalu singkat.
-                                                        </p>
-                                                        <div class="solusi small">
-                                                            <strong>Solusi:</strong> warnai kembali bagian yang terlalu
-                                                            muda
-                                                            atau belang, lakukan pembagian rambut lebih kecil dan rata,
-                                                            perhatikan waktu prosesnya.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="case-card" data-id="c2">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <strong class="small">2. Hasil Warna Terlalu Muda</strong>
-                                                            <span class="badge text-bg-light">Kurang proses</span>
-                                                        </div>
-                                                        <p class="small mb-1 mt-1">
-                                                            Bisa karena kekuatan hidrogen peroksida menurun, waktu olah
-                                                            terlalu
-                                                            singkat,
-                                                            atau rambut terlalu porus sehingga sulit menahan molekul
-                                                            warna.
-                                                        </p>
-                                                        <div class="solusi small">
-                                                            <strong>Solusi:</strong> periksa kembali kekuatan hidrogen
-                                                            peroksida,
-                                                            perpanjang waktu olah yang aman, dan pilih warna sedikit
-                                                            lebih
-                                                            gelap.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="case-card" data-id="c3">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <strong class="small">3. Hasil Warna Luntur setelah Beberapa
-                                                                Kali
-                                                                Penyampoan</strong>
-                                                            <span class="badge text-bg-light">Pigmen kurang kuat</span>
-                                                        </div>
-                                                        <p class="small mb-1 mt-1">
-                                                            Bisa disebabkan bleaching, sinar matahari, air laut atau
-                                                            kolam
-                                                            renang,
-                                                            dan penggunaan shampo yang keras.
-                                                        </p>
-                                                        <div class="solusi small">
-                                                            <strong>Solusi:</strong> gunakan shampo khusus rambut
-                                                            berwarna,
-                                                            lakukan pewarnaan ulang bila perlu, dan gunakan perawatan
-                                                            penutup
-                                                            kutikula.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="case-card" data-id="c4">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <strong class="small">4. Hasil Warna Terlalu Tua</strong>
-                                                            <span class="badge text-bg-light">Terlalu lama / pilihan
-                                                                shade</span>
-                                                        </div>
-                                                        <p class="small mb-1 mt-1">
-                                                            Terjadi karena waktu olah terlalu lama, pemilihan warna
-                                                            terlalu tua,
-                                                            atau adanya unsur logam dalam rambut.
-                                                        </p>
-                                                        <div class="solusi small">
-                                                            <strong>Solusi:</strong> gunakan kosmetik pengurang warna
-                                                            (colour reducer) untuk memudarkan, lalu lakukan pewarnaan
-                                                            ulang
-                                                            dengan warna yang lebih sesuai.
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="case-card" data-id="c5">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <strong class="small">5. Hasil Warna Terlalu Merah</strong>
-                                                            <span class="badge text-bg-light">Rona hangat
-                                                                berlebihan</span>
-                                                        </div>
-                                                        <p class="small mb-1 mt-1">
-                                                            Muncul karena waktu proses terlalu lama atau pemilihan warna
-                                                            merah
-                                                            yang terlalu kuat.
-                                                        </p>
-                                                        <div class="solusi small">
-                                                            <strong>Solusi:</strong> gunakan pembilas hijau
-                                                            (<em>colour rinse</em>) atau pembilas dengan warna
-                                                            komplementer
-                                                            untuk menetralkan merah.
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <!-- INTERAKTIF: COCOKKAN KESALAHAN & KOREKSI -->
-                                <section class="mb-4">
-                                    <div class="card shadow-sm mb-4">
-                                        <div class="card-body">
-                                            <h6 class="fw-bold mb-2">Interaktif: Cocokkan Kesalahan & Koreksinya</h6>
-                                            <p class="small-muted mb-2">
-                                                Untuk setiap kesalahan di bawah ini, pilihlah <strong>koreksi
-                                                    utama</strong>
-                                                yang paling sesuai. Ini memperkuat bagian “Kesalahan Umum & Cara
-                                                Mengoreksinya”.
-                                            </p>
-                                            <div class="table-responsive">
-                                                <table class="table table-sm align-middle table-interaktif">
-                                                    <thead>
-                                                        <tr class="table-light">
-                                                            <th style="width:45%">Kesalahan</th>
-                                                            <th>Koreksi Utama</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="small">Timbul bercak-bercak tidak teratur.</td>
-                                                            <td>
-                                                                <select id="mk1" class="form-select form-select-sm">
-                                                                    <option value="">— pilih —</option>
-                                                                    <option value="ulang">Warnai kembali bagian yang
-                                                                        terlalu
-                                                                        muda/belang</option>
-                                                                    <option value="reducer">Gunakan colour reducer
-                                                                    </option>
-                                                                    <option value="shampoo">Gunakan shampo khusus rambut
-                                                                        berwarna</option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="small">Hasil warna terlalu muda.</td>
-                                                            <td>
-                                                                <select id="mk2" class="form-select form-select-sm">
-                                                                    <option value="">— pilih —</option>
-                                                                    <option value="peroksida">Periksa kekuatan peroksida
-                                                                        &
-                                                                        tambah
-                                                                        waktu olah</option>
-                                                                    <option value="reducer">Gunakan colour reducer
-                                                                    </option>
-                                                                    <option value="hijau">Gunakan pembilas hijau
-                                                                    </option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="small">Hasil warna terlalu tua.</td>
-                                                            <td>
-                                                                <select id="mk3" class="form-select form-select-sm">
-                                                                    <option value="">— pilih —</option>
-                                                                    <option value="reducer">Gunakan colour reducer untuk
-                                                                        memudarkan warna</option>
-                                                                    <option value="ulang">Warnai kembali bagian muda
-                                                                    </option>
-                                                                    <option value="hijau">Gunakan pembilas hijau
-                                                                    </option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="small">Hasil warna luntur setelah beberapa kali
-                                                                penyampoan.</td>
-                                                            <td>
-                                                                <select id="mk4" class="form-select form-select-sm">
-                                                                    <option value="">— pilih —</option>
-                                                                    <option value="shampoo">Gunakan shampo khusus rambut
-                                                                        berwarna & perawatan penutup kutikula</option>
-                                                                    <option value="reducer">Gunakan colour reducer
-                                                                    </option>
-                                                                    <option value="hijau">Gunakan pembilas hijau
-                                                                    </option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="small">Hasil warna terlalu merah.</td>
-                                                            <td>
-                                                                <select id="mk5" class="form-select form-select-sm">
-                                                                    <option value="">— pilih —</option>
-                                                                    <option value="hijau">Gunakan pembilas hijau / warna
-                                                                        komplementer</option>
-                                                                    <option value="shampoo">Gunakan shampo khusus rambut
-                                                                        berwarna</option>
-                                                                    <option value="peroksida">Tambah kekuatan peroksida
-                                                                    </option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <button id="btnMatchKesalahan" class="btn btn-brand btn-sm">
-                                                Cek Jawaban
-                                            </button>
-                                            <button id="btnResetMatch" class="btn btn-outline-secondary btn-sm ms-1">
-                                                Reset
-                                            </button>
-                                            <div id="fbMatchKesalahan" class="mt-2 small"></div>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <!-- AYO LAKUKAN: GALERI & CATATAN -->
-                                <section class="mb-4">
-                                    <div class="card shadow-sm mb-4">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-2">Ayo Lakukan: Amati Kondisi Rambut</h5>
-                                            <p class="small">
-                                                Amati gambar berikut (bisa diganti dengan foto kalian sendiri), lalu
-                                                tulis
-                                                komentar atau analisis singkat pada kotak catatan di bawah.
-                                            </p>
-
-                                            <div class="row g-3 mb-3">
-                                                <div class="col-md-4">
-                                                    <figure class="figure">
-                                                        <img src="../img/rambut-rusak-pewarnaan.jpg"
-                                                            class="figure-img img-fluid"
-                                                            alt="Rambut rusak akibat pewarnaan">
-                                                        <figcaption class="figure-caption small">
-                                                            1. Rambut rusak akibat pewarnaan.
-                                                        </figcaption>
-                                                    </figure>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <figure class="figure">
-                                                        <img src="../img/ujung-rambut-terbelah.jpg"
-                                                            class="figure-img img-fluid" alt="Ujung rambut terbelah">
-                                                        <figcaption class="figure-caption small">
-                                                            2. Ujung rambut terbelah (split ends).
-                                                        </figcaption>
-                                                    </figure>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <figure class="figure">
-                                                        <img src="../img/rambut-rontok-diwarna.jpg"
-                                                            class="figure-img img-fluid"
-                                                            alt="Rambut rontok akibat terlalu sering diwarnai">
-                                                        <figcaption class="figure-caption small">
-                                                            3. Rambut rontok akibat terlalu sering diwarnai.
-                                                        </figcaption>
-                                                    </figure>
-                                                </div>
-                                            </div>
-
-                                            <label class="form-label small fw-semibold">Catatan / Hasil Diskusi
-                                                Kelompok</label>
-                                            <textarea id="hasilDiskusi" class="form-control form-control-sm" rows="4"
-                                                placeholder="Tuliskan ringkasan hasil diskusi kalian di sini..."></textarea>
-                                            <div class="mt-2 d-flex gap-2">
-                                                <button id="btnSimpanDiskusi" class="btn btn-brand btn-sm">
-                                                    <i class="bi bi-save me-1"></i>Simpan
-                                                </button>
-                                                <button id="btnHapusDiskusi" class="btn btn-outline-secondary btn-sm">
-                                                    <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
-                                                </button>
-                                            </div>
-                                            <div id="feedbackDiskusi" class="small mt-1"></div>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <!-- JELAJAH INTERNET + RANGKUMAN VIDEO -->
-                                <section class="mb-4">
-                                    <div class="card shadow-sm mb-4">
-                                        <div class="card-body">
-                                            <div class="card border-0 qr-box">
-                                                <div class="card-body">
-                                                    <h6 class="fw-bold mb-2 d-flex align-items-center gap-2"> <i
-                                                            class="bi bi-globe2"></i> Jelajah Internet: Perawatan Rambut
-                                                        Berwarna </h6>
-                                                    <p class="small mb-2"> Tonton video pembelajaran tentang cara
-                                                        merawat rambut
-                                                        yang berwarna melalui link atau QR code di bawah, kemudian
-                                                        tuliskan
-                                                        rangkuman singkat pemahamanmu. </p>
 
 
-                                                    <div class="row g-3 align-items-center">
-                                                        <div class="col-md-4 text-center">
-
-                                                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Det1Z3CSqcPk"
-                                                                alt="QR code video perawatan rambut" class="img-fluid"
-                                                                class="qr-frame mx-auto mb-2" style="max-width:180px;">
-
-                                                            <div class="small-muted"> Arahkan kamera HP ke QR untuk
-                                                                membuka
-                                                                video. </div>
-                                                        </div>
-                                                        <div class="col-md-8 small">
-                                                            <p class="mb-1 fw-semibold"> Link video: </p>
-                                                            <p class="mb-2"> <a
-                                                                    href="https://www.youtube.com/watch?v=et1Z3CSqcPk"
-                                                                    target="_blank">
-                                                                    https://www.youtube.com/watch?v=et1Z3CSqcPk
-                                                                </a> </p>
-                                                            <p class="mb-2 small-muted"> (Ganti gambar QR dengan QR code
-                                                                yang
-                                                                kamu miliki bila perlu.) </p> <label
-                                                                class="form-label small fw-semibold"> Rangkuman setelah
-                                                                menonton
-                                                                video </label> <textarea id="ringkasanVideo"
-                                                                class="form-control form-control-sm" rows="3"
-                                                                placeholder="Tuliskan inti cara merawat rambut berwarna menurut video..."></textarea>
-                                                            <div class="mt-2 d-flex gap-2"> <button id="btnSimpanVideo"
-                                                                    class="btn btn-brand btn-sm"> <i
-                                                                        class="bi bi-save me-1"></i>Simpan </button>
-                                                                <button id="btnResetVideo"
-                                                                    class="btn btn-outline-secondary btn-sm">
-                                                                    <i
-                                                                        class="bi bi-arrow-counterclockwise me-1"></i>Reset
-                                                                </button>
-                                                            </div>
-                                                            <div id="feedbackVideo" class="small mt-1"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <!-- KUIS CEPAT BENAR/SALAH -->
-                                <section class="mb-3">
-                                    <div class="card shadow-sm mb-4">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-2">Kuis Cepat: Benar atau Salah?</h5>
-                                            <p class="small-muted mb-2">
-                                                Beri tanda <strong>B</strong> untuk pernyataan yang benar dan
-                                                <strong>S</strong> untuk yang salah, terkait teori koreksi warna di
-                                                atas.
-                                            </p>
-                                            <ol class="small">
-                                                <li class="mb-2">
-                                                    Warna hijau dapat digunakan untuk menetralkan warna merah pada
-                                                    rambut.
-                                                    <br>
-                                                    <label><input type="radio" name="t1" value="B"> B</label>
-                                                    <label class="ms-3"><input type="radio" name="t1" value="S">
-                                                        S</label>
-                                                </li>
-                                                <li class="mb-2">
-                                                    Jika hasil warna terlalu tua, cukup menambahkan warna yang lebih
-                                                    gelap
-                                                    tanpa memudarkan warna sebelumnya.
-                                                    <br>
-                                                    <label><input type="radio" name="t2" value="B"> B</label>
-                                                    <label class="ms-3"><input type="radio" name="t2" value="S">
-                                                        S</label>
-                                                </li>
-                                                <li class="mb-2">
-                                                    Pewarnaan korektif dapat digunakan untuk menyamakan warna rambut
-                                                    yang tidak
-                                                    merata.
-                                                    <br>
-                                                    <label><input type="radio" name="t3" value="B"> B</label>
-                                                    <label class="ms-3"><input type="radio" name="t3" value="S">
-                                                        S</label>
-                                                </li>
-                                            </ol>
-                                            <button id="btnCekTF" class="btn btn-brand btn-sm">
-                                                Cek Jawaban
-                                            </button>
-                                            <button id="btnResetTF" class="btn btn-outline-secondary btn-sm ms-1">
-                                                Reset
-                                            </button>
-                                            <div id="feedbackTF" class="mt-2 small"></div>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <!-- UJI KOMPETENSI -->
-                                <section class="mb-3">
-                                    <div class="card shadow-sm mb-4">
-                                        <div class="card-body">
-                                            <h5 class="fw-bold mb-2">Uji Kompetensi Mini</h5>
-                                            <p class="small-muted mb-2">
-                                                Jawab pertanyaan berikut (pilih jawaban paling tepat). Hasilnya akan
-                                                disimpan di
-                                                perangkatmu.
-                                            </p>
-
-                                            <ol class="small" id="listQuiz">
-                                                <li class="mb-2">
-                                                    Bentuk wajah apa yang cocok dengan rambut di bagian puncak dan depan
-                                                    diberi frosting intensif dan toner warna muda?
-                                                    <div class="mt-1">
-                                                        <label><input type="radio" name="q1" value="A"> Wajah
-                                                            bulat</label><br>
-                                                        <label><input type="radio" name="q1" value="B"> Wajah
-                                                            persegi</label><br>
-                                                        <label><input type="radio" name="q1" value="C"> Wajah segitiga
-                                                            terbalik</label>
-                                                    </div>
-                                                </li>
-
-                                                <li class="mb-2">
-                                                    Bentuk wajah apa yang memerlukan peluasan rambut di bagian atas dan
-                                                    penyempitan di bagian rahang?
-                                                    <div class="mt-1">
-                                                        <label><input type="radio" name="q2" value="A"> Wajah
-                                                            persegi</label><br>
-                                                        <label><input type="radio" name="q2" value="B"> Wajah
-                                                            bulat</label><br>
-                                                        <label><input type="radio" name="q2" value="C"> Wajah
-                                                            segitiga</label>
-                                                    </div>
-                                                </li>
-
-                                                <li class="mb-2">
-                                                    Apa kesalahan yang diakibatkan oleh hidrogen peroksida yang menurun
-                                                    kekuatannya
-                                                    dan waktu olah yang terlalu singkat?
-                                                    <div class="mt-1">
-                                                        <label><input type="radio" name="q3" value="A"> Hasil warna
-                                                            terlalu
-                                                            tua</label><br>
-                                                        <label><input type="radio" name="q3" value="B"> Hasil warna
-                                                            terlalu
-                                                            muda</label><br>
-                                                        <label><input type="radio" name="q3" value="C"> Timbul bercak
-                                                            tidak
-                                                            teratur</label>
-                                                    </div>
-                                                </li>
-
-                                                <li class="mb-2">
-                                                    Kosmetik apa yang digunakan untuk melunturkan / memudarkan warna
-                                                    rambut yang
-                                                    terlalu tua?
-                                                    <div class="mt-1">
-                                                        <label><input type="radio" name="q4" value="A"> Toner
-                                                            abu-abu</label><br>
-                                                        <label><input type="radio" name="q4" value="B"> Colour reducer /
-                                                            pengurang warna</label><br>
-                                                        <label><input type="radio" name="q4" value="C"> Serum pelindung
-                                                            panas</label>
-                                                    </div>
-                                                </li>
-
-                                                <li class="mb-2">
-                                                    Jika hasil warna terlalu merah, pembilas apa yang dapat digunakan
-                                                    untuk
-                                                    koreksi warna?
-                                                    <div class="mt-1">
-                                                        <label><input type="radio" name="q5" value="A"> Pembilas
-                                                            hijau</label><br>
-                                                        <label><input type="radio" name="q5" value="B"> Pembilas
-                                                            kuning</label><br>
-                                                        <label><input type="radio" name="q5" value="C"> Pembilas
-                                                            biru</label>
-                                                    </div>
-                                                </li>
-                                            </ol>
-
-                                            <button id="btnNilaiQuiz" class="btn btn-brand btn-sm">
-                                                <i class="bi bi-clipboard-check me-1"></i>Nilai
-                                            </button>
-                                            <button id="btnResetQuiz" class="btn btn-outline-secondary btn-sm ms-1">
-                                                Reset
-                                            </button>
-                                            <div id="feedbackQuiz" class="mt-2 small"></div>
-                                        </div>
-                                    </div>
-                                </section>
 
                             </div>
                         </div>
@@ -1227,8 +761,6 @@
             const STORAGE_KEY = 'pewarnaan-korektif-v1';
 
             const $ = (s, r = document) => r.querySelector(s);
-            const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-
             const getStore = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
             const setStore = (obj) => localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
 
@@ -1237,310 +769,68 @@
 
             const stInit = getStore();
 
-            /* === Kartu kasus: klik untuk tampilkan solusi === */
-            $$('.case-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    card.classList.toggle('show-solution');
-                    const id = card.dataset.id;
-                    const st = getStore();
-                    st.cases = st.cases || {};
-                    st.cases[id] = card.classList.contains('show-solution');
-                    setStore(st);
-                });
-            });
-
-            if (stInit.cases) {
-                Object.entries(stInit.cases).forEach(([id, val]) => {
-                    const card = document.querySelector(`.case-card[data-id="${id}"]`);
-                    if (card && val) card.classList.add('show-solution');
-                });
-            }
-
             /* === INTERAKTIF: MENGOREKSI WARNA TIDAK DIINGINKAN === */
             const kunciTidakDiinginkan = { td1: 'ungu', td2: 'ulang', td3: 'hijau' };
+
             const selTidak = {
                 td1: $('#td1'),
                 td2: $('#td2'),
                 td3: $('#td3')
             };
             const fbTidak = $('#fbTidakDiinginkan');
+            const btnCek = $('#btnCekTidakDiinginkan');
+            const btnReset = $('#btnResetTidakDiinginkan');
 
+            // restore dari localStorage
             if (stInit.tidakDiinginkan && stInit.tidakDiinginkan.answers) {
                 Object.entries(stInit.tidakDiinginkan.answers).forEach(([id, val]) => {
                     if (selTidak[id]) selTidak[id].value = val;
                 });
-                if (stInit.tidakDiinginkan.lastScore != null) {
+                if (stInit.tidakDiinginkan.lastScore != null && fbTidak) {
                     fbTidak.innerHTML = ok(`Skor terakhir: ${stInit.tidakDiinginkan.lastScore}/100`);
                 }
             }
 
-            $('#btnCekTidakDiinginkan').addEventListener('click', () => {
-                let benar = 0;
-                let total = Object.keys(kunciTidakDiinginkan).length;
-                const answers = {};
+            if (btnCek && fbTidak) {
+                btnCek.addEventListener('click', () => {
+                    let benar = 0;
+                    const total = Object.keys(kunciTidakDiinginkan).length;
+                    const answers = {};
 
-                Object.keys(kunciTidakDiinginkan).forEach(id => {
-                    const sel = selTidak[id];
-                    if (sel && sel.value) {
-                        answers[id] = sel.value;
-                        if (sel.value === kunciTidakDiinginkan[id]) benar++;
+                    Object.keys(kunciTidakDiinginkan).forEach(id => {
+                        const sel = selTidak[id];
+                        if (sel && sel.value) {
+                            answers[id] = sel.value;
+                            if (sel.value === kunciTidakDiinginkan[id]) benar++;
+                        }
+                    });
+
+                    if (Object.keys(answers).length === 0) {
+                        fbTidak.innerHTML = warn('Pilih dulu koreksi untuk minimal satu kondisi ya 😊');
+                        return;
                     }
+
+                    const skor = Math.round((benar / total) * 100);
+                    fbTidak.innerHTML =
+                        skor === 100
+                            ? ok(`Hebat! Semua koreksi sudah tepat, skor kamu ${skor}/100 👏`)
+                            : warn(`Skor kamu ${skor}/100 (${benar} dari ${total} kondisi tepat). Coba baca lagi teori koreksi di atas.`);
+
+                    const st = getStore();
+                    st.tidakDiinginkan = { lastScore: skor, answers };
+                    setStore(st);
                 });
-
-                if (Object.keys(answers).length === 0) {
-                    fbTidak.innerHTML = warn('Pilih dulu koreksi untuk minimal satu kondisi ya 😊');
-                    return;
-                }
-
-                const skor = Math.round((benar / total) * 100);
-                fbTidak.innerHTML =
-                    skor === 100
-                        ? ok(`Hebat! Semua koreksi sudah tepat, skor kamu ${skor}/100 👏`)
-                        : warn(`Skor kamu ${skor}/100 (${benar} dari ${total} kondisi tepat). Coba baca lagi teori koreksi di atas.`);
-
-                const st = getStore();
-                st.tidakDiinginkan = { lastScore: skor, answers };
-                setStore(st);
-            });
-
-            $('#btnResetTidakDiinginkan').addEventListener('click', () => {
-                Object.values(selTidak).forEach(sel => { if (sel) sel.value = ""; });
-                fbTidak.innerHTML = '';
-                const st = getStore();
-                delete st.tidakDiinginkan;
-                setStore(st);
-            });
-
-            /* === INTERAKTIF: COCOKKAN KESALAHAN & KOREKSI === */
-            const kunciMatch = {
-                mk1: 'ulang',
-                mk2: 'peroksida',
-                mk3: 'reducer',
-                mk4: 'shampoo',
-                mk5: 'hijau'
-            };
-            const selMatch = {
-                mk1: $('#mk1'),
-                mk2: $('#mk2'),
-                mk3: $('#mk3'),
-                mk4: $('#mk4'),
-                mk5: $('#mk5')
-            };
-            const fbMatch = $('#fbMatchKesalahan');
-
-            if (stInit.matchKesalahan && stInit.matchKesalahan.answers) {
-                Object.entries(stInit.matchKesalahan.answers).forEach(([id, val]) => {
-                    if (selMatch[id]) selMatch[id].value = val;
-                });
-                if (stInit.matchKesalahan.lastScore != null) {
-                    fbMatch.innerHTML = ok(`Skor terakhir: ${stInit.matchKesalahan.lastScore}/100`);
-                }
             }
 
-            $('#btnMatchKesalahan').addEventListener('click', () => {
-                let benar = 0;
-                const total = Object.keys(kunciMatch).length;
-                const answers = {};
-
-                Object.keys(kunciMatch).forEach(id => {
-                    const sel = selMatch[id];
-                    if (sel && sel.value) {
-                        answers[id] = sel.value;
-                        if (sel.value === kunciMatch[id]) benar++;
-                    }
+            if (btnReset && fbTidak) {
+                btnReset.addEventListener('click', () => {
+                    Object.values(selTidak).forEach(sel => { if (sel) sel.value = ""; });
+                    fbTidak.innerHTML = '';
+                    const st = getStore();
+                    delete st.tidakDiinginkan;
+                    setStore(st);
                 });
-
-                if (Object.keys(answers).length === 0) {
-                    fbMatch.innerHTML = warn('Isi dulu pilihan koreksi pada tabel, ya 😊');
-                    return;
-                }
-
-                const skor = Math.round((benar / total) * 100);
-                fbMatch.innerHTML =
-                    skor >= 80
-                        ? ok(`Bagus! Skor kamu ${skor}/100 (${benar} dari ${total} benar).`)
-                        : warn(`Skor kamu ${skor}/100. Coba buka lagi kartu “Kesalahan Umum & Cara Mengoreksinya”.`);
-
-                const st = getStore();
-                st.matchKesalahan = { lastScore: skor, answers };
-                setStore(st);
-            });
-
-            $('#btnResetMatch').addEventListener('click', () => {
-                Object.values(selMatch).forEach(sel => { if (sel) sel.value = ""; });
-                fbMatch.innerHTML = '';
-                const st = getStore();
-                delete st.matchKesalahan;
-                setStore(st);
-            });
-
-            /* === Catatan / diskusi === */
-            const txtDiskusi = $('#hasilDiskusi');
-            const fbDiskusi = $('#feedbackDiskusi');
-
-            if (stInit.diskusi) {
-                txtDiskusi.value = stInit.diskusi;
             }
-
-            $('#btnSimpanDiskusi').addEventListener('click', () => {
-                const val = txtDiskusi.value.trim();
-                if (!val) {
-                    fbDiskusi.innerHTML = warn('Catatan masih kosong, tulis dulu hasil diskusi kalian 😊');
-                    return;
-                }
-                const st = getStore();
-                st.diskusi = val;
-                setStore(st);
-                fbDiskusi.innerHTML = ok('Catatan diskusi tersimpan di perangkat ini.');
-            });
-
-            $('#btnHapusDiskusi').addEventListener('click', () => {
-                txtDiskusi.value = '';
-                const st = getStore();
-                delete st.diskusi;
-                setStore(st);
-                fbDiskusi.innerHTML = '';
-            });
-
-            /* === Rangkuman Video === */
-            const txtVideo = $('#ringkasanVideo');
-            const fbVideo = $('#feedbackVideo');
-
-            if (stInit.videoSummary) {
-                txtVideo.value = stInit.videoSummary;
-            }
-
-            $('#btnSimpanVideo').addEventListener('click', () => {
-                const val = txtVideo.value.trim();
-                if (!val) {
-                    fbVideo.innerHTML = warn('Tulis dulu rangkuman setelah menonton video ya 😊');
-                    return;
-                }
-                const st = getStore();
-                st.videoSummary = val;
-                setStore(st);
-                fbVideo.innerHTML = ok('Rangkuman video tersimpan di perangkat ini.');
-            });
-
-            $('#btnResetVideo').addEventListener('click', () => {
-                txtVideo.value = '';
-                const st = getStore();
-                delete st.videoSummary;
-                setStore(st);
-                fbVideo.innerHTML = '';
-            });
-
-            /* === Kuis Benar/Salah === */
-            const kunciTF = { t1: 'B', t2: 'S', t3: 'B' };
-            const fbTF = $('#feedbackTF');
-
-            if (stInit.tfQuiz && stInit.tfQuiz.answers) {
-                Object.entries(stInit.tfQuiz.answers).forEach(([name, val]) => {
-                    const r = document.querySelector(`input[name="${name}"][value="${val}"]`);
-                    if (r) r.checked = true;
-                });
-                if (stInit.tfQuiz.lastScore != null) {
-                    fbTF.innerHTML = ok(`Skor terakhir kuis cepat: ${stInit.tfQuiz.lastScore}/100`);
-                }
-            }
-
-            $('#btnCekTF').addEventListener('click', () => {
-                let benar = 0;
-                const total = Object.keys(kunciTF).length;
-                const answers = {};
-
-                Object.keys(kunciTF).forEach(name => {
-                    const checked = document.querySelector(`input[name="${name}"]:checked`);
-                    if (checked) {
-                        answers[name] = checked.value;
-                        if (checked.value === kunciTF[name]) benar++;
-                    }
-                });
-
-                if (Object.keys(answers).length === 0) {
-                    fbTF.innerHTML = warn('Belum ada pernyataan yang dijawab. Pilih B atau S dulu ya 😊');
-                    return;
-                }
-
-                const skor = Math.round((benar / total) * 100);
-                fbTF.innerHTML =
-                    skor === 100
-                        ? ok(`Keren! Semua jawaban benar, skor kamu ${skor}/100 👏`)
-                        : warn(`Skor kamu ${skor}/100 (${benar} dari ${total} benar). Coba baca lagi materi di atas.`);
-
-                const st = getStore();
-                st.tfQuiz = { lastScore: skor, answers };
-                setStore(st);
-            });
-
-            $('#btnResetTF').addEventListener('click', () => {
-                ['t1', 't2', 't3'].forEach(name => {
-                    $$(`input[name="${name}"]`).forEach(r => r.checked = false);
-                });
-                fbTF.innerHTML = '';
-                const st = getStore();
-                delete st.tfQuiz;
-                setStore(st);
-            });
-
-            /* === Uji Kompetensi === */
-            const kunci = {
-                q1: 'C',
-                q2: 'A',
-                q3: 'B',
-                q4: 'B',
-                q5: 'A'
-            };
-
-            if (stInit.quiz && stInit.quiz.answers) {
-                Object.entries(stInit.quiz.answers).forEach(([name, val]) => {
-                    const r = document.querySelector(`input[name="${name}"][value="${val}"]`);
-                    if (r) r.checked = true;
-                });
-                if (stInit.quiz.lastScore != null) {
-                    $('#feedbackQuiz').innerHTML = ok(`Skor terakhir kamu: ${stInit.quiz.lastScore}/100`);
-                }
-            }
-
-            $('#btnNilaiQuiz').addEventListener('click', () => {
-                let benar = 0;
-                const total = Object.keys(kunci).length;
-                const jawaban = {};
-
-                Object.keys(kunci).forEach(name => {
-                    const checked = document.querySelector(`input[name="${name}"]:checked`);
-                    if (checked) {
-                        jawaban[name] = checked.value;
-                        if (checked.value === kunci[name]) benar++;
-                    }
-                });
-
-                if (Object.keys(jawaban).length === 0) {
-                    $('#feedbackQuiz').innerHTML = warn('Belum ada jawaban yang dipilih. Coba isi dulu ya 😊');
-                    return;
-                }
-
-                const skor = Math.round((benar / total) * 100);
-                $('#feedbackQuiz').innerHTML =
-                    skor >= 75
-                        ? ok(`Bagus! Skor kamu ${skor}/100 (${benar} dari ${total} soal benar).`)
-                        : warn(`Skor kamu ${skor}/100. Masih bisa diperbaiki, baca lagi materi di atas 😄`);
-
-                const st = getStore();
-                st.quiz = {
-                    lastScore: skor,
-                    answers: jawaban
-                };
-                setStore(st);
-            });
-
-            $('#btnResetQuiz').addEventListener('click', () => {
-                $$('input[name^="q"]').forEach(r => r.checked = false);
-                $('#feedbackQuiz').innerHTML = '';
-                const st = getStore();
-                delete st.quiz;
-                setStore(st);
-            });
         })();
     </script>
 </body>

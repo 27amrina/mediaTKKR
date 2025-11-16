@@ -159,7 +159,11 @@
         /* 1) Mobile: biarkan halaman memanjang normal */
         @media (max-width: 767.98px) {
 
-            /* jangan kunci tinggi halaman di HP */
+            /* HP: tidak perlu padding bawah besar karena footer tidak fixed */
+            body {
+                padding-bottom: 0;
+            }
+
             main.app-shell {
                 height: auto;
                 overflow: visible;
@@ -171,7 +175,6 @@
                 overflow: visible;
             }
 
-            /* kartu ikut tinggi natural agar isi tidak terpotong */
             .materi-card {
                 height: auto;
             }
@@ -182,7 +185,6 @@
                 overflow: visible;
             }
 
-            /* sidebar muncul di atas konten, tidak fixed */
             .sidebar-fixed {
                 position: static;
                 width: 100%;
@@ -190,10 +192,15 @@
                 overflow: visible;
             }
 
-            /* sticky CTA biar rapi penuh di HP */
+            /* tombol ikut alur di bawah konten */
             .sticky-cta {
                 position: static;
-                margin-top: .5rem;
+                margin-top: .75rem;
+            }
+
+            /* footer juga ikut alur (tidak fixed) saat HP */
+            .footer {
+                position: static !important;
             }
         }
 
@@ -388,7 +395,7 @@
                             <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent"
                                 type="button" data-bs-toggle="collapse" data-bs-target="#submenu-peralatan"
                                 aria-expanded="true" aria-controls="submenu-peralatan">
-                                <span class="me-2"><i class="bi bi-scissors"></i></span>
+                                <span class="me-2"><i class="bi bi-palette"></i></span>
                                 <span class="flex-grow-1 text-start">B. Teori Warna</span>
                                 <i class="bi bi-chevron-down small"></i>
                                 <a>

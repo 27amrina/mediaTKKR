@@ -27,7 +27,6 @@
             /* jarak konten dari sidebar */
         }
 
-
         /* ===== App shell ===== */
         html,
         body {
@@ -122,7 +121,6 @@
             stroke-linecap: square;
         }
 
-
         @media (min-width:768px) {
             .sidebar-fixed {
                 position: fixed;
@@ -166,7 +164,6 @@
             border-bottom: 1px solid #eee;
             padding: .5rem 1rem .4rem !important;
         }
-
 
         /* Flashcard */
         .flashcard {
@@ -251,12 +248,12 @@
             width: 100%;
         }
 
-        /* ====== RESPONSIVE LAYOUT FIXES (override) ====== */
-
-        /* 1) Mobile: biarkan halaman memanjang normal */
+        /* 1) Mobile */
         @media (max-width: 767.98px) {
+            body {
+                padding-bottom: 0;
+            }
 
-            /* jangan kunci tinggi halaman di HP */
             main.app-shell {
                 height: auto;
                 overflow: visible;
@@ -268,7 +265,6 @@
                 overflow: visible;
             }
 
-            /* kartu ikut tinggi natural agar isi tidak terpotong */
             .materi-card {
                 height: auto;
             }
@@ -279,7 +275,6 @@
                 overflow: visible;
             }
 
-            /* sidebar muncul di atas konten, tidak fixed */
             .sidebar-fixed {
                 position: static;
                 width: 100%;
@@ -287,21 +282,23 @@
                 overflow: visible;
             }
 
-            /* sticky CTA biar rapi penuh di HP */
             .sticky-cta {
                 position: static;
-                margin-top: .5rem;
+                margin-top: .75rem;
+            }
+
+            .footer {
+                position: static !important;
             }
         }
 
-        /* 2) Tablet & Desktop: pakai 100dvh agar akurat vs toolbar browser */
+        /* 2) Tablet & Desktop */
         @media (min-width: 768px) {
             main.app-shell {
                 height: calc(100dvh - var(--navbar-h) - var(--footer-h));
                 overflow: hidden;
             }
 
-            /* sidebar tetap fixed, konten bergeser */
             .sidebar-fixed {
                 position: fixed;
                 top: var(--navbar-h);
@@ -315,17 +312,14 @@
                 margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
             }
 
-            /* area isi: hanya body card yang scroll */
             .content-col,
             .content-scroll {
                 height: 100%;
                 overflow: hidden;
             }
 
-            /* tinggi kartu fleksibel, tidak kaku 580px */
             .materi-card {
                 height: clamp(480px, 66vh, 760px);
-                /* enak di berbagai layar */
             }
 
             .materi-card .card-body.scrollable {
@@ -335,43 +329,48 @@
                 -webkit-overflow-scrolling: touch;
             }
 
-            /* CTA melayang rapi */
             .sticky-cta {
                 position: fixed;
                 bottom: calc(var(--footer-h) + 8px);
                 left: calc(var(--sidebar-w) + var(--sidebar-gap));
                 right: 12px;
                 z-index: 1030;
-                /* di atas card */
             }
         }
 
-        /* 3) Large desktop: beri napas ekstra pada konten */
         @media (min-width: 1200px) {
             .materi-card {
                 height: clamp(570px, 62vh, 820px);
             }
         }
 
-        /* 4) Minor polish */
         .navbar {
             will-change: transform;
         }
 
-        /* lebih halus saat scroll iOS */
-
-        /* ===== Minor polish ===== */
         .min-vh-0 {
             min-height: 0 !important;
+        }
+
+        /* Pusatkan dan samakan ukuran semua gambar di materi */
+        #apersepsi-hair-coloring .figure {
+            text-align: center;
         }
 
         #apersepsi-hair-coloring figure img {
             display: block;
             width: 100%;
+            /* responsif */
+            max-width: 260px;
+            /* batas lebar gambar di layar besar */
             height: auto;
+            /* tidak gepeng */
+            margin: 0 auto;
+            /* benar-benar di tengah */
             border-radius: 12px;
-            object-fit: cover;
-            max-height: 420px;
+            border: 1px solid #e5e7eb;
+            object-fit: contain;
+            /* gambar tidak terpotong */
         }
     </style>
 </head>
@@ -406,21 +405,18 @@
         <div class="container-fluid ">
             <div class="row g-1 no-top-gap h-100">
                 <!-- SIDEBAR -->
-                <!-- SIDEBAR -->
                 <aside class="col-12 col-md-auto order-1 order-md-0 p-0">
-
                     <nav class="menu-card sidebar-fixed shadow-sm">
                         <div class="menu-title"><i class="bi bi-journal-bookmark"></i> Materi</div>
 
                         <a class="menu-item " aria-current="page" href="PengetahuanDasarRambut.html"><i
                                 class="bi bi-lightbulb"></i> Pengetahuan Dasar Rambut</a>
 
-                        <!-- TOMBOL INDUK TERBUKA TEORI-->
+                        <!-- A. Pewarnaan Rambut -->
                         <div class="menu-item active">
-
                             <button class=" d-flex align-items-center w-100 border-0 bg-transparent" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#submenu-teori" aria-expanded="true"
-                                aria-controls="submenu-teori" href="./peralatan.html">
+                                aria-controls="submenu-teori">
 
                                 <span class="me-2"><i class="bi bi-droplet-half"></i></span>
                                 <span class="flex-grow-1 text-start" aria-current="page">A. Pewarnaan
@@ -428,112 +424,64 @@
                                 <i class="bi bi-chevron-down small"></i>
                             </button>
                         </div>
-                        <!-- SUBMENU TERBUKA -->
-                        <div class="collapse show" id="submenu-teori"> <!-- penting -->
+                        <div class="collapse show" id="submenu-teori">
                             <ul class="nav flex-column ps-4 my-1">
                                 <li>
-
                                     <a class="menu-item py-1 active" aria-current="page" href="Sejarah.html"><span>1.
                                             Sejarah</span></a>
                                 </li>
-                                <li>
-                                    <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="PengertianPewarnaan.html"><span>2. Pengertian
-                                            Pewarnaan </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item py-1" href="TujuanPewarnaan.html">3. Tujuan Pewarnaan</a>
-                                </li>
-                                <li>
-                                    <a class="menu-item py-1" href="TipePewarnaan.html">4. Tipe Pewarnaan</a>
-                                </li>
-                                <li>
-                                    <a class="menu-item py-1" href="Desainteknik.html">5. Istilah Desain dan Teknik
-                                        Pewarnaan</a>
-                                </li>
-                                <li>
-                                    <a class="menu-item py-1 " href="AyoLakukanA.html">6. Ayo Lakukan
-                                        Pewarnaan</a>
-                                </li>
+                                <li><a class="menu-item py-1" href="PengertianPewarnaan.html"><span>2. Pengertian
+                                            Pewarnaan </span></a></li>
+                                <li><a class="menu-item py-1" href="TujuanPewarnaan.html">3. Tujuan Pewarnaan</a></li>
+                                <li><a class="menu-item py-1" href="TipePewarnaan.html">4. Tipe Pewarnaan</a></li>
+                                <li><a class="menu-item py-1" href="Desainteknik.html">5. Istilah Desain dan Teknik
+                                        Pewarnaan</a></li>
+                                <li><a class="menu-item py-1 " href="AyoLakukanA.html">6. Ayo Lakukan
+                                        Pewarnaan</a></li>
                             </ul>
                         </div>
 
-                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <!-- B. Teori Warna -->
                         <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
                             data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
                             aria-controls="submenu-peralatan">
-                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="me-2"><i class="bi bi-palette"></i></span>
                             <span class="flex-grow-1 text-start">B. Teori Warna</span>
                             <i class="bi bi-chevron-down small"></i>
-                            <a>
                         </button>
-
-                        <!-- SUBMENU TERBUKA -->
-                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                        <div class="collapse show" id="submenu-peralatan">
                             <ul class="nav flex-column ps-4 my-1">
-                                <li>
-                                    <a class="menu-item py-1 " href="PengetahuanWarna.html"><span>1. Pengetahuan
-                                            Warna</span></a>
-                                </li>
-                                <li>
-                                    <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="KegunaanSegitiga.html"> <span>2. Kegunaan
-                                            Segitiga</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="KoreksiWarna.html"> <span>3. Koreksi
-                                            Warna</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>4. Pengaruh
-                                            Modifikasi</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>5. Warna Dingin
+                                <li><a class="menu-item py-1 " href="PengetahuanWarna.html"><span>1. Pengetahuan
+                                            Warna</span></a></li>
+                                <li><a class="menu-item py-1" href="KegunaanSegitiga.html"> <span>2. Kegunaan
+                                            Segitiga</span></a></li>
+                                <li><a class="menu-item py-1" href="KoreksiWarna.html"> <span>3. Koreksi
+                                            Warna</span></a></li>
+                                <li><a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>4. Pengaruh
+                                            Modifikasi</span></a></li>
+                                <li><a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>5. Warna Dingin
                                             dan
-                                            Hanga</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item py-1" href="AyoLakukanB.html">6. Ayo Lakukan Pewarnaan</a>
-                                </li>
+                                            Hanga</span></a></li>
+                                <li><a class="menu-item py-1" href="AyoLakukanB.html">6. Ayo Lakukan Pewarnaan</a></li>
                             </ul>
                         </div>
 
-                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <!-- C. Pewarnaan Korektif -->
                         <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
-                            aria-controls="submenu-peralatan">
+                            data-bs-toggle="collapse" data-bs-target="#submenu-korektif" aria-expanded="true"
+                            aria-controls="submenu-korektif">
                             <span class="me-2"><i class="bi bi-scissors"></i></span>
                             <span class="flex-grow-1 text-start">C. Pewarnaan Korektif</span>
                             <i class="bi bi-chevron-down small"></i>
-                            <a>
                         </button>
-
-                        <!-- SUBMENU TERBUKA -->
-                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                        <div class="collapse show" id="submenu-korektif">
                             <ul class="nav flex-column ps-4 my-1">
-                                <li>
-                                    <a class="menu-item py-1 " href="PewarnaanKorektif.html"><span>1. Pewarnaan
-                                            Korektif</span></a>
-                                </li>
-                                <li>
-                                    <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="KesalahanDalamPewarnaan.html"> <span>2.
+                                <li><a class="menu-item py-1 " href="PewarnaanKorektif.html"><span>1. Pewarnaan
+                                            Korektif</span></a></li>
+                                <li><a class="menu-item py-1" href="KesalahanDalamPewarnaan.html"> <span>2.
                                             Kesalahan
-                                            Dalam Pewarnaan</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="menu-item py-1" href="AyoLakukanC.html">3. Ayo Lakukan Pewarnaan</a>
-                                </li>
+                                            Dalam Pewarnaan</span></a></li>
+                                <li><a class="menu-item py-1" href="AyoLakukanC.html">3. Ayo Lakukan Pewarnaan</a></li>
                             </ul>
                         </div>
 
@@ -550,54 +498,48 @@
                                     <h3 class="h5 mb-0 fw-bold">Pengetahuan Dasar Pewarnaan Rambut</h3>
                                 </div>
                             </div>
-                            <!--  -->
+
                             <div class="card-body scrollable flex-grow-1 min-vh-0" id="apersepsi-hair-coloring">
-                                <!--  -->
+
+                                <!-- A. Masa Kuno -->
                                 <section class="pengertian mb-3">
                                     <div class="card shadow-sm">
-                                        <div class="accordion" id="accMateri">
+                                        <div class="accordion" id="accMateriA">
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="h1">
-
+                                                <h2 class="accordion-header" id="hA1">
                                                     <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#c1">👒🕰️ A. Masa
-                                                        Kuno (Mesir, Yunani, Romawi)</h3>
-                                                        <p class="mb-1"><strong>Pertanyaan pemantik:</strong>
-                                                            Mengapa orang di zaman
-                                                            kuno suka
-                                                            mewarnai rambut mereka?</p>
+                                                        data-bs-toggle="collapse" data-bs-target="#cA1">
+                                                        👒🕰️ A. Masa Kuno (Mesir, Yunani, Romawi)
                                                     </button>
-
                                                 </h2>
-                                                <div id="c1" class="accordion-collapse collapse show"
-                                                    data-bs-parent="#accMateri">
+                                                <div id="cA1" class="accordion-collapse collapse show"
+                                                    data-bs-parent="#accMateriA">
                                                     <div class="accordion-body text-secondary">
+                                                        <p class="mb-1"><strong>Pertanyaan pemantik:</strong>
+                                                            Mengapa orang di
+                                                            zaman kuno suka mewarnai rambut mereka?</p>
                                                         <ul>
                                                             <li><b>Mesir Kuno</b> menggunakan <i>henna</i> untuk
-                                                                rambut
-                                                                merah/gelap; Ramses II terkenal berambut merah.</li>
+                                                                rambut merah/gelap; Ramses II terkenal berambut merah.
+                                                            </li>
                                                             <li><b>Yunani</b> mencerahkan rambut dengan larutan
-                                                                kalium
-                                                                dan sinar matahari.</li>
-                                                            <li><b>Romawi</b> mencampur bubuk timah dan belerang
-                                                                untuk
+                                                                kalium dan sinar matahari.</li>
+                                                            <li><b>Romawi</b> mencampur bubuk timah dan belerang untuk
                                                                 warna gelap.</li>
                                                             <li>Venesia abad ke-16 memutihkan rambut di bawah
-                                                                matahari;
-                                                                resep tradisional memakai elderberry, anggur, lobak,
-                                                                dan
-                                                                ceruse.</li>
+                                                                matahari; resep tradisional memakai elderberry, anggur,
+                                                                lobak, dan ceruse.</li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
+
+                                        <!-- Aktivitas matching -->
                                         <div class="card-body">
                                             <section class="pengertian mb-4">
                                                 <div class="card shadow-sm">
                                                     <div class="card-body">
-
                                                         <h4 class="h6 mb-2">🧩 Aktivitas singkat: <em>Tebak bahan!</em>
                                                         </h4>
                                                         <p class="small text-muted">Cocokkan bahan dengan fungsinya,
@@ -680,63 +622,65 @@
                                                     </div>
                                                 </div>
                                             </section>
-
                                         </div>
                                     </div>
                                 </section>
 
-
-                                <!--  -->
+                                <!-- B. Abad Pertengahan & Renaisans + gambar wanita Venesia -->
                                 <section class="pengertian mb-3">
                                     <div class="card shadow-sm">
-                                        <div class="accordion" id="accMateri">
+                                        <div class="accordion" id="accMateriB">
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="h2">
+                                                <h2 class="accordion-header" id="hB1">
                                                     <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#c2">👒 B. Abad
-                                                        Pertengahan &
-                                                        Renaisans</h3>
-                                                        <p class="mb-1"><strong>Diskusi ringan:</strong> Apakah
-                                                            menurutmu orang
-                                                            zaman dulu sudah memperhatikan kesehatan rambut saat
-                                                            mewarnai?</p>
+                                                        data-bs-toggle="collapse" data-bs-target="#cB1">
+                                                        👒 B. Abad Pertengahan & Renaisans
                                                     </button>
                                                 </h2>
-                                                <div id="c2" class="accordion-collapse collapse"
-                                                    data-bs-parent="#accMateri">
+                                                <div id="cB1" class="accordion-collapse collapse"
+                                                    data-bs-parent="#accMateriB">
                                                     <div class="accordion-body text-secondary">
+                                                        <p class="mb-1"><strong>Diskusi ringan:</strong> Apakah
+                                                            menurutmu orang zaman dulu sudah memperhatikan kesehatan
+                                                            rambut saat mewarnai?</p>
                                                         <ul>
                                                             <li>Ramuan herbal & ekstrak sayuran (tawas, belerang,
                                                                 madu, henna, madder) untuk merah/pirang/gelap.</li>
                                                             <li>Italia Renaisans: campuran tawas–kapur & berjemur
-                                                                lama demi rambut pirang; berisiko merusak rambut.
-                                                            </li>
+                                                                lama demi rambut pirang; berisiko merusak rambut.</li>
                                                             <li>Prancis: <b>wig</b> populer; diwarnai kunyit, nila,
                                                                 dan serbuk kumbang untuk merah/biru/ungu.</li>
                                                         </ul>
+
+                                                        <!-- Gambar 1.1 Wanita Venesia Abad ke-16 -->
+                                                        <figure class="figure mt-3">
+                                                            <img src="../img/abadke16.jpg"
+                                                                alt="Wanita Venesia abad ke-16 dengan rambut berwarna terang">
+                                                            <figcaption class="figure-caption small">
+                                                                Gambar 1.1 Wanita Venesia abad ke-16. Contoh tren
+                                                                memutihkan rambut dengan sinar matahari dan ramuan
+                                                                tradisional.
+                                                            </figcaption>
+                                                        </figure>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
 
+                                        <!-- Mini quiz -->
                                         <div class="card-body">
                                             <section class="pengertian mb-4">
                                                 <div class="card shadow-sm">
                                                     <div class="card-body">
-
-
                                                         <h4 class="h6 mb-2">🎯 Mini Quiz</h4>
                                                         <div class="vstack gap-2">
                                                             <div>
                                                                 <div class="mb-1">1) Mengapa orang Venesia berjemur di
-                                                                    bawah
-                                                                    matahari?</div>
+                                                                    bawah matahari?</div>
                                                                 <div class="form-check"><input class="form-check-input"
                                                                         type="radio" name="siQb1" value="a"
                                                                         id="siQb1a"><label class="form-check-label"
-                                                                        for="siQb1a">Mengeringkan
-                                                                        rambut</label></div>
+                                                                        for="siQb1a">Mengeringkan rambut</label></div>
                                                                 <div class="form-check"><input class="form-check-input"
                                                                         type="radio" name="siQb1" value="b"
                                                                         id="siQb1b"><label class="form-check-label"
@@ -745,28 +689,23 @@
                                                                 <div class="form-check"><input class="form-check-input"
                                                                         type="radio" name="siQb1" value="c"
                                                                         id="siQb1c"><label class="form-check-label"
-                                                                        for="siQb1c">Menghilangkan
-                                                                        ketombe</label></div>
+                                                                        for="siQb1c">Menghilangkan ketombe</label></div>
                                                             </div>
                                                             <div>
                                                                 <div class="mb-1">2) Bahan alami yang digunakan bangsa
-                                                                    Prancis untuk
-                                                                    mewarnai wig adalah …</div>
+                                                                    Prancis untuk mewarnai wig adalah …</div>
                                                                 <div class="form-check"><input class="form-check-input"
                                                                         type="radio" name="siQb2" value="a"
                                                                         id="siQb2a"><label class="form-check-label"
-                                                                        for="siQb2a">Garam & cuka</label>
-                                                                </div>
+                                                                        for="siQb2a">Garam & cuka</label></div>
                                                                 <div class="form-check"><input class="form-check-input"
                                                                         type="radio" name="siQb2" value="b"
                                                                         id="siQb2b"><label class="form-check-label"
-                                                                        for="siQb2b">Kunyit & nila</label>
-                                                                </div>
+                                                                        for="siQb2b">Kunyit & nila</label></div>
                                                                 <div class="form-check"><input class="form-check-input"
                                                                         type="radio" name="siQb2" value="c"
                                                                         id="siQb2c"><label class="form-check-label"
-                                                                        for="siQb2c">Susu & madu</label>
-                                                                </div>
+                                                                        for="siQb2c">Susu & madu</label></div>
                                                             </div>
                                                         </div>
                                                         <div class="d-flex gap-2 mt-2">
@@ -780,77 +719,69 @@
                                                 </div>
                                             </section>
                                         </div>
-                                </section>
-
-
-                                <!--  -->
-                                <section class="pengertian mb-3">
-                                    <div class="card shadow-sm">
-
-                                        <div class="accordion" id="accMateri">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="h1">
-                                                    <button class="accordion-button" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#c1"
-                                                        aria-expanded="true">
-                                                        <h3 class="h6 text-uppercase text-muted mb-2">🧪 C.
-                                                            Revolusi
-                                                            Industri &
-                                                            Penemuan Kimia</h3>
-                                                    </button>
-                                                </h2>
-                                                <div id="c1" class="accordion-collapse collapse show"
-                                                    data-bs-parent="#accMateri">
-                                                    <div class="accordion-body text-secondary">
-                                                        <p class="mb-2"><strong>Pertanyaan
-                                                                reflektif:</strong> Bagaimana
-                                                            peran ilmu
-                                                            kimia dalam perkembangan kecantikan?</p>
-                                                        <p class="mb-0"><strong>Inti materi:</strong> Tahun
-                                                            1863,
-                                                            William H. Perkin
-                                                            menemukan <em>mauveine</em> (pewarna sintetis
-                                                            pertama).
-                                                            Awalnya untuk
-                                                            tekstil, namun membuka jalan bagi pewarna rambut
-                                                            modern—menandai
-                                                            transisi dari bahan alami ke kimia.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
                                     </div>
                                 </section>
 
-
-
-                                <!--  -->
+                                <!-- C. Revolusi Industri & Penemuan Kimia + botol mauve -->
                                 <section class="pengertian mb-3">
                                     <div class="card shadow-sm">
-
-                                        <div class="accordion" id="accMateri">
+                                        <div class="accordion" id="accMateriC">
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="h2">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#c2">
-                                                        <h3 class="h6 text-uppercase text-muted mb-2">💡 D. Era Modern:
-                                                            L’Oréal &
-                                                            Inovasi</h3>
-                                                        <p class="mb-1"><strong>Diskusi ringan:</strong> Apakah
-                                                            menurutmu orang
-                                                            zaman dulu sudah memperhatikan kesehatan rambut saat
-                                                            mewarnai?</p>
+                                                <h2 class="accordion-header" id="hC1">
+                                                    <button class="accordion-button" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#cC1"
+                                                        aria-expanded="true">
+                                                        🧪 C. Revolusi Industri & Penemuan Kimia
                                                     </button>
                                                 </h2>
-                                                <div id="c2" class="accordion-collapse collapse"
-                                                    data-bs-parent="#accMateri">
+                                                <div id="cC1" class="accordion-collapse collapse show"
+                                                    data-bs-parent="#accMateriC">
                                                     <div class="accordion-body text-secondary">
+                                                        <p class="mb-2"><strong>Pertanyaan reflektif:</strong> Bagaimana
+                                                            peran ilmu kimia dalam perkembangan kecantikan?</p>
+                                                        <p class="mb-2"><strong>Inti materi:</strong> Tahun 1863,
+                                                            William H. Perkin menemukan <em>mauveine</em> (pewarna
+                                                            sintetis pertama). Awalnya untuk tekstil, namun membuka
+                                                            jalan bagi pewarna rambut modern—menandai transisi dari
+                                                            bahan alami ke kimia.</p>
+
+                                                        <!-- Gambar 1.2 Botol berisi pewarna mauve -->
+                                                        <figure class="figure mt-2">
+                                                            <img src="../img/botolpewarna.jpg"
+                                                                alt="Botol berisi pewarna mauve sintetis">
+                                                            <figcaption class="figure-caption small">
+                                                                Gambar 1.2 Botol berisi pewarna mauve. Pewarna sintetis
+                                                                ini menjadi tonggak penting dalam sejarah industri
+                                                                pewarna.
+                                                            </figcaption>
+                                                        </figure>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- D. Era Modern + promo L'Oreal & Schueller -->
+                                <section class="pengertian mb-3">
+                                    <div class="card shadow-sm">
+                                        <div class="accordion" id="accMateriD">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="hD1">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#cD1">
+                                                        💡 D. Era Modern: L’Oréal & Inovasi
+                                                    </button>
+                                                </h2>
+                                                <div id="cD1" class="accordion-collapse collapse"
+                                                    data-bs-parent="#accMateriD">
+                                                    <div class="accordion-body text-secondary">
+                                                        <p class="mb-1"><strong>Diskusi ringan:</strong> Menurutmu,
+                                                            apa pengaruh perusahaan kosmetik besar terhadap tren warna
+                                                            rambut di masyarakat?</p>
                                                         <ul class="mb-3">
                                                             <li><strong>Eugène Schueller (1907):</strong> Oreale Dye
-                                                                berbasis
-                                                                hidrogen peroksida.</li>
+                                                                berbasis hidrogen peroksida.</li>
                                                             <li><strong>L’Oréal (1911):</strong> berekspansi global.
                                                             </li>
                                                             <li><strong>1920-an:</strong> pewarna permanen (amonia +
@@ -860,11 +791,33 @@
                                                             <li><strong>Sekarang:</strong> warna = ekspresi diri & gaya
                                                                 hidup.</li>
                                                         </ul>
+
+                                                        <!-- Gambar 1.3 Promo L'Oreal -->
+                                                        <figure class="figure mt-2">
+                                                            <img src="../img/promoeiloreal.jpg"
+                                                                alt="Poster promosi awal produk pewarna rambut L'Oreal">
+                                                            <figcaption class="figure-caption small">
+                                                                Gambar 1.3 Promosi awal produk L’Oréal. Iklan digunakan
+                                                                untuk memperkenalkan pewarna rambut sintetis kepada
+                                                                masyarakat luas.
+                                                            </figcaption>
+                                                        </figure>
+
+                                                        <!-- Gambar 1.4 Eugene Schueller -->
+                                                        <figure class="figure mt-3">
+                                                            <img src="../img/uegne.png"
+                                                                alt="Eugene Schueller, pendiri L'Oreal">
+                                                            <figcaption class="figure-caption small">
+                                                                Gambar 1.4 Eugène Schueller, pendiri L’Oréal. Karyanya
+                                                                memulai era baru pewarna rambut modern.
+                                                            </figcaption>
+                                                        </figure>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
+
+                                        <!-- Urutkan waktu -->
                                         <div class="card-body">
                                             <section class="pengertian mb-4">
                                                 <div class="card shadow-sm">
@@ -874,20 +827,15 @@
                                                             kronologi.</p>
                                                         <div id="siSortPool" class="drag-pool">
                                                             <div class="drag-chip" draggable="true" data-k="1">Pewarna
-                                                                alami Mesir
-                                                                Kuno</div>
+                                                                alami Mesir Kuno</div>
                                                             <div class="drag-chip" draggable="true" data-k="2">Penemuan
-                                                                Mauveine
-                                                            </div>
+                                                                Mauveine</div>
                                                             <div class="drag-chip" draggable="true" data-k="3">Lahirnya
-                                                                L’Oréal
-                                                            </div>
+                                                                L’Oréal</div>
                                                             <div class="drag-chip" draggable="true" data-k="4">Pewarna
-                                                                rambut
-                                                                rumahan</div>
+                                                                rambut rumahan</div>
                                                             <div class="drag-chip" draggable="true" data-k="5">Tren
-                                                                balayage modern
-                                                            </div>
+                                                                balayage modern</div>
                                                         </div>
                                                         <div class="d-flex gap-2 mt-2">
                                                             <button class="btn btn-brand" id="siCheckSort">Periksa
@@ -901,29 +849,22 @@
                                             </section>
                                         </div>
                                     </div>
-
                                 </section>
 
-
-
-                                <!--  -->
+                                <!-- E. Risiko -->
                                 <section class="pengertian mb-3">
                                     <div class="card shadow-sm">
-
-
-                                        <div class="accordion" id="accMateri">
+                                        <div class="accordion" id="accMateriE">
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="h1">
+                                                <h2 class="accordion-header" id="hE1">
                                                     <button class="accordion-button" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#c1"
+                                                        data-bs-toggle="collapse" data-bs-target="#cE1"
                                                         aria-expanded="true">
-                                                        ⚠️ E. Risiko dan
-                                                        Kesadaran
-                                                        Kesehatan</h3>
+                                                        ⚠️ E. Risiko dan Kesadaran Kesehatan
                                                     </button>
                                                 </h2>
-                                                <div id="c1" class="accordion-collapse collapse show"
-                                                    data-bs-parent="#accMateri">
+                                                <div id="cE1" class="accordion-collapse collapse show"
+                                                    data-bs-parent="#accMateriE">
                                                     <div class="accordion-body text-secondary">
                                                         <ul>
                                                             <li>Reaksi yang dilaporkan: dermatitis iritan/kontak, alergi
@@ -935,19 +876,20 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="card-body">
                                             <section class="pengertian mb-4">
                                                 <div class="card shadow-sm">
                                                     <div class="card-body">
-
                                                         <p class="mb-1"><strong>Refleksi diri:</strong> Apakah penting
-                                                            mengetahui
-                                                            kandungan kimia dalam produk? Jelaskan alasanmu!</p>
+                                                            mengetahui kandungan kimia dalam produk? Jelaskan
+                                                            alasanmu!</p>
                                                         <textarea id="siRefRisk" class="form-control" rows="2"
                                                             placeholder="Tulis pendapatmu..."></textarea>
-                                                        <div class="d-flex gap-2 mt-2"><button class="btn btn-brand"
-                                                                id="siSaveRisk">Simpan</button><button
-                                                                class="btn btn-outline-secondary"
+                                                        <div class="d-flex gap-2 mt-2">
+                                                            <button class="btn btn-brand"
+                                                                id="siSaveRisk">Simpan</button>
+                                                            <button class="btn btn-outline-secondary"
                                                                 id="siClearRisk">Hapus</button>
                                                         </div>
                                                         <div id="siRiskFb" class="mt-2 small"></div>
@@ -958,79 +900,59 @@
                                     </div>
                                 </section>
 
-
-
-                                <!--  -->
+                                <!-- F. Kesimpulan -->
                                 <section class="pengertian mb-3">
                                     <div class="card shadow-sm">
-                                        <div class="accordion" id="accMateri">
+                                        <div class="accordion" id="accMateriF">
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header" id="h1">
+                                                <h2 class="accordion-header" id="hF1">
                                                     <button class="accordion-button" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#c1"
+                                                        data-bs-toggle="collapse" data-bs-target="#cF1"
                                                         aria-expanded="true">
-                                                        <h3 class="h6 text-uppercase text-muted mb-2">🧭 F.
-                                                            Kesimpulan
-                                                            <h3 class="h6 text-uppercase text-muted mb-2">🧭
-                                                                F. Kesimpulan
-
+                                                        🧭 F. Kesimpulan
                                                     </button>
                                                 </h2>
-                                                <div id="c1" class="accordion-collapse collapse show"
-                                                    data-bs-parent="#accMateri">
+                                                <div id="cF1" class="accordion-collapse collapse show"
+                                                    data-bs-parent="#accMateriF">
                                                     <div class="accordion-body text-secondary">
-                                                        <p class="mb-0">Pewarnaan rambut mencerminkan
-                                                            perkembangan
-                                                            budaya,
-                                                            teknologi, dan sains. Dari henna Mesir Kuno
-                                                            hingga inovasi
-                                                            modern,
-                                                            setiap era menunjukkan kebutuhan manusia untuk
-                                                            berekspresi
-                                                            melalui
-                                                            rambut.</p>
+                                                        <p class="mb-0">Pewarnaan rambut mencerminkan perkembangan
+                                                            budaya, teknologi, dan sains. Dari henna Mesir Kuno hingga
+                                                            inovasi modern, setiap era menunjukkan kebutuhan manusia
+                                                            untuk berekspresi melalui rambut.</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </section>
 
-
-                                <!--  -->
+                                <!-- G. Kuis akhir -->
                                 <section class="pengertian mb-3">
                                     <div class="card shadow-sm">
                                         <div class="card-body">
                                             <h3 class="h6 text-uppercase text-muted mb-2">🧠 G. Kuis Akhir
-                                                (Evaluasi
-                                                Ringan)</h3>
+                                                (Evaluasi Ringan)</h3>
                                             <ol class="mb-2" id="siEssay">
-                                                <li class="mb-2">Siapa penemu pewarna sintetis pertama di
-                                                    dunia?
+                                                <li class="mb-2">Siapa penemu pewarna sintetis pertama di dunia?
                                                     <input type="text" class="form-control form-control-sm mt-1"
                                                         data-q="q1" placeholder="Ketik jawaban...">
                                                 </li>
-                                                <li class="mb-2">Apa fungsi hidrogen peroksida dalam pewarna
-                                                    rambut
+                                                <li class="mb-2">Apa fungsi hidrogen peroksida dalam pewarna rambut
                                                     modern?
                                                     <input type="text" class="form-control form-control-sm mt-1"
                                                         data-q="q2" placeholder="Ketik jawaban...">
                                                 </li>
-                                                <li class="mb-2">Sebutkan dua bahan alami yang digunakan
-                                                    untuk pewarnaan
+                                                <li class="mb-2">Sebutkan dua bahan alami yang digunakan untuk pewarnaan
                                                     rambut zaman kuno.
                                                     <input type="text" class="form-control form-control-sm mt-1"
                                                         data-q="q3" placeholder="Contoh: henna, ...">
                                                 </li>
-                                                <li class="mb-2">Mengapa abad ke-20 disebut era
-                                                    demokratisasi warna
+                                                <li class="mb-2">Mengapa abad ke-20 disebut era demokratisasi warna
                                                     rambut?
                                                     <input type="text" class="form-control form-control-sm mt-1"
                                                         data-q="q4" placeholder="Ketik jawaban...">
                                                 </li>
-                                                <li class="mb-2">Sebutkan dua risiko penggunaan pewarna
-                                                    kimia.
+                                                <li class="mb-2">Sebutkan dua risiko penggunaan pewarna kimia.
                                                     <input type="text" class="form-control form-control-sm mt-1"
                                                         data-q="q5" placeholder="Ketik jawaban...">
                                                 </li>
@@ -1045,17 +967,13 @@
                                     </div>
                                 </section>
 
-
-                                <!--  -->
+                                <!-- H. Penutup -->
                                 <section class="pengertian mb-3">
                                     <div class="card shadow-sm">
                                         <div class="card-body">
-                                            <h3 class="h6 text-uppercase text-muted mb-2">💬 H. Kegiatan
-                                                Penutup</h3>
-                                            <p class="mb-2">🎨 <strong>Tugas Kreatif:</strong> Buat
-                                                poster/timeline
-                                                digital bertema “Evolusi Warna Rambut dari Dulu Hingga
-                                                Kini”. Sertakan
+                                            <h3 class="h6 text-uppercase text-muted mb-2">💬 H. Kegiatan Penutup</h3>
+                                            <p class="mb-2">🎨 <strong>Tugas Kreatif:</strong> Buat poster/timeline
+                                                digital bertema “Evolusi Warna Rambut dari Dulu Hingga Kini”. Sertakan
                                                 gambar/ikon & keterangan singkat.</p>
                                             <div class="d-flex gap-2">
                                                 <button class="btn btn-outline-primary" id="siExport">Ekspor
@@ -1068,14 +986,13 @@
                                     </div>
                                 </section>
 
-
-
-
                             </div>
+                        </div>
+                    </div>
                 </section>
+            </div>
+        </div>
     </main>
-
-
 
     <!-- CTA tetap di atas footer -->
     <div class="sticky-cta">
@@ -1091,6 +1008,7 @@
             </div>
         </div>
     </div>
+
     <!-- FOOTER -->
     <footer class="footer fixed-bottom py-2">
         <div class="container d-flex justify-content-between align-items-center small">
@@ -1124,32 +1042,36 @@
             const kunciMatch = { henna: 'merah', timah: 'gelap', kalium: 'pirang' };
             $('#siCheckMatch')?.addEventListener('click', () => {
                 const selected = {}; let benar = 0;
-                $$('.si-match').forEach(sel => { selected[sel.dataset.key] = sel.value; if (kunciMatch[sel.dataset.key] === sel.value) benar++; });
+                $$('.si-match').forEach(sel => {
+                    selected[sel.dataset.key] = sel.value;
+                    if (kunciMatch[sel.dataset.key] === sel.value) benar++;
+                });
                 const all = Object.keys(kunciMatch).length;
                 $('#siMatchFb').innerHTML = benar === all ? ok('Mantap! Semua benar.') : warn(`Benar ${benar}/${all}. Coba lagi ya.`);
                 const d = get(); d.matchOk = (benar === all); d.match = selected; set(d); progress();
             });
-            $('#siResetMatch')?.addEventListener('click', () => { $$('.si-match').forEach(sel => sel.value = ''); const d = get(); delete d.matchOk; delete d.match; set(d); $('#siMatchFb').innerHTML = ''; progress(); });
+            $('#siResetMatch')?.addEventListener('click', () => {
+                $$('.si-match').forEach(sel => sel.value = '');
+                const d = get(); delete d.matchOk; delete d.match; set(d);
+                $('#siMatchFb').innerHTML = ''; progress();
+            });
 
             // === B. Mini Quiz ===
             const miniKey = { siQb1: 'b', siQb2: 'b' };
-
             $('#siCheckMini')?.addEventListener('click', () => {
                 let benar = 0;
                 const total = 2;
                 const d = get();
-                const jawab = {};   // <-- untuk menyimpan jawaban siswa
+                const jawab = {};
 
                 Object.keys(miniKey).forEach(name => {
                     const sel = document.querySelector(`input[name="${name}"]:checked`);
-                    jawab[name] = sel ? sel.value : null;    // simpan ke object jawab
-                    if (sel && sel.value === miniKey[name]) {
-                        benar++;
-                    }
+                    jawab[name] = sel ? sel.value : null;
+                    if (sel && sel.value === miniKey[name]) benar++;
                 });
 
                 d.miniOk = (benar === total);
-                d.mini = jawab;      // <-- SIMPAN jawaban ke localStorage
+                d.mini = jawab;
                 set(d);
 
                 $('#siMiniFb').innerHTML =
@@ -1158,28 +1080,35 @@
                         : warn(`Skor ${benar}/${total}. Pelajari ringkasan di atas.`);
                 progress();
             });
-
             $('#siResetMini')?.addEventListener('click', () => {
                 $$('input[name="siQb1"]').forEach(r => r.checked = false);
                 $$('input[name="siQb2"]').forEach(r => r.checked = false);
-
-                const d = get();
-                delete d.miniOk;
-                delete d.mini;            // <-- hapus juga jawaban tersimpan
-                set(d);
-
-                $('#siMiniFb').innerHTML = '';
-                progress();
+                const d = get(); delete d.miniOk; delete d.mini; set(d);
+                $('#siMiniFb').innerHTML = ''; progress();
             });
 
             // === D. Urutkan Waktu (drag to sort) ===
             const pool = $('#siSortPool'); let dragRef = null;
-            document.addEventListener('dragstart', e => { if (e.target.classList.contains('drag-chip')) { dragRef = e.target; e.dataTransfer.setData('text/plain', e.target.dataset.k); } });
-            document.addEventListener('dragover', e => { if (e.target.classList.contains('drag-chip') || e.target === pool) { e.preventDefault(); } });
+            document.addEventListener('dragstart', e => {
+                if (e.target.classList.contains('drag-chip')) {
+                    dragRef = e.target;
+                    e.dataTransfer.setData('text/plain', e.target.dataset.k);
+                }
+            });
+            document.addEventListener('dragover', e => {
+                if (e.target.classList.contains('drag-chip') || e.target === pool) {
+                    e.preventDefault();
+                }
+            });
             document.addEventListener('drop', e => {
                 if (e.target.classList.contains('drag-chip') && dragRef) {
-                    e.preventDefault(); const after = e.target; if (after !== dragRef) { pool.insertBefore(dragRef, after); }
-                } else if (e.target === pool && dragRef) { e.preventDefault(); pool.appendChild(dragRef); }
+                    e.preventDefault();
+                    const after = e.target;
+                    if (after !== dragRef) pool.insertBefore(dragRef, after);
+                } else if (e.target === pool && dragRef) {
+                    e.preventDefault();
+                    pool.appendChild(dragRef);
+                }
             });
             $('#siCheckSort')?.addEventListener('click', () => {
                 const order = $$('.drag-chip', pool).map(ch => ch.dataset.k).join('-');
@@ -1189,14 +1118,29 @@
                 progress();
             });
             $('#siResetSort')?.addEventListener('click', () => {
-                const keys = ['1', '2', '3', '4', '5']; keys.forEach(k => pool.appendChild($(`.drag-chip[data-k="${k}"]`))); const d = get(); delete d.sortOk; delete d.sortOrder; set(d); $('#siSortFb').innerHTML = ''; progress();
+                const keys = ['1', '2', '3', '4', '5'];
+                keys.forEach(k => pool.appendChild($(`.drag-chip[data-k="${k}"]`)));
+                const d = get(); delete d.sortOk; delete d.sortOrder; set(d);
+                $('#siSortFb').innerHTML = ''; progress();
             });
 
             // === E. Refleksi risiko ===
-            $('#siSaveRisk')?.addEventListener('click', () => { const txt = $('#siRefRisk').value.trim(); if (!txt) { $('#siRiskFb').innerHTML = warn('Tulis pendapatmu dulu.'); return; } const d = get(); d.risk = { txt, at: Date.now() }; set(d); $('#siRiskFb').innerHTML = ok('Tersimpan.'); progress(); });
-            $('#siClearRisk')?.addEventListener('click', () => { const d = get(); delete d.risk; set(d); $('#siRefRisk').value = ''; $('#siRiskFb').innerHTML = ''; progress(); });
+            $('#siSaveRisk')?.addEventListener('click', () => {
+                const txt = $('#siRefRisk').value.trim();
+                if (!txt) {
+                    $('#siRiskFb').innerHTML = warn('Tulis pendapatmu dulu.');
+                    return;
+                }
+                const d = get(); d.risk = { txt, at: Date.now() }; set(d);
+                $('#siRiskFb').innerHTML = ok('Tersimpan.');
+                progress();
+            });
+            $('#siClearRisk')?.addEventListener('click', () => {
+                const d = get(); delete d.risk; set(d);
+                $('#siRefRisk').value = ''; $('#siRiskFb').innerHTML = ''; progress();
+            });
 
-            // === G. Kuis Akhir (cek berbasis kata kunci sederhana) ===
+            // === G. Kuis Akhir ===
             const rubric = {
                 q1: { keys: ['perkin'], min: 1 },
                 q2: { keys: ['oksidasi', 'developer', 'mengoksidasi', 'membuka', 'aktifkan', 'peroksida'], min: 1 },
@@ -1205,42 +1149,82 @@
                 q5: { keysAny: [['alergi', 'iritasi', 'dermatitis'], ['sensitisasi', 'reaksi', 'ruam'], ['kerusakan', 'kering', 'patah']], minSets: 2 }
             };
             function scoreEssay() {
-                const vals = {}; $('#siEssay').querySelectorAll('input[data-q]').forEach(inp => vals[inp.dataset.q] = inp.value.toLowerCase());
-                let pts = 0, total = 5, detail = [];
-                // q1, q2, q4 simple contains
-                ['q1', 'q2', 'q4'].forEach(q => { const v = vals[q] || ''; const req = rubric[q]; const hit = req.keys.some(k => v.includes(k)); if (hit) pts++; detail.push([q, hit]); });
-                // q3 & q5 require at least N sets
-                const q3v = (vals.q3 || ''); const q5v = (vals.q5 || '');
+                const vals = {};
+                $('#siEssay').querySelectorAll('input[data-q]').forEach(inp => vals[inp.dataset.q] = inp.value.toLowerCase());
+                let pts = 0, total = 5;
+
+                ['q1', 'q2', 'q4'].forEach(q => {
+                    const v = vals[q] || '';
+                    const req = rubric[q];
+                    const hit = req.keys.some(k => v.includes(k));
+                    if (hit) pts++;
+                });
+
+                const q3v = (vals.q3 || '');
+                const q5v = (vals.q5 || '');
                 const hit3 = (rubric.q3.keysAny || []).reduce((acc, set) => acc + (set.some(k => q3v.includes(k)) ? 1 : 0), 0) >= (rubric.q3.minSets || 2);
                 const hit5 = (rubric.q5.keysAny || []).reduce((acc, set) => acc + (set.some(k => q5v.includes(k)) ? 1 : 0), 0) >= (rubric.q5.minSets || 2);
-                if (hit3) pts++; if (hit5) pts++; detail.push(['q3', hit3]); detail.push(['q5', hit5]);
+                if (hit3) pts++; if (hit5) pts++;
+
                 const skor = Math.round((pts / total) * 100);
                 const d = get(); d.essayScore = skor; d.essayAns = vals; set(d);
                 $('#siEssayFb').innerHTML = `<div class="alert ${skor >= 80 ? 'alert-success' : 'alert-info'} mb-0">Skor kamu: <strong>${skor}</strong>/100 (${pts} benar dari ${total}).</div>`;
                 progress();
             }
             $('#siCheckEssay')?.addEventListener('click', scoreEssay);
-            $('#siResetEssay')?.addEventListener('click', () => { $$('#siEssay input[data-q]').forEach(i => i.value = ''); const d = get(); delete d.essayScore; delete d.essayAns; set(d); $('#siEssayFb').innerHTML = ''; progress(); });
+            $('#siResetEssay')?.addEventListener('click', () => {
+                $$('#siEssay input[data-q]').forEach(i => i.value = '');
+                const d = get(); delete d.essayScore; delete d.essayAns; set(d);
+                $('#siEssayFb').innerHTML = ''; progress();
+            });
 
-            // === Ekspor/Impor ===
-            $('#siExport')?.addEventListener('click', () => { const blob = new Blob([JSON.stringify(get(), null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'progres-sejarah.json'; a.click(); URL.revokeObjectURL(url); });
-            $('#siImport')?.addEventListener('change', (e) => { const f = e.target.files?.[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { const data = JSON.parse(r.result); if (data && typeof data === 'object') { localStorage.setItem(KEY, JSON.stringify(data)); location.reload(); } } catch (err) { alert('File tidak valid.'); } }; r.readAsText(f); });
+            // Ekspor / impor
+            $('#siExport')?.addEventListener('click', () => {
+                const blob = new Blob([JSON.stringify(get(), null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'progres-sejarah.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+            $('#siImport')?.addEventListener('change', (e) => {
+                const f = e.target.files?.[0]; if (!f) return;
+                const r = new FileReader();
+                r.onload = () => {
+                    try {
+                        const data = JSON.parse(r.result);
+                        if (data && typeof data === 'object') {
+                            localStorage.setItem(KEY, JSON.stringify(data));
+                            location.reload();
+                        }
+                    } catch (err) {
+                        alert('File tidak valid.');
+                    }
+                };
+                r.readAsText(f);
+            });
 
-            // === Restore on load ===
+            // Restore on load
             window.addEventListener('DOMContentLoaded', () => {
                 const d = get();
-                // restore matching
-                if (d.match) Object.entries(d.match).forEach(([k, v]) => { const sel = document.querySelector(`.si-match[data-key="${k}"]`); if (sel) sel.value = v; });
-                // restore mini
+                if (d.match) Object.entries(d.match).forEach(([k, v]) => {
+                    const sel = document.querySelector(`.si-match[data-key="${k}"]`);
+                    if (sel) sel.value = v;
+                });
                 if (d.mini) {
                     Object.entries(d.mini).forEach(([name, val]) => {
                         const r = document.querySelector(`input[name="${name}"][value="${val}"]`);
                         if (r) r.checked = true;
                     });
-                } // restore risk
+                }
                 if (d.risk?.txt) $('#siRefRisk').value = d.risk.txt;
-                // restore essay
-                if (d.essayAns) { Object.entries(d.essayAns).forEach(([k, v]) => { const inp = document.querySelector(`#siEssay input[data-q="${k}"]`); if (inp) inp.value = v; }); }
+                if (d.essayAns) {
+                    Object.entries(d.essayAns).forEach(([k, v]) => {
+                        const inp = document.querySelector(`#siEssay input[data-q="${k}"]`);
+                        if (inp) inp.value = v;
+                    });
+                }
                 progress();
             });
         })();

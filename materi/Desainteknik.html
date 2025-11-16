@@ -142,7 +142,11 @@
         /* 1) Mobile: biarkan halaman memanjang normal */
         @media (max-width: 767.98px) {
 
-            /* jangan kunci tinggi halaman di HP */
+            /* HP: tidak perlu padding bawah besar karena footer tidak fixed */
+            body {
+                padding-bottom: 0;
+            }
+
             main.app-shell {
                 height: auto;
                 overflow: visible;
@@ -154,7 +158,6 @@
                 overflow: visible;
             }
 
-            /* kartu ikut tinggi natural agar isi tidak terpotong */
             .materi-card {
                 height: auto;
             }
@@ -165,7 +168,6 @@
                 overflow: visible;
             }
 
-            /* sidebar muncul di atas konten, tidak fixed */
             .sidebar-fixed {
                 position: static;
                 width: 100%;
@@ -173,10 +175,15 @@
                 overflow: visible;
             }
 
-            /* sticky CTA biar rapi penuh di HP */
+            /* tombol ikut alur di bawah konten */
             .sticky-cta {
                 position: static;
-                margin-top: .5rem;
+                margin-top: .75rem;
+            }
+
+            /* footer juga ikut alur (tidak fixed) saat HP */
+            .footer {
+                position: static !important;
             }
         }
 
@@ -303,6 +310,17 @@
         }
 
         /* Figure (gambar) */
+        #figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            /* supaya gambar tidak terpotong dan bagian atas–bawah lebih kelihatan */
+            object-fit: contain;
+            /* naikkan tinggi maksimum gambar (boleh disesuaikan lagi) */
+            max-height: 650px;
+        }
+
         .figure img {
             border-radius: 12px;
             border: 1px solid var(--brand-100);
@@ -389,12 +407,12 @@
                     <nav class="menu-card sidebar-fixed shadow-sm">
                         <div class="menu-title"><i class="bi bi-journal-bookmark"></i> Materi</div>
 
-                        <a class="menu-item" href="PengetahuanDasarRambut.html"><i class="bi bi-lightbulb"></i>
-                            Pengetahuan Dasar
-                            Rambut</a>
+                        <a class="menu-item " aria-current="page" href="PengetahuanDasarRambut.html"><i
+                                class="bi bi-lightbulb"></i> Pengetahuan Dasar Rambut</a>
 
                         <!-- TOMBOL INDUK TERBUKA TEORI-->
                         <div class="menu-item active">
+
                             <button class=" d-flex align-items-center w-100 border-0 bg-transparent" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#submenu-teori" aria-expanded="true"
                                 aria-controls="submenu-teori" href="./peralatan.html">
@@ -410,7 +428,7 @@
                             <ul class="nav flex-column ps-4 my-1">
                                 <li>
 
-                                    <a class="menu-item py-1 active" aria-current="page" href="Sejarah.html"><span>1.
+                                    <a class="menu-item py-1 " aria-current="page" href="Sejarah.html"><span>1.
                                             Sejarah</span></a>
                                 </li>
                                 <li>
@@ -430,6 +448,10 @@
                                         Teknik
                                         Pewarnaan</a>
                                 </li>
+                                <li>
+                                    <a class="menu-item py-1 " href="AyoLakukanA.html">6. Ayo Lakukan
+                                        Pewarnaan</a>
+                                </li>
                             </ul>
                         </div>
 
@@ -437,7 +459,7 @@
                         <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
                             data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
                             aria-controls="submenu-peralatan">
-                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="me-2"><i class="bi bi-palette"></i></span>
                             <span class="flex-grow-1 text-start">B. Teori Warna</span>
                             <i class="bi bi-chevron-down small"></i>
                             <a>
@@ -447,7 +469,7 @@
                         <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
                             <ul class="nav flex-column ps-4 my-1">
                                 <li>
-                                    <a class="menu-item py-1" href="PengetahuanWarna.html"><span>1. Pengetahuan
+                                    <a class="menu-item py-1 " href="PengetahuanWarna.html"><span>1. Pengetahuan
                                             Warna</span></a>
                                 </li>
                                 <li>
@@ -458,14 +480,55 @@
                                 </li>
                                 <li>
                                     <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="KoreksiWarna.html"> <span>3. Koreksi Warna</span>
+                                    <a class="menu-item py-1" href="KoreksiWarna.html"> <span>3. Koreksi
+                                            Warna</span>
                                     </a>
                                 </li>
                                 <li>
                                     <!-- ITEM SEDANG DIBACA -->
-                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>3. Pengaruh
+                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>4. Pengaruh
                                             Modifikasi</span>
                                     </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>5. Warna Dingin
+                                            dan
+                                            Hanga</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="AyoLakukanB.html">6. Ayo Lakukan Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
+                            aria-controls="submenu-peralatan">
+                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="flex-grow-1 text-start">C. Pewarnaan Korektif</span>
+                            <i class="bi bi-chevron-down small"></i>
+                            <a>
+                        </button>
+
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1 " href="PewarnaanKorektif.html"><span>1. Pewarnaan
+                                            Korektif</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KesalahanDalamPewarnaan.html"> <span>2.
+                                            Kesalahan
+                                            Dalam Pewarnaan</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="AyoLakukanC.html">3. Ayo Lakukan Pewarnaan</a>
                                 </li>
                             </ul>
                         </div>
@@ -531,13 +594,7 @@
                                                 Teknik Prancis dengan sapuan lembut menghasilkan <strong>gradasi
                                                     natural</strong> dari akar ke ujung (sering di bagian ujung/
                                                 tipping).
-                                                <figure class="figure mt-2">
-                                                    <img src="/mnt/data/f39780a4-86bd-4fa0-be11-c55279972c96.png"
-                                                        class="img-fluid" alt="Highlight Rambut"
-                                                        data-full="/mnt/data/f39780a4-86bd-4fa0-be11-c55279972c96.png">
-                                                    <figcaption class="figure-caption">Gambar 1.8 Highlight Rambut
-                                                    </figcaption>
-                                                </figure>
+
                                             </div>
                                         </div>
                                     </div>
@@ -581,8 +638,10 @@
                                                 Mencerahkan <strong>bagian-bagian tertentu</strong> rambut untuk memberi
                                                 kilau & dimensi sehingga tampak tebal dan hidup.
                                                 <figure class="figure mt-2">
-                                                    <img src="/mnt/data/f39780a4-86bd-4fa0-be11-c55279972c96.png"
-                                                        class="img-fluid" alt="Highlight Rambut">
+                                                    <img src="../img/1,8.png" class="img-fluid" alt="Highlight Rambut"
+                                                        data-full="/mnt/data/f39780a4-86bd-4fa0-be11-c55279972c96.png">
+                                                    <figcaption class="figure-caption">Gambar 1.8 Highlight Rambut
+                                                    </figcaption>
                                                 </figure>
                                             </div>
                                         </div>
@@ -628,8 +687,7 @@
                                                 Fokus di <strong>bagian depan</strong> untuk membingkai wajah (variasi
                                                 highlight).
                                                 <figure class="figure mt-2">
-                                                    <img src="/mnt/data/4e8583f5-ebd1-4eba-89ab-6da7a7a70621.png"
-                                                        class="img-fluid" alt="Money Piece"
+                                                    <img src="../img/1,9.png" class="img-fluid" alt="Money Piece"
                                                         data-full="/mnt/data/4e8583f5-ebd1-4eba-89ab-6da7a7a70621.png">
                                                     <figcaption class="figure-caption">Gambar 1.9 Money Piece
                                                     </figcaption>
@@ -650,8 +708,7 @@
                                                 (sun-kissed). Dapat divariasikan dengan warna vibrant (pink, hijau,
                                                 kuning).
                                                 <figure class="figure mt-2">
-                                                    <img src="/mnt/data/9f2f2752-67d1-41a4-9883-9579175bef71.png"
-                                                        class="img-fluid" alt="Splashlight"
+                                                    <img src="../img/1,10.png" class="img-fluid" alt="Splashlight"
                                                         data-full="/mnt/data/9f2f2752-67d1-41a4-9883-9579175bef71.png">
                                                     <figcaption class="figure-caption">Gambar 1.10 Teknik Splashlight
                                                     </figcaption>

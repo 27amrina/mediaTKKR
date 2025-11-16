@@ -159,7 +159,11 @@
         /* 1) Mobile: biarkan halaman memanjang normal */
         @media (max-width: 767.98px) {
 
-            /* jangan kunci tinggi halaman di HP */
+            /* HP: tidak perlu padding bawah besar karena footer tidak fixed */
+            body {
+                padding-bottom: 0;
+            }
+
             main.app-shell {
                 height: auto;
                 overflow: visible;
@@ -171,7 +175,6 @@
                 overflow: visible;
             }
 
-            /* kartu ikut tinggi natural agar isi tidak terpotong */
             .materi-card {
                 height: auto;
             }
@@ -182,7 +185,6 @@
                 overflow: visible;
             }
 
-            /* sidebar muncul di atas konten, tidak fixed */
             .sidebar-fixed {
                 position: static;
                 width: 100%;
@@ -190,10 +192,15 @@
                 overflow: visible;
             }
 
-            /* sticky CTA biar rapi penuh di HP */
+            /* tombol ikut alur di bawah konten */
             .sticky-cta {
                 position: static;
-                margin-top: .5rem;
+                margin-top: .75rem;
+            }
+
+            /* footer juga ikut alur (tidak fixed) saat HP */
+            .footer {
+                position: static !important;
             }
         }
 
@@ -273,8 +280,10 @@
             width: 100%;
             height: auto;
             border-radius: 12px;
-            object-fit: cover;
-            max-height: 420px;
+            /* supaya gambar tidak terpotong dan bagian atas–bawah lebih kelihatan */
+            object-fit: contain;
+            /* naikkan tinggi maksimum gambar (boleh disesuaikan lagi) */
+            max-height: 650px;
         }
 
         .figure img {
@@ -414,7 +423,7 @@
                         <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
                             data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
                             aria-controls="submenu-peralatan">
-                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="me-2"><i class="bi bi-palette"></i></span>
                             <span class="flex-grow-1 text-start">B. Teori Warna</span>
                             <i class="bi bi-chevron-down small"></i>
                             <a>
@@ -535,17 +544,7 @@
                                                                 <span class="badge text-bg-light border">Ketahanan: 1–3
                                                                     kali keramas</span>
                                                             </div>
-                                                            <div class="col-md-5">
-                                                                <figure class="figure mb-0">
-                                                                    <img src="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png"
-                                                                        class="img-fluid"
-                                                                        alt="Contoh produk temporary & semi-permanent"
-                                                                        data-full="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png">
-                                                                    <figcaption class="figure-caption">Gambar 1.5
-                                                                        Semi/Temporary — editorial.femaledaily/Ochell
-                                                                        (2019)</figcaption>
-                                                                </figure>
-                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -577,14 +576,15 @@
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <figure class="figure mb-0">
-                                                                    <img src="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png"
-                                                                        class="img-fluid"
-                                                                        alt="Contoh produk semi-permanent"
+                                                                    <img src="../img/1,5.jpg" class="img-fluid"
+                                                                        alt="Contoh produk temporary & semi-permanent"
                                                                         data-full="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png">
-                                                                    <figcaption class="figure-caption">Contoh kemasan
-                                                                        semipermanen.</figcaption>
+                                                                    <figcaption class="figure-caption">Gambar 1.5
+                                                                        Semi/Temporary — editorial.femaledaily/Ochell
+                                                                        (2019)</figcaption>
                                                                 </figure>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -614,8 +614,7 @@
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <figure class="figure mb-0">
-                                                                    <img src="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png"
-                                                                        class="img-fluid"
+                                                                    <img src="../img/1,6.png" class="img-fluid"
                                                                         alt="Contoh demi-permanent (box dye)"
                                                                         data-full="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png">
                                                                     <figcaption class="figure-caption">Gambar 1.6
@@ -653,16 +652,7 @@
                                                                 <span class="badge text-bg-light border">Ketahanan:
                                                                     paling awet</span>
                                                             </div>
-                                                            <div class="col-md-5">
-                                                                <figure class="figure mb-0">
-                                                                    <img src="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png"
-                                                                        class="img-fluid"
-                                                                        alt="Contoh kemasan permanen (ilustrasi box)"
-                                                                        data-full="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png">
-                                                                    <figcaption class="figure-caption">Ilustrasi box dye
-                                                                        brand salon/ritel.</figcaption>
-                                                                </figure>
-                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -691,8 +681,7 @@
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <figure class="figure mb-0">
-                                                                    <img src="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png"
-                                                                        class="img-fluid"
+                                                                    <img src="../img/1,7.png" class="img-fluid"
                                                                         alt="Kemasan henna di halaman sumber"
                                                                         data-full="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png">
                                                                     <figcaption class="figure-caption">Gambar 1.7 Henna
@@ -725,16 +714,7 @@
                                                                 </ul>
                                                                 <span class="badge text-bg-primary">Ekspresi diri</span>
                                                             </div>
-                                                            <div class="col-md-5">
-                                                                <figure class="figure mb-0">
-                                                                    <img src="/mnt/data/f18fea6a-f82a-48bc-b185-9ba89a932ace.png"
-                                                                        class="img-fluid"
-                                                                        alt="Teks sumber: Pewarnaan Rambut Fashion"
-                                                                        data-full="/mnt/data/f18fea6a-f82a-48bc-b185-9ba89a932ace.png">
-                                                                    <figcaption class="figure-caption">Cuplikan sumber:
-                                                                        definisi pewarnaan fashion.</figcaption>
-                                                                </figure>
-                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
