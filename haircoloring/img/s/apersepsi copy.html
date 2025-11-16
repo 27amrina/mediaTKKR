@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tipe Pewarnaan Rambut — Interaktif</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand: #ff3f8e;
+            --line: #e9ecf1
+        }
+
+        body {
+            background: #fafafb;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif
+        }
+
+        .container-narrow {
+            max-width: 1000px
+        }
+
+        .hero {
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 63, 142, .10), rgba(255, 127, 185, .08));
+            border: 1px solid var(--line)
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 16px
+        }
+
+        .btn-brand {
+            background: var(--brand);
+            color: #fff;
+            border: 0
+        }
+
+        .btn-brand:hover {
+            filter: brightness(.95);
+            color: #fff
+        }
+
+        .muted {
+            color: #6b7280
+        }
+
+        .figure img {
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            cursor: pointer
+        }
+
+        /* DnD chips */
+        .chip {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fff;
+            padding: .5rem .7rem;
+            cursor: grab;
+            user-select: none
+        }
+
+        .drop {
+            min-height: 84px;
+            border: 2px dashed var(--line);
+            border-radius: 12px;
+            padding: .6rem;
+            background: #fcfcff
+        }
+
+        .drop.drag-over {
+            border-color: #0d6efd;
+            background: rgba(13, 110, 253, .08)
+        }
+
+        .drop.correct {
+            border-color: rgba(25, 135, 84, .9);
+            background: rgba(25, 135, 84, .08)
+        }
+
+        .progress-mini {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 999px;
+            overflow: hidden
+        }
+
+        .progress-mini>span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--brand), #ff8fbe);
+            transition: width .35s
+        }
+    </style>
+</head>
+
+<body class="py-4 py-md-5">
+    <div class="container container-narrow">
+
+        <!-- HERO -->
+        <section class="hero p-3 p-md-4 mb-3 shadow-sm">
+            <div class="d-flex align-items-start gap-3">
+                <div class="rounded-circle d-inline-flex align-items-center justify-content-center"
+                    style="width:50px;height:50px;background:#fff;border:1px solid var(--line)">
+                    <i class="bi bi-palette2" style="color:var(--brand);font-size:1.3rem"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h1 class="h5 fw-bold mb-1">Tipe Pewarnaan Rambut — Interaktif</h1>
+                    <p class="mb-2 muted">Pelajari jenis pewarna: sementara, semipermanen, demi-permanen (box dye),
+                        permanen, henna, dan fashion.</p>
+                    <div class="d-flex align-items-center gap-2 small">
+                        <span class="muted">Progres</span>
+                        <div class="progress-mini flex-grow-1" style="max-width:260px"><span id="bar"></span></div>
+                        <button id="btnExport" class="btn btn-outline-secondary btn-sm"><i class="bi bi-download"></i>
+                            Ekspor</button>
+                        <label class="btn btn-outline-secondary btn-sm mb-0">
+                            <i class="bi bi-upload"></i> Impor <input id="btnImport" type="file"
+                                accept="application/json" hidden>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MATERI (Accordion per tipe) -->
+        <div class="accordion mb-3" id="accTypes">
+            <!-- a. SEMENTARA -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="hA">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cA"
+                        aria-expanded="true">
+                        a) Pewarna Sementara (Temporary / Wash-out)
+                    </button>
+                </h2>
+                <div id="cA" class="accordion-collapse collapse show" data-bs-parent="#accTypes">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-7">
+                                <ul class="mb-2">
+                                    <li>Paling cepat pudar; hanya <em>melapisi batang rambut</em>.</li>
+                                    <li>Hilang saat dibilas/cuci air hangat. Bentuk: <strong>cream</strong> atau
+                                        <strong>hair spray</strong>.</li>
+                                </ul>
+                                <span class="badge text-bg-secondary">Tidak pakai developer</span>
+                                <span class="badge text-bg-light border">Ketahanan: 1–3 kali keramas</span>
+                            </div>
+                            <div class="col-md-5">
+                                <figure class="figure mb-0">
+                                    <img src="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png" class="img-fluid"
+                                        alt="Contoh produk temporary & semi-permanent"
+                                        data-full="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png">
+                                    <figcaption class="figure-caption">Gambar 1.5 Semi/Temporary —
+                                        editorial.femaledaily/Ochell (2019)</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- b. SEMI-PERMANEN -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="hB">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#cB">
+                        b) Pewarna Semipermanen
+                    </button>
+                </h2>
+                <div id="cB" class="accordion-collapse collapse" data-bs-parent="#accTypes">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-7">
+                                <ul class="mb-2">
+                                    <li>Tanpa amonia, <em>tidak meresap hingga korteks</em>; cocok warna mode (ungu,
+                                        biru, abu, pink).</li>
+                                    <li>Ketahanan umumnya <strong>4–6 minggu</strong>, perlu di-refresh. Tanpa
+                                        developer.</li>
+                                </ul>
+                                <span class="badge text-bg-warning text-dark">Menempel di kutikula</span>
+                                <span class="badge text-bg-light border">Glosser/Toner</span>
+                            </div>
+                            <div class="col-md-5">
+                                <figure class="figure mb-0">
+                                    <img src="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png" class="img-fluid"
+                                        alt="Contoh produk semi-permanent"
+                                        data-full="/mnt/data/1da0a1e3-b444-4978-ad7f-84cf8543d8c1.png">
+                                    <figcaption class="figure-caption">Contoh kemasan semipermanen.</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- c. DEMI-PERMANEN (BOX DYE) -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="hC">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#cC">
+                        c) Demi-permanent Hair Dye (Box Dye)
+                    </button>
+                </h2>
+                <div id="cC" class="accordion-collapse collapse" data-bs-parent="#accTypes">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-7">
+                                <ul class="mb-2">
+                                    <li>Gabungan dye + <em>developer rendah</em>; tersedia di supermarket (“box hair
+                                        dye”).</li>
+                                    <li>Lebih awet dari semi; bisa tahan hingga <strong>3 bulan</strong> pada rambut
+                                        tertentu.</li>
+                                </ul>
+                                <span class="badge text-bg-info">Developer low-volume</span>
+                            </div>
+                            <div class="col-md-5">
+                                <figure class="figure mb-0">
+                                    <img src="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png" class="img-fluid"
+                                        alt="Contoh demi-permanent (box dye)"
+                                        data-full="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png">
+                                    <figcaption class="figure-caption">Gambar 1.6 Demi-permanent —
+                                        editorial.femaledaily/Ochell (2019)</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- d. PERMANEN -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="hD">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#cD">
+                        d) Permanent Hair Color
+                    </button>
+                </h2>
+                <div id="cD" class="accordion-collapse collapse" data-bs-parent="#accTypes">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-7">
+                                <ul class="mb-2">
+                                    <li>Mengandung <strong>amonia</strong> (membuka kutikula) +
+                                        <strong>developer/peroksida</strong> (oksidasi).</li>
+                                    <li>Mampu mengangkat warna lama & menggantinya; <em>regrowth touch-up</em> perlu
+                                        rutin.</li>
+                                </ul>
+                                <span class="badge text-bg-danger">Butuh patch test</span>
+                                <span class="badge text-bg-light border">Ketahanan: paling awet</span>
+                            </div>
+                            <div class="col-md-5">
+                                <figure class="figure mb-0">
+                                    <img src="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png" class="img-fluid"
+                                        alt="Contoh kemasan permanen (ilustrasi box)"
+                                        data-full="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png">
+                                    <figcaption class="figure-caption">Ilustrasi box dye brand salon/ritel.</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- e. HENNA -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="hE">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#cE">
+                        e) Pewarnaan Henna (Alami)
+                    </button>
+                </h2>
+                <div id="cE" class="accordion-collapse collapse" data-bs-parent="#accTypes">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-7">
+                                <ul class="mb-2">
+                                    <li>Dari daun tanaman henna; memberi warna <strong>merah–cokelat</strong> yang kuat
+                                        & awet.</li>
+                                    <li>Sering hadir sebagai shampoo/conditioning (contoh: henna shampoo).</li>
+                                </ul>
+                                <span class="badge text-bg-success">Bahan alami</span>
+                            </div>
+                            <div class="col-md-5">
+                                <figure class="figure mb-0">
+                                    <img src="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png" class="img-fluid"
+                                        alt="Kemasan henna di halaman sumber"
+                                        data-full="/mnt/data/424c3c12-c5a0-46c9-8593-f561f29a4751.png">
+                                    <figcaption class="figure-caption">Gambar 1.7 Henna Shampoo — popmama/Nabila Agita
+                                        (2021)</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- f. FASHION -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="hF">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#cF">
+                        f) Pewarnaan Rambut Fashion
+                    </button>
+                </h2>
+                <div id="cF" class="accordion-collapse collapse" data-bs-parent="#accTypes">
+                    <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-7">
+                                <ul class="mb-2">
+                                    <li>Pewarnaan <em>ekspresif</em> (neon, pastel, blok/peekaboo, split-dye).</li>
+                                    <li>Biasanya berbasis semi/demi; fokus pada estetika & tren.</li>
+                                </ul>
+                                <span class="badge text-bg-primary">Ekspresi diri</span>
+                            </div>
+                            <div class="col-md-5">
+                                <figure class="figure mb-0">
+                                    <img src="/mnt/data/f18fea6a-f82a-48bc-b185-9ba89a932ace.png" class="img-fluid"
+                                        alt="Teks sumber: Pewarnaan Rambut Fashion"
+                                        data-full="/mnt/data/f18fea6a-f82a-48bc-b185-9ba89a932ace.png">
+                                    <figcaption class="figure-caption">Cuplikan sumber: definisi pewarnaan fashion.
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERAKTIF 1: Bandingkan Cepat (Drag to Scale) -->
+        <section class="card shadow-sm mb-3">
+            <div class="card-body">
+                <h2 class="h6 text-uppercase text-muted mb-2">Bandingkan Cepat: Skala Ketahanan</h2>
+                <p class="mb-2">Seret tiap tipe ke posisi yang tepat dari <strong>paling cepat pudar</strong> →
+                    <strong>paling awet</strong>.</p>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="p-2 border rounded-3">
+                            <div id="pool" class="vstack gap-2">
+                                <div class="chip" draggable="true" data-key="sem">Sementara</div>
+                                <div class="chip" draggable="true" data-key="semi">Semipermanen</div>
+                                <div class="chip" draggable="true" data-key="demi">Demi-permanen</div>
+                                <div class="chip" draggable="true" data-key="perm">Permanen</div>
+                                <div class="chip" draggable="true" data-key="henna">Henna</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row g-2">
+                            <div class="col-6 col-lg-4">
+                                <div class="small muted mb-1">Paling cepat pudar</div>
+                                <div class="drop" data-accept="sem"></div>
+                            </div>
+                            <div class="col-6 col-lg-4">
+                                <div class="small muted mb-1">Cukup cepat</div>
+                                <div class="drop" data-accept="semi"></div>
+                            </div>
+                            <div class="col-6 col-lg-4">
+                                <div class="small muted mb-1">Sedang</div>
+                                <div class="drop" data-accept="demi"></div>
+                            </div>
+                            <div class="col-6 col-lg-6">
+                                <div class="small muted mb-1">Awet</div>
+                                <div class="drop" data-accept="perm"></div>
+                            </div>
+                            <div class="col-6 col-lg-6">
+                                <div class="small muted mb-1">Alami & kuat</div>
+                                <div class="drop" data-accept="henna"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn btn-brand btn-sm" id="scaleCheck">Periksa</button>
+                    <button class="btn btn-outline-secondary btn-sm" id="scaleReset">Reset</button>
+                </div>
+                <div id="scaleFb" class="small mt-2"></div>
+            </div>
+        </section>
+
+        <!-- INTERAKTIF 2: Kuis -->
+        <section class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h6 text-uppercase text-muted mb-2">Kuis Cepat</h2>
+                <ol class="mb-2" id="quiz">
+                    <li class="mb-2">Pewarna semipermanen <em>mengandung</em> amonia.
+                        <div class="mt-1">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q1" value="B"><label
+                                    class="form-check-label">Benar</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q1" value="S"><label
+                                    class="form-check-label">Salah</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">Demi-permanen biasanya menggunakan developer <em>low volume</em>.
+                        <div class="mt-1">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q2" value="B"><label
+                                    class="form-check-label">Benar</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q2" value="S"><label
+                                    class="form-check-label">Salah</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">Permanent color memerlukan amonia untuk membuka kutikula rambut.
+                        <div class="mt-1">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q3" value="B"><label
+                                    class="form-check-label">Benar</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q3" value="S"><label
+                                    class="form-check-label">Salah</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">Henna cenderung memberikan warna merah–cokelat dan bersifat alami.
+                        <div class="mt-1">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q4" value="B"><label
+                                    class="form-check-label">Benar</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q4" value="S"><label
+                                    class="form-check-label">Salah</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">Pewarna fashion selalu permanen.
+                        <div class="mt-1">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q5" value="B"><label
+                                    class="form-check-label">Benar</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="q5" value="S"><label
+                                    class="form-check-label">Salah</label>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-brand btn-sm" id="quizCheck">Nilai</button>
+                    <button class="btn btn-outline-secondary btn-sm" id="quizReset">Reset</button>
+                </div>
+                <div id="quizFb" class="small mt-2"></div>
+            </div>
+        </section>
+
+        <footer class="text-center small text-muted mt-4">© 2025 • Modul Interaktif Tipe Pewarnaan</footer>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <img id="imgFull" class="w-100" alt="Preview gambar">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            const KEY = 'tipe-pewarnaan-v1';
+            const $ = s => document.querySelector(s);
+            const $$ = s => Array.from(document.querySelectorAll(s));
+            const get = () => JSON.parse(localStorage.getItem(KEY) || '{}');
+            const set = o => localStorage.setItem(KEY, JSON.stringify(o));
+            const ok = t => `<div class="alert alert-success mb-0">${t}</div>`;
+            const warn = t => `<div class="alert alert-warning mb-0">${t}</div>`;
+
+            function progress() {
+                const d = get(); let done = 0;
+                if (d.scaleOk) done++;
+                if (typeof d.quizScore === 'number') done++;
+                $('#bar').style.width = Math.round(done / 2 * 100) + '%';
+            }
+
+            // Lightbox
+            $$('.figure img').forEach(img => {
+                img.addEventListener('click', () => {
+                    $('#imgFull').src = img.dataset.full || img.src;
+                    const m = new bootstrap.Modal('#imgModal'); m.show();
+                });
+            });
+
+            // Drag chips to scale
+            let dragRef = null;
+            document.addEventListener('dragstart', e => {
+                if (e.target.classList.contains('chip')) { dragRef = e.target; e.dataTransfer.setData('text/plain', e.target.dataset.key); }
+            });
+            $$('.drop').forEach(z => {
+                ['dragenter', 'dragover'].forEach(ev => z.addEventListener(ev, e => { e.preventDefault(); z.classList.add('drag-over'); }));
+                ['dragleave', 'drop'].forEach(ev => z.addEventListener(ev, () => z.classList.remove('drag-over')));
+                z.addEventListener('drop', e => { e.preventDefault(); if (!dragRef) return; z.innerHTML = ''; z.appendChild(dragRef); });
+            });
+            $('#scaleCheck').addEventListener('click', () => {
+                let all = $$('.drop').length, right = 0;
+                $$('.drop').forEach(z => {
+                    z.classList.remove('correct');
+                    const chip = z.querySelector('.chip'); if (chip && chip.dataset.key === z.dataset.accept) { right++; z.classList.add('correct'); }
+                });
+                const d = get(); d.scaleOk = (right === all); set(d);
+                $('#scaleFb').innerHTML = right === all ? ok('Urutan skala sudah tepat! 🎉') : warn(`Benar ${right}/${all}. Coba rapikan lagi.`);
+                progress();
+            });
+            $('#scaleReset').addEventListener('click', () => {
+                const pool = $('#pool'); $$('.drop .chip').forEach(c => pool.appendChild(c));
+                const d = get(); delete d.scaleOk; set(d); $('#scaleFb').innerHTML = ''; progress();
+            });
+
+            // Quiz
+            const kunci = { q1: 'S', q2: 'B', q3: 'B', q4: 'B', q5: 'S' };
+            $('#quizCheck').addEventListener('click', () => {
+                let benar = 0, total = Object.keys(kunci).length;
+                Object.keys(kunci).forEach(n => {
+                    const sel = document.querySelector(`input[name="${n}"]:checked`);
+                    if (sel && sel.value === kunci[n]) benar++;
+                });
+                const score = Math.round(benar / total * 100);
+                const d = get(); d.quizScore = score; set(d);
+                $('#quizFb').innerHTML = `<div class="alert ${score >= 80 ? 'alert-success' : 'alert-info'} mb-0">Skor: <b>${score}</b>/100 (${benar}/${total})</div>`;
+                progress();
+            });
+            $('#quizReset').addEventListener('click', () => {
+                Object.keys(kunci).forEach(n => $$(`input[name="${n}"]`).forEach(r => r.checked = false));
+                const d = get(); delete d.quizScore; set(d); $('#quizFb').innerHTML = ''; progress();
+            });
+
+            // Export/Import
+            $('#btnExport').addEventListener('click', () => {
+                const blob = new Blob([JSON.stringify(get(), null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob); const a = document.createElement('a');
+                a.href = url; a.download = 'progres-tipe-pewarnaan.json'; a.click(); URL.revokeObjectURL(url);
+            });
+            $('#btnImport').addEventListener('change', (e) => {
+                const f = e.target.files?.[0]; if (!f) return;
+                const r = new FileReader();
+                r.onload = () => { try { const data = JSON.parse(r.result); if (data && typeof data === 'object') { localStorage.setItem(KEY, JSON.stringify(data)); location.reload(); } } catch { alert('File tidak valid'); } };
+                r.readAsText(f);
+            });
+
+            // Restore
+            window.addEventListener('DOMContentLoaded', () => { progress(); });
+        })();
+    </script>
+</body>
+
+</html>

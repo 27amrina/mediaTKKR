@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Apersepsi • Materi</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet"><!-- opsional -->
+
+    <style>
+        :root {
+            --navbar-h: 55px;
+            --footer-h: 40px;
+            /* footer sedikit lebih tinggi agar nyaman */
+            --brand: #ff3f8e;
+            --sidebar-w: 255px;
+            --line: #e5e7eb;
+            --card: #ffffff;
+            --card-border: #eeeeee;
+
+            /* samakan dengan lebar sidebar */
+            --sidebar-gap: 1px;
+            /* jarak konten dari sidebar */
+        }
+
+        /* ===== App shell ===== */
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            padding-bottom: var(--footer-h);
+            background: #fff;
+        }
+
+        .main-pad {
+            padding-top: var(--navbar-h);
+        }
+
+        main.app-shell {
+            height: calc(100vh - var(--navbar-h) - var(--footer-h));
+            overflow: hidden;
+        }
+
+        /* ===== Navbar & Footer ===== */
+        .navbar,
+        .footer {
+            background: #fff;
+        }
+
+        .footer {
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== Grid helpers ===== */
+        .no-top-gap>[class^="col-"],
+        .no-top-gap>aside,
+        .no-top-gap>section {
+            padding-top: 0 !important;
+        }
+
+        /* ===== Sidebar ===== */
+        .menu-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+        }
+
+        .menu-title {
+            padding: .75rem 1rem;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            display: block;
+            padding: .6rem 1rem;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .menu-item:hover {
+            background: #fafafa;
+        }
+
+        .menu-item.active {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+        @media (min-width:768px) {
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100vh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+        }
+
+        /* ===== Buttons ===== */
+        .btn-brand {
+            background: var(--brand);
+            color: #fff;
+        }
+
+        .btn-brand:hover {
+            color: #fff;
+            filter: brightness(.95);
+        }
+
+        /* ===== Layout: hanya area card yang scroll ===== */
+        .content-col {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .content-scroll {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .materi-card .card-header {
+            flex: 0 0 auto;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: .5rem 1rem .4rem !important;
+        }
+
+        /* Pusatkan isi di dalam sticky-cta */
+        .sticky-cta .content-with-fixed .d-flex {
+            justify-content: center;
+            /* pusat */
+            align-items: center;
+            gap: .5rem;
+            /* jarak antar tombol */
+            flex-wrap: wrap;
+            /* responsif di layar kecil */
+            width: 100%;
+        }
+
+        /* ====== RESPONSIVE LAYOUT FIXES (override) ====== */
+
+        @media (max-width: 767.98px) {
+
+            main.app-shell {
+                height: auto;
+                overflow: visible;
+            }
+
+            .content-col,
+            .content-scroll {
+                height: auto;
+                overflow: visible;
+            }
+
+            .materi-card {
+                height: auto;
+            }
+
+            .materi-card .card-body.scrollable {
+                min-height: 0;
+                max-height: none;
+                overflow: visible;
+            }
+
+            .sidebar-fixed {
+                position: static;
+                width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+
+            .sticky-cta {
+                position: static;
+                margin-top: .5rem;
+            }
+        }
+
+        /* 2) Tablet & Desktop: pakai 100dvh agar akurat vs toolbar browser */
+        @media (min-width: 768px) {
+            main.app-shell {
+                height: calc(100dvh - var(--navbar-h) - var(--footer-h));
+                overflow: hidden;
+            }
+
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100dvh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+
+            .content-col,
+            .content-scroll {
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .materi-card {
+                height: clamp(480px, 66vh, 760px);
+            }
+
+            .materi-card .card-body.scrollable {
+                flex: 1 1 auto;
+                min-height: 0;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .sticky-cta {
+                position: fixed;
+                bottom: calc(var(--footer-h) + 8px);
+                left: calc(var(--sidebar-w) + var(--sidebar-gap));
+                right: 12px;
+                z-index: 1030;
+            }
+        }
+
+        /* 3) Large desktop: beri napas ekstra pada konten */
+        @media (min-width: 1200px) {
+            .materi-card {
+                height: clamp(570px, 62vh, 820px);
+            }
+        }
+
+        .quiz-answer.answer-correct {
+            border-color: #198754 !important;
+            background-color: #e9f7ef;
+        }
+
+        .quiz-answer.answer-wrong {
+            border-color: #dc3545 !important;
+            background-color: #fcebea;
+        }
+
+        .quiz-feedback {
+            font-size: .85rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+                <i class="bi bi-brush" style="font-size:1.25rem; color:var(--brand)"></i>
+                <strong>Pewarnaan Rambut</strong> <span class="fw-normal">• Single Application</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navs">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navs">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-semibold" style="color:var(--brand)"
+                            aria-current="page" href="./apersepsi.html">Materi</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../latihan.html">Latihan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../kd.html">Tujuan Pembelajaran</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../peta.html">Peta Konsep</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KONTEN: hanya area card yang scroll -->
+    <main class="main-pad app-shell">
+        <div class="container-fluid ">
+            <div class="row g-1 no-top-gap h-100">
+                <!-- SIDEBAR -->
+                <aside class="col-12 col-md-auto order-1 order-md-0 p-0">
+
+                    <nav class="menu-card sidebar-fixed shadow-sm">
+                        <div class="menu-title"><i class="bi bi-journal-bookmark"></i> Materi</div>
+
+                        <a class="menu-item" href="PengetahuanDasarRambut.html"><i class="bi bi-lightbulb"></i>
+                            Pengetahuan Dasar
+                            Rambut</a>
+
+                        <!-- TOMBOL INDUK TERBUKA TEORI-->
+                        <div class="menu-item active">
+                            <button class=" d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#submenu-teori" aria-expanded="true"
+                                aria-controls="submenu-teori" href="./peralatan.html">
+
+                                <span class="me-2"><i class="bi bi-droplet-half"></i></span>
+                                <span class="flex-grow-1 text-start" aria-current="page">A. Pewarnaan
+                                    Rambut</span>
+                                <i class="bi bi-chevron-down small"></i>
+                            </button>
+                        </div>
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-teori"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1 " aria-current="page" href="Sejarah.html"><span>1.
+                                            Sejarah</span></a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="PengertianPewarnaan.html"><span>2. Pengertian
+                                            Pewarnaan </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1 active" href="TujuanPewarnaan.html">3. Tujuan Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="TipePewarnaan.html">4. Tipe Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="Desainteknik.html">5. Istilah Desain dan Teknik
+                                        Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
+                            aria-controls="submenu-peralatan">
+                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="flex-grow-1 text-start">B. Teori Warna</span>
+                            <i class="bi bi-chevron-down small"></i>
+                            <a>
+                        </button>
+
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1" href="PengetahuanWarna.html"><span>1. Pengetahuan
+                                            Warna</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KegunaanSegitiga.html"> <span>2. Kegunaan
+                                            Segitiga</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KoreksiWarna.html"> <span>3. Koreksi Warna</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>3. Pengaruh
+                                            Modifikasi</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </aside>
+
+                <!-- KANAN (scroll) -->
+                <section class="col-12 col-md-9 col-xl-10 content-col content-with-fixed order-2 order-md-0">
+                    <div class="content-scroll">
+                        <div class="card shadow-sm materi-card">
+                            <div class="card-header d-flex align-items-center gap-2">
+                                <i class="bi bi-lightbulb" style="color:var(--brand); font-size:1.25rem;"></i>
+                                <div class="d-flex flex-wrap align-items-baseline gap-2">
+                                    <h3 class="h5 mb-0 fw-bold">Pengetahuan Dasar Pewarnaan Rambut</h3>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="card-body scrollable flex-grow-1 min-vh-0" id="apersepsi-hair-coloring">
+                                <!--  -->
+                                <section class="pengertian mb-3">
+                                    <div class="card shadow-sm">
+                                        <!-- ====== AYO LAKUKAN ====== -->
+                                        <div class="card shadow-sm mb-4">
+                                            <div class="card-body">
+                                                <div
+                                                    class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                                                    <div>
+                                                        <h5 class="fw-bold mb-2">Ayo Lakukan</h5>
+                                                        <p class="mb-2">
+                                                            Bentuklah kelompok 4–6 orang, diskusikan teori lingkaran
+                                                            warna dan
+                                                            penggunaannya dalam pewarnaan rambut. Pilih salah satu
+                                                            produk
+                                                            pewarna rambut yang ada di sekitar kalian, lalu identifikasi
+                                                            warna
+                                                            dasar, warna dalam pewarna, serta kode warnanya.
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap gap-2">
+                                                        <button type="button" class="btn btn-brand btn-sm"
+                                                            id="btn-ayo-save">
+                                                            <i class="bi bi-save me-1"></i>Simpan
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                            id="btn-ayo-refresh">
+                                                            <i class="bi bi-arrow-counterclockwise me-1"></i>Refresh
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="table-responsive mt-2">
+                                                    <table class="table table-bordered align-middle">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="width: 50px">No.</th>
+                                                                <th>Warna Dasar</th>
+                                                                <th>Warna dalam Pewarna (Cat Rambut)</th>
+                                                                <th>Merk & Kode Cat Rambut</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>Kelompok warna dingin</td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>Abu-abu</td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>Biru</td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4</td>
+                                                                <td>Dan sebagainya</td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                                <td contenteditable="true"
+                                                                    class="bg-light lks-editable"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- ====== JELAJAH INTERNET ====== -->
+                                        <div class="card shadow-sm mb-4">
+                                            <div class="card-body">
+                                                <h5 class="fw-bold">Jelajah Internet</h5>
+                                                <p>
+                                                    Untuk memahami teori warna dalam pewarnaan rambut, simak video
+                                                    pembelajaran berikut melalui link atau QR Code di bawah ini.
+                                                </p>
+
+                                                <div class="row justify-content-center text-center">
+                                                    <div class="col-md-4 mb-3">
+                                                        <div class="fw-semibold mb-1">QR Code</div>
+                                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=https://www.youtube.com/watch?v=8BRbRoBpHsnE"
+                                                            alt="QR Youtube" class="img-fluid mb-1 rounded shadow-sm">
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center mb-3">
+                                                    <small class="text-muted">
+                                                        Sumber:
+                                                        <a href="https://www.youtube.com/watch?v=8BRbRoBpHsnE"
+                                                            target="_blank">
+                                                            https://www.youtube.com/watch?v=8BRbRoBpHsnE
+                                                        </a>
+                                                    </small>
+                                                </div>
+
+                                                <hr>
+                                                <h6 class="fw-semibold mb-1">
+                                                    <i class="bi bi-pencil-square"></i> Ringkasan setelah menonton video
+                                                </h6>
+                                                <p class="small text-muted mb-2">
+                                                    Tuliskan poin-poin penting dari video: teori warna, contoh
+                                                    pengaplikasian pada pewarnaan rambut, dan hal yang menurutmu
+                                                    penting.
+                                                </p>
+                                                <textarea id="ringkasan-video" class="form-control mb-2" rows="3"
+                                                    placeholder="Tulis ringkasan video di sini..."></textarea>
+
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <button type="button" class="btn btn-brand btn-sm"
+                                                        id="btn-jelajah-save">
+                                                        <i class="bi bi-save me-1"></i>Simpan
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                        id="btn-jelajah-refresh">
+                                                        <i class="bi bi-arrow-counterclockwise me-1"></i>Refresh
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- ====== KOLOABORASI & KOMUNIKASI ====== -->
+                                        <div class="card shadow-sm mb-4">
+                                            <div class="card-body">
+                                                <h5 class="fw-bold">Kolaborasi dan Komunikasi</h5>
+                                                <p>
+                                                    Bentuk kelompok 4–6 orang. Presentasikan hasil diskusi kalian
+                                                    mengenai
+                                                    teori warna dan pewarna rambut. Buatlah bahan tayang yang menarik
+                                                    agar
+                                                    mudah dipahami. Gunakan kolom berikut untuk mencatat hasil diskusi.
+                                                </p>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold small">
+                                                        1. Nama kelompok / anggota:
+                                                    </label>
+                                                    <textarea class="form-control lks-kolab" rows="2"
+                                                        placeholder="Tuliskan nama kelompok dan anggota..."></textarea>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold small">
+                                                        2. Ringkasan hasil diskusi tentang teori warna dan pewarna
+                                                        rambut:
+                                                    </label>
+                                                    <textarea class="form-control lks-kolab" rows="3"
+                                                        placeholder="Tuliskan poin-poin penting diskusi kelompok..."></textarea>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold small">
+                                                        3. Pembagian tugas / peran masing-masing anggota:
+                                                    </label>
+                                                    <textarea class="form-control lks-kolab" rows="3"
+                                                        placeholder="Contoh: A = mencari data, B = membuat slide, C = presentasi..."></textarea>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold small">
+                                                        4. Catatan dan masukan dari guru:
+                                                    </label>
+                                                    <textarea class="form-control lks-kolab" rows="2"
+                                                        placeholder="Catat saran atau evaluasi dari guru di sini..."></textarea>
+                                                </div>
+
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <button type="button" class="btn btn-brand btn-sm"
+                                                        id="btn-kolab-save">
+                                                        <i class="bi bi-save me-1"></i>Simpan
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                        id="btn-kolab-refresh">
+                                                        <i class="bi bi-arrow-counterclockwise me-1"></i>Refresh
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- ====== UJI KOMPETENSI INTERAKTIF ====== -->
+                                        <div class="card shadow-sm mb-4">
+                                            <div class="card-body">
+                                                <h5 class="fw-bold">Uji Kompetensi</h5>
+
+                                                <!-- Soal 1 -->
+                                                <p><strong>1.</strong> Sebutkan yang termasuk warna-warna primer!</p>
+                                                <input id="q1" type="text" class="form-control quiz-answer mb-1"
+                                                    placeholder="Contoh: merah, kuning, biru">
+                                                <div id="fb-q1" class="quiz-feedback text-muted mb-3"></div>
+
+                                                <!-- Soal 2 -->
+                                                <p><strong>2.</strong> Warna apakah yang sering digunakan untuk
+                                                    menciptakan fokus,
+                                                    menonjolkan bagian tertentu, atau sebagai penekanan dalam suatu
+                                                    desain?</p>
+                                                <input id="q2" type="text" class="form-control quiz-answer mb-1"
+                                                    placeholder="Kata kunci: warna ...">
+                                                <div id="fb-q2" class="quiz-feedback text-muted mb-3"></div>
+
+                                                <!-- Soal 3 -->
+                                                <p><strong>3.</strong> Sebutkan yang termasuk warna-warna sekunder!</p>
+                                                <input id="q3" type="text" class="form-control quiz-answer mb-1"
+                                                    placeholder="Contoh: oranye, hijau, ungu">
+                                                <div id="fb-q3" class="quiz-feedback text-muted mb-3"></div>
+
+                                                <!-- Soal 4 -->
+                                                <p><strong>4.</strong> Apa yang akan terjadi jika rambut sangat kuning
+                                                    diberikan pembilas
+                                                    warna biru?</p>
+                                                <input id="q4" type="text" class="form-control quiz-answer mb-1"
+                                                    placeholder="Jelaskan singkat efeknya...">
+                                                <div id="fb-q4" class="quiz-feedback text-muted mb-3"></div>
+
+                                                <!-- Soal 5 -->
+                                                <p><strong>5.</strong> Apakah warna undertone di corrective color?</p>
+                                                <input id="q5" type="text" class="form-control quiz-answer mb-1"
+                                                    placeholder="Contoh: warna dingin seperti ...">
+                                                <div id="fb-q5" class="quiz-feedback text-muted mb-3"></div>
+
+                                                <!-- Tombol Cek & Refresh -->
+                                                <div class="d-flex flex-wrap gap-2 mt-2">
+                                                    <button type="button" class="btn btn-brand btn-sm"
+                                                        onclick="cekJawabanLKS()">
+                                                        <i class="bi bi-check2-circle me-1"></i> Cek Jawaban
+                                                    </button>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                        onclick="resetLKS()">
+                                                        <i class="bi bi-arrow-counterclockwise me-1"></i> Refresh Semua
+                                                    </button>
+                                                </div>
+
+                                                <div id="quiz-summary" class="alert mt-3 d-none"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+
+
+
+    <!-- CTA tetap di atas footer -->
+    <div class="sticky-cta">
+        <div class="container">
+            <div class="col-12 col-md-10 content-col content-with-fixed mx-auto">
+                <div class="d-flex justify-content-center align-items-center flex-wrap gap-2 w-100">
+                    <a class="btn btn-outline-secondary" href="PengertianPewarnaan.html"><i
+                            class="bi bi-arrow-left"></i>
+                        Sebelumnya</a>
+                    <a class="btn btn-brand" href="TipePewarnaan.html">Berikutnya <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="footer fixed-bottom py-2">
+        <div class="container d-flex justify-content-between align-items-center small">
+            <span>SMKS ISFI BANJARMASIN • Hair Coloring</span>
+            <span class="text-muted">© 2025 • Single Application</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function norm(str) {
+            return (str || "")
+                .toLowerCase()
+                .replace(/[^a-z0-9\u00C0-\u024f]+/g, " ")
+                .trim();
+        }
+
+        function splitWords(str) {
+            return norm(str).split(/\s*,\s*|\s+/).filter(Boolean);
+        }
+
+        function cekJawabanLKS() {
+            let benar = 0;
+            let total = 5;
+
+            // reset state dulu
+            document.querySelectorAll(".quiz-answer").forEach(el => {
+                el.classList.remove("answer-correct", "answer-wrong");
+            });
+
+            // ============ SOAL 1: warna primer ============
+            const q1 = document.getElementById("q1");
+            const fb1 = document.getElementById("fb-q1");
+            const jaw1 = splitWords(q1.value);
+            const primerSet = new Set(["merah", "kuning", "biru"]);
+
+            let hit1 = 0;
+            primerSet.forEach(w => { if (jaw1.includes(w)) hit1++; });
+
+            if (hit1 === 3) {
+                q1.classList.add("answer-correct");
+                fb1.innerHTML = "✅ Betul. Warna primer: <strong>merah, kuning, biru</strong>.";
+                benar++;
+            } else {
+                q1.classList.add("answer-wrong");
+                fb1.innerHTML =
+                    "❌ Coba lagi. Warna primer yang dimaksud adalah <strong>merah, kuning, dan biru</strong>.";
+            }
+
+            // ============ SOAL 2 ============
+            const q2 = document.getElementById("q2");
+            const fb2 = document.getElementById("fb-q2");
+            const n2 = norm(q2.value);
+
+            const ok2 = n2.includes("aksen") || n2.includes("kontras");
+            if (ok2) {
+                q2.classList.add("answer-correct");
+                fb2.innerHTML =
+                    "✅ Tepat. Untuk fokus dan penekanan biasanya digunakan <strong>warna aksen / warna kontras</strong> terhadap warna sekitarnya.";
+                benar++;
+            } else {
+                q2.classList.add("answer-wrong");
+                fb2.innerHTML =
+                    "💡 Biasanya digunakan <strong>warna aksen</strong> atau <strong>warna kontras</strong> agar bagian tersebut lebih menonjol.";
+            }
+
+            // ============ SOAL 3: warna sekunder ============
+            const q3 = document.getElementById("q3");
+            const fb3 = document.getElementById("fb-q3");
+            const jaw3 = splitWords(q3.value);
+            const sekSet = new Set(["oranye", "jingga", "hijau", "ungu"]);
+
+            if ((jaw3.includes("oranye") || jaw3.includes("jingga")) &&
+                jaw3.includes("hijau") &&
+                jaw3.includes("ungu")) {
+                q3.classList.add("answer-correct");
+                fb3.innerHTML =
+                    "✅ Betul. Warna sekunder: <strong>oranye (jingga), hijau, dan ungu</strong>.";
+                benar++;
+            } else {
+                q3.classList.add("answer-wrong");
+                fb3.innerHTML =
+                    "❌ Coba lengkapi. Warna sekunder dibentuk dari campuran dua warna primer: <strong>oranye (jingga), hijau, dan ungu</strong>.";
+            }
+
+            // ============ SOAL 4 ============
+            const q4 = document.getElementById("q4");
+            const fb4 = document.getElementById("fb-q4");
+            const n4 = norm(q4.value);
+
+            const ok4 =
+                n4.includes("netral") ||
+                n4.includes("menetral") ||
+                n4.includes("abu") ||
+                n4.includes("tidak terlalu kuning") ||
+                n4.includes("kuning berkurang");
+            if (ok4) {
+                q4.classList.add("answer-correct");
+                fb4.innerHTML =
+                    "✅ Tepat. Biru adalah komplementer kuning, sehingga pembilas biru akan <strong>menetralkan kuning</strong> dan hasil rambut tampak lebih <strong>dingin / agak abu</strong>.";
+                benar++;
+            } else {
+                q4.classList.add("answer-wrong");
+                fb4.innerHTML =
+                    "💡 Pembilas biru akan <strong>menetralkan warna kuning yang terlalu kuat</strong>, sehingga rambut tampak lebih dingin atau cenderung abu-abu.";
+            }
+
+            // ============ SOAL 5 ============
+            const q5 = document.getElementById("q5");
+            const fb5 = document.getElementById("fb-q5");
+            const n5 = norm(q5.value);
+
+            const ok5 =
+                n5.includes("dingin") ||
+                n5.includes("abu") ||
+                n5.includes("biru") ||
+                n5.includes("ungu");
+            if (ok5) {
+                q5.classList.add("answer-correct");
+                fb5.innerHTML =
+                    "✅ Benar. Undertone pada corrective color umumnya adalah <strong>warna dingin</strong> (abu-abu, biru, atau ungu) yang berfungsi untuk menetralkan warna yang tidak diinginkan.";
+                benar++;
+            } else {
+                q5.classList.add("answer-wrong");
+                fb5.innerHTML =
+                    "💡 Undertone di corrective color biasanya berupa <strong>warna dingin</strong> seperti abu-abu, biru, atau ungu untuk menetralkan warna berlebih.";
+            }
+
+            // ====== RINGKASAN NILAI ======
+            const summary = document.getElementById("quiz-summary");
+            summary.classList.remove("d-none");
+            summary.classList.remove("alert-success", "alert-warning");
+
+            const persen = Math.round((benar / total) * 100);
+
+            if (benar === total) {
+                summary.classList.add("alert-success");
+                summary.innerHTML =
+                    `🎉 Sangat baik! Semua jawaban benar (${benar}/${total}, ${persen}%).`;
+            } else {
+                summary.classList.add("alert-warning");
+                summary.innerHTML =
+                    `✅ Jawaban benar: <strong>${benar}</strong> dari <strong>${total}</strong> soal (${persen}%). ` +
+                    `Coba perbaiki yang masih bertanda merah.`;
+            }
+        }
+
+        function resetLKS() {
+            // hapus localStorage untuk tiga bagian
+            localStorage.removeItem('lks-ayo-teoriwarna-v1');
+            localStorage.removeItem('lks-jelajah-teoriwarna-v1');
+            localStorage.removeItem('lks-kolab-teoriwarna-v1');
+
+            // kosongkan semua input kuis
+            document.querySelectorAll(".quiz-answer").forEach(el => {
+                el.value = "";
+                el.classList.remove("answer-correct", "answer-wrong");
+            });
+
+            // hapus feedback kuis
+            for (let i = 1; i <= 5; i++) {
+                const fb = document.getElementById("fb-q" + i);
+                if (fb) fb.innerHTML = "";
+            }
+
+            // sembunyikan ringkasan
+            const summary = document.getElementById("quiz-summary");
+            summary.classList.add("d-none");
+            summary.innerHTML = "";
+
+            // kosongkan sel tabel yang bisa diedit
+            document.querySelectorAll(".lks-editable").forEach(td => {
+                td.innerHTML = "";
+            });
+
+            // kosongkan kolom kolaborasi & komunikasi
+            document.querySelectorAll(".lks-kolab").forEach(t => {
+                t.value = "";
+            });
+
+            // kosongkan ringkasan video
+            const rv = document.getElementById('ringkasan-video');
+            if (rv) rv.value = "";
+
+            alert('Semua jawaban dan penyimpanan telah di-reset.');
+        }
+    </script>
+
+    <!-- SCRIPT LOCALSTORAGE UNTUK SIMPAN / REFRESH -->
+    <script>
+        (function () {
+            const KEY_AYO = 'lks-ayo-teoriwarna-v1';
+            const KEY_JELAJAH = 'lks-jelajah-teoriwarna-v1';
+            const KEY_KOLAB = 'lks-kolab-teoriwarna-v1';
+
+            // ========== AYO LAKUKAN ==========
+            function saveAyo() {
+                const cells = document.querySelectorAll('.lks-editable');
+                const data = Array.from(cells).map(td => td.innerText.trim());
+                localStorage.setItem(KEY_AYO, JSON.stringify(data));
+                alert('Jawaban pada bagian "Ayo Lakukan" tersimpan di perangkat.');
+            }
+
+            function loadAyo() {
+                const cells = document.querySelectorAll('.lks-editable');
+                try {
+                    const saved = JSON.parse(localStorage.getItem(KEY_AYO) || '[]');
+                    if (Array.isArray(saved)) {
+                        cells.forEach((td, i) => {
+                            td.innerText = saved[i] || '';
+                        });
+                    }
+                } catch { }
+            }
+
+            function refreshAyo() {
+                if (!confirm('Refresh akan menghapus jawaban pada tabel Ayo Lakukan. Lanjutkan?')) return;
+                localStorage.removeItem(KEY_AYO);
+                document.querySelectorAll('.lks-editable').forEach(td => td.innerHTML = '');
+                alert('Bagian "Ayo Lakukan" sudah di-refresh.');
+            }
+
+            // ========== JELAJAH INTERNET ==========
+            function saveJelajah() {
+                const ta = document.getElementById('ringkasan-video');
+                if (!ta) return;
+                const val = ta.value.trim();
+                if (!val) {
+                    alert('Isi ringkasan video terlebih dahulu sebelum disimpan.');
+                    return;
+                }
+                localStorage.setItem(KEY_JELAJAH, val);
+                alert('Ringkasan video tersimpan di perangkat.');
+            }
+
+            function loadJelajah() {
+                const ta = document.getElementById('ringkasan-video');
+                if (!ta) return;
+                try {
+                    const saved = localStorage.getItem(KEY_JELAJAH) || '';
+                    ta.value = saved;
+                } catch { }
+            }
+
+            function refreshJelajah() {
+                const ta = document.getElementById('ringkasan-video');
+                if (!ta) return;
+                if (!confirm('Refresh akan menghapus ringkasan video. Lanjutkan?')) return;
+                localStorage.removeItem(KEY_JELAJAH);
+                ta.value = '';
+                alert('Ringkasan video sudah di-refresh.');
+            }
+
+            // ========== KOLABORASI & KOMUNIKASI ==========
+            function saveKolab() {
+                const areas = document.querySelectorAll('.lks-kolab');
+                const data = Array.from(areas).map(t => t.value.trim());
+                if (data.every(v => !v)) {
+                    alert('Isi terlebih dahulu jawaban kolaborasi sebelum disimpan.');
+                    return;
+                }
+                localStorage.setItem(KEY_KOLAB, JSON.stringify(data));
+                alert('Jawaban Kolaborasi dan Komunikasi tersimpan di perangkat.');
+            }
+
+            function loadKolab() {
+                const areas = document.querySelectorAll('.lks-kolab');
+                try {
+                    const saved = JSON.parse(localStorage.getItem(KEY_KOLAB) || '[]');
+                    if (Array.isArray(saved)) {
+                        areas.forEach((t, i) => {
+                            t.value = saved[i] || '';
+                        });
+                    }
+                } catch { }
+            }
+
+            function refreshKolab() {
+                if (!confirm('Refresh akan menghapus semua jawaban Kolaborasi dan Komunikasi. Lanjutkan?')) return;
+                localStorage.removeItem(KEY_KOLAB);
+                document.querySelectorAll('.lks-kolab').forEach(t => t.value = '');
+                alert('Jawaban Kolaborasi dan Komunikasi sudah di-refresh.');
+            }
+
+            // Pasang event listener ke tombol
+            document.getElementById('btn-ayo-save')?.addEventListener('click', saveAyo);
+            document.getElementById('btn-ayo-refresh')?.addEventListener('click', refreshAyo);
+
+            document.getElementById('btn-jelajah-save')?.addEventListener('click', saveJelajah);
+            document.getElementById('btn-jelajah-refresh')?.addEventListener('click', refreshJelajah);
+
+            document.getElementById('btn-kolab-save')?.addEventListener('click', saveKolab);
+            document.getElementById('btn-kolab-refresh')?.addEventListener('click', refreshKolab);
+
+            // Load data saat halaman dibuka
+            loadAyo();
+            loadJelajah();
+            loadKolab();
+        })();
+    </script>
+</body>
+
+</html>

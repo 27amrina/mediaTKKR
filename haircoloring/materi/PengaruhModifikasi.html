@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Apersepsi • Materi</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet"><!-- opsional -->
+
+    <style>
+        :root {
+            --navbar-h: 55px;
+            --footer-h: 40px;
+            /* footer sedikit lebih tinggi agar nyaman */
+            --brand: #ff3f8e;
+            --sidebar-w: 255px;
+            --line: #e5e7eb;
+            --card: #ffffff;
+            --card-border: #eeeeee;
+
+            /* samakan dengan lebar sidebar */
+            --sidebar-gap: 1px;
+            /* jarak konten dari sidebar */
+        }
+
+
+        /* ===== App shell ===== */
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            padding-bottom: var(--footer-h);
+            background: #fff;
+        }
+
+        .main-pad {
+            padding-top: var(--navbar-h);
+        }
+
+        main.app-shell {
+            height: calc(100vh - var(--navbar-h) - var(--footer-h));
+            overflow: hidden;
+        }
+
+        /* ===== Navbar & Footer ===== */
+        .navbar,
+        .footer {
+            background: #fff;
+        }
+
+        .footer {
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== Grid helpers ===== */
+        .no-top-gap>[class^="col-"],
+        .no-top-gap>aside,
+        .no-top-gap>section {
+            padding-top: 0 !important;
+        }
+
+        /* ===== Sidebar ===== */
+        .menu-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+        }
+
+        .menu-title {
+            padding: .75rem 1rem;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            display: block;
+            padding: .6rem 1rem;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .menu-item:hover {
+            background: #fafafa;
+        }
+
+        .menu-item.active {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+
+
+        @media (min-width:768px) {
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100vh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+        }
+
+        /* ===== Buttons ===== */
+        .btn-brand {
+            background: var(--brand);
+            color: #fff;
+        }
+
+        .btn-brand:hover {
+            color: #fff;
+            filter: brightness(.95);
+        }
+
+        /* ===== Layout: hanya area card yang scroll ===== */
+        .content-col {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .content-scroll {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .materi-card .card-header {
+            flex: 0 0 auto;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: .5rem 1rem .4rem !important;
+        }
+
+
+
+        /* Pusatkan isi di dalam sticky-cta */
+        .sticky-cta .content-with-fixed .d-flex {
+            justify-content: center;
+            /* pusat */
+            align-items: center;
+            gap: .5rem;
+            /* jarak antar tombol */
+            flex-wrap: wrap;
+            /* responsif di layar kecil */
+            width: 100%;
+        }
+
+        /* ====== RESPONSIVE LAYOUT FIXES (override) ====== */
+
+        /* 1) Mobile: biarkan halaman memanjang normal */
+        @media (max-width: 767.98px) {
+
+            /* jangan kunci tinggi halaman di HP */
+            main.app-shell {
+                height: auto;
+                overflow: visible;
+            }
+
+            .content-col,
+            .content-scroll {
+                height: auto;
+                overflow: visible;
+            }
+
+            /* kartu ikut tinggi natural agar isi tidak terpotong */
+            .materi-card {
+                height: auto;
+            }
+
+            .materi-card .card-body.scrollable {
+                min-height: 0;
+                max-height: none;
+                overflow: visible;
+            }
+
+            /* sidebar muncul di atas konten, tidak fixed */
+            .sidebar-fixed {
+                position: static;
+                width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+
+            /* sticky CTA biar rapi penuh di HP */
+            .sticky-cta {
+                position: static;
+                margin-top: .5rem;
+            }
+        }
+
+        /* 2) Tablet & Desktop: pakai 100dvh agar akurat vs toolbar browser */
+        @media (min-width: 768px) {
+            main.app-shell {
+                height: calc(100dvh - var(--navbar-h) - var(--footer-h));
+                overflow: hidden;
+            }
+
+            /* sidebar tetap fixed, konten bergeser */
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100dvh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+
+            /* area isi: hanya body card yang scroll */
+            .content-col,
+            .content-scroll {
+                height: 100%;
+                overflow: hidden;
+            }
+
+            /* tinggi kartu fleksibel, tidak kaku 580px */
+            .materi-card {
+                height: clamp(480px, 66vh, 760px);
+                /* enak di berbagai layar */
+            }
+
+            .materi-card .card-body.scrollable {
+                flex: 1 1 auto;
+                min-height: 0;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* CTA melayang rapi */
+            .sticky-cta {
+                position: fixed;
+                bottom: calc(var(--footer-h) + 8px);
+                left: calc(var(--sidebar-w) + var(--sidebar-gap));
+                right: 12px;
+                z-index: 1030;
+                /* di atas card */
+            }
+        }
+
+        /* 3) Large desktop: beri napas ekstra pada konten */
+        @media (min-width: 1200px) {
+            .materi-card {
+                height: clamp(570px, 62vh, 820px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+                <i class="bi bi-brush" style="font-size:1.25rem; color:var(--brand)"></i>
+                <strong>Pewarnaan Rambut</strong> <span class="fw-normal">• Single Application</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navs">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navs">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-semibold" style="color:var(--brand)"
+                            aria-current="page" href="./apersepsi.html">Materi</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../latihan.html">Latihan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../kd.html">Tujuan Pembelajaran</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../peta.html">Peta Konsep</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KONTEN: hanya area card yang scroll -->
+    <main class="main-pad app-shell">
+        <div class="container-fluid ">
+            <div class="row g-1 no-top-gap h-100">
+                <!-- SIDEBAR -->
+                <aside class="col-12 col-md-auto order-1 order-md-0 p-0">
+
+                    <nav class="menu-card sidebar-fixed shadow-sm">
+                        <div class="menu-title"><i class="bi bi-journal-bookmark"></i> Materi</div>
+
+                        <a class="menu-item " aria-current="page" href="PengetahuanDasarRambut.html"><i
+                                class="bi bi-lightbulb"></i> Pengetahuan Dasar Rambut</a>
+
+                        <!-- TOMBOL INDUK TERBUKA TEORI-->
+
+                        <button class=" d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-teori" aria-expanded="true"
+                            aria-controls="submenu-teori" href="./peralatan.html">
+
+                            <span class="me-2"><i class="bi bi-droplet-half"></i></span>
+                            <span class="flex-grow-1 text-start" aria-current="page">A. Pewarnaan
+                                Rambut</span>
+                            <i class="bi bi-chevron-down small"></i>
+                        </button>
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-teori"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+
+                                    <a class="menu-item py-1 " aria-current="page" href="Sejarah.html"><span>1.
+                                            Sejarah</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengertianPewarnaan.html"><span>2. Pengertian
+                                            Pewarnaan </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="TujuanPewarnaan.html">3. Tujuan Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="TipePewarnaan.html">4. Tipe Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="Desainteknik.html">5. Istilah Desain dan Teknik
+                                        Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1 " href="AyoLakukanA.html">6. Ayo Lakukan
+                                        Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <div class="menu-item active">
+                            <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#submenu-peralatan"
+                                aria-expanded="true" aria-controls="submenu-peralatan">
+                                <span class="me-2"><i class="bi bi-scissors"></i></span>
+                                <span class="flex-grow-1 text-start">B. Teori Warna</span>
+                                <i class="bi bi-chevron-down small"></i>
+                                <a>
+                            </button>
+                        </div>
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1 " href="PengetahuanWarna.html"><span>1. Pengetahuan
+                                            Warna</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KegunaanSegitiga.html"> <span>2. Kegunaan
+                                            Segitiga</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1 " href="KoreksiWarna.html"> <span>3. Koreksi
+                                            Warna</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1 active" href="PengaruhModifikasi.html"> <span>4. Pengaruh
+                                            Modifikasi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>5. Warna Dingin
+                                            dan
+                                            Hanga</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="AyoLakukanB.html">6. Ayo Lakukan Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
+                            aria-controls="submenu-peralatan">
+                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="flex-grow-1 text-start">C. Pewarnaan Korektif</span>
+                            <i class="bi bi-chevron-down small"></i>
+                            <a>
+                        </button>
+
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1 " href="PewarnaanKorektif.html"><span>1. Pewarnaan
+                                            Korektif</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KesalahanDalamPewarnaan.html"> <span>2.
+                                            Kesalahan
+                                            Dalam Pewarnaan</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="AyoLakukanC.html">3. Ayo Lakukan Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </aside>
+
+                <!-- KANAN (scroll) -->
+                <section class="col-12 col-md-9 col-xl-10 content-col content-with-fixed order-2 order-md-0">
+                    <div class="content-scroll">
+                        <div class="card shadow-sm materi-card">
+                            <div class="card-header d-flex align-items-center gap-2">
+                                <i class="bi bi-palette" style="color:var(--brand); font-size:1.25rem;"></i>
+                                <div class="d-flex flex-wrap align-items-baseline gap-2">
+                                    <h3 class="h5 mb-0 fw-bold"> Pengaruh Modifikasi Warna</h3>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="card-body scrollable flex-grow-1 min-vh-0" id="apersepsi-hair-coloring">
+                                <!--  -->
+                                <!-- ✨ BAGIAN MATERI: PENGARUH MODIFIKASI WARNA -->
+                                <div class="card shadow-sm mb-4">
+                                    <div class="card-body">
+
+                                        <!-- Judul & Penjelasan Materi -->
+                                        <h5 class="fw-bold mb-3">4. Pengaruh Modifikasi Warna</h5>
+
+                                        <p>
+                                            <strong>Modifikasi warna</strong> adalah perubahan kesan suatu warna
+                                            ketika diletakkan berdampingan dengan warna lain. Perubahan ini bukan
+                                            perubahan warna asli secara fisik, tetapi perubahan <em>persepsi</em>
+                                            mata kita karena warna-warna tersebut saling membandingkan.
+                                        </p>
+
+                                        <p>
+                                            Misalnya, jika warna <strong>hijau</strong> diletakkan berdampingan dengan
+                                            warna <strong>biru</strong>, maka hijau akan tampak lebih kuning, sedangkan
+                                            biru akan tampak menjadi lebih ungu. Hal ini disebabkan karena tidak
+                                            adanya unsur warna kuning dalam biru, sehingga unsur kuning yang ada di
+                                            dalam hijau menjadi lebih menonjol secara kontras.
+                                        </p>
+
+                                        <p>
+                                            Modifikasi warna juga terjadi pada situasi sehari-hari. Contohnya, rambut
+                                            pirang kemerahan yang dipadukan dengan pakaian berwarna hijau: warna
+                                            merah pada rambut akan tampak makin menonjol karena dalam warna hijau
+                                            tidak terdapat unsur merah. Oleh sebab itu, pengaruh modifikasi warna
+                                            harus selalu diperhitungkan ketika menempatkan dua warna atau lebih secara
+                                            berdekatan, baik dalam pewarnaan artistik maupun pewarnaan korektif.
+                                        </p>
+
+                                        <hr class="my-3">
+
+                                        <!-- ====== STYLE KHUSUS KOMPONEN INI ====== -->
+                                        <style>
+                                            .mod-card,
+                                            .mix-card {
+                                                border-radius: 16px;
+                                                border: 1px solid #eeeeee;
+                                                background: radial-gradient(circle at top left, #fff8fc, #ffffff);
+                                                padding: 1rem 1.1rem;
+                                                position: relative;
+                                                overflow: hidden;
+                                            }
+
+                                            .mod-card::before,
+                                            .mix-card::before {
+                                                content: "";
+                                                position: absolute;
+                                                inset: 0;
+                                                background: radial-gradient(circle at 0 0,
+                                                        rgba(255, 63, 142, 0.12), transparent 60%);
+                                                opacity: .8;
+                                                pointer-events: none;
+                                            }
+
+                                            .mod-inner,
+                                            .mix-inner {
+                                                position: relative;
+                                                z-index: 1;
+                                            }
+
+                                            .mini-label {
+                                                font-size: .8rem;
+                                                text-transform: uppercase;
+                                                letter-spacing: .08em;
+                                                color: #888;
+                                            }
+
+                                            .mod-color-box,
+                                            .mix-color-box,
+                                            .mix-result-box {
+                                                width: 100%;
+                                                height: 85px;
+                                                border-radius: 14px;
+                                                border: 2px solid #ddd;
+                                                background: #fafafa;
+                                                transition:
+                                                    background-color .6s ease,
+                                                    transform .3s ease,
+                                                    box-shadow .3s ease;
+                                            }
+
+                                            .mod-color-box.mod-active,
+                                            .mix-color-box.mix-active,
+                                            .mix-result-box.mix-active {
+                                                transform: translateY(-2px) scale(1.02);
+                                                box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
+                                            }
+
+                                            .combo-bar {
+                                                height: 38px;
+                                                border-radius: 999px;
+                                                border: 2px solid #e5e7eb;
+                                                background: linear-gradient(90deg, #f5f5f5 0 50%, #e5e5e5 50% 100%);
+                                                transition: background .6s ease, transform .3s ease, box-shadow .3s ease;
+                                            }
+
+                                            .combo-bar.pulse {
+                                                animation: comboPulse .7s ease;
+                                            }
+
+                                            @keyframes comboPulse {
+                                                0% {
+                                                    box-shadow: 0 0 0 0 rgba(255, 63, 142, 0.5);
+                                                    transform: scale(1);
+                                                }
+
+                                                60% {
+                                                    box-shadow: 0 0 0 10px rgba(255, 63, 142, 0);
+                                                    transform: scale(1.02);
+                                                }
+
+                                                100% {
+                                                    box-shadow: 0 0 0 0 rgba(255, 63, 142, 0);
+                                                    transform: scale(1);
+                                                }
+                                            }
+
+                                            @media (max-width: 767.98px) {
+
+                                                .mod-card,
+                                                .mix-card {
+                                                    margin-bottom: .75rem;
+                                                }
+                                            }
+                                        </style>
+
+                                        <!-- ====== DUA SIMULATOR DALAM 1 ROW ====== -->
+                                        <div class="row g-3 mt-2">
+
+                                            <!-- SIMULATOR 1: MODIFIKASI WARNA BERDAMPINGAN -->
+                                            <div class="col-md-6">
+                                                <div class="mod-card shadow-sm">
+                                                    <div class="mod-inner">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mb-2">
+                                                            <div>
+                                                                <div class="mini-label">Modifikasi Warna</div>
+                                                                <div class="fw-semibold">Warna berdampingan saling
+                                                                    memengaruhi</div>
+                                                            </div>
+                                                            <i class="bi bi-eye fs-4"
+                                                                style="color:var(--brand,#ff3f8e)"></i>
+                                                        </div>
+
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <label class="form-label mb-1 small">Warna Utama (mis.
+                                                                    warna rambut):</label>
+                                                                <select id="mod-main"
+                                                                    class="form-select form-select-sm">
+                                                                    <option>-Pilih Warna-</option>
+                                                                    <option value="blue">Biru</option>
+                                                                    <option value="red">Merah</option>
+                                                                    <option value="yellow">Kuning</option>
+                                                                    <option value="purple">Ungu</option>
+                                                                    <option value="orange">Oranye</option>
+                                                                </select>
+                                                                <div id="mod-main-box" class="mod-color-box mt-2"></div>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <label class="form-label mb-1 small">Warna di Sebelahnya
+                                                                    (pakaian / lingkungan):</label>
+                                                                <select id="mod-side"
+                                                                    class="form-select form-select-sm">
+                                                                    <option>-Pilih Warna-</option>
+                                                                    <option value="blue">Biru</option>
+                                                                    <option value="green">Hijau</option>
+                                                                    <option value="red">Merah</option>
+                                                                    <option value="yellow">Kuning</option>
+                                                                    <option value="purple">Ungu</option>
+                                                                    <option value="orange">Oranye</option>
+                                                                </select>
+                                                                <div id="mod-side-box" class="mod-color-box mt-2"></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-2">
+                                                            <div id="mod-combo" class="combo-bar"></div>
+                                                            <small class="text-muted d-block mt-1">
+                                                                Kiri = warna utama • Kanan = warna di sebelahnya.
+                                                            </small>
+                                                        </div>
+
+                                                        <div
+                                                            class="text-center mt-3 d-flex justify-content-center gap-2 flex-wrap">
+                                                            <button class="btn btn-brand btn-sm px-3" type="button"
+                                                                onclick="modSimulate()">
+                                                                <i class="bi bi-play-fill me-1"></i> Lihat Efek
+                                                                Modifikasi
+                                                            </button>
+                                                            <button class="btn btn-outline-secondary btn-sm"
+                                                                type="button" onclick="modReset()">
+                                                                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                                                                Refresh
+                                                            </button>
+                                                        </div>
+
+
+                                                        <div id="mod-result"
+                                                            class="alert alert-light border mt-3 d-none mb-0"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- SIMULATOR 2: HASIL CAMPURAN DUA WARNA -->
+                                            <div class="col-md-6">
+                                                <div class="mix-card shadow-sm">
+                                                    <div class="mix-inner">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mb-2">
+                                                            <div>
+                                                                <div class="mini-label">Campuran Warna</div>
+                                                                <div class="fw-semibold">Jika dua warna digabung, jadi
+                                                                    apa?</div>
+                                                            </div>
+                                                            <i class="bi bi-paint-bucket fs-4"
+                                                                style="color:var(--brand,#ff3f8e)"></i>
+                                                        </div>
+
+                                                        <div class="row g-2">
+                                                            <div class="col-6">
+                                                                <label class="form-label mb-1 small">Warna A:</label>
+                                                                <select id="mix-a" class="form-select form-select-sm">
+                                                                    <option>-Pilih Warna-</option>
+                                                                    <option value="red">Merah</option>
+                                                                    <option value="yellow">Kuning</option>
+                                                                    <option value="blue">Biru</option>
+                                                                    <option value="green">Hijau</option>
+                                                                    <option value="orange">Oranye</option>
+                                                                    <option value="purple">Ungu</option>
+                                                                </select>
+                                                                <div id="mix-a-box" class="mix-color-box mt-2"></div>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <label class="form-label mb-1 small">Warna B:</label>
+                                                                <select id="mix-b" class="form-select form-select-sm">
+                                                                    <option>-Pilih Warna-</option>
+                                                                    <option value="yellow">Kuning</option>
+                                                                    <option value="red">Merah</option>
+                                                                    <option value="blue">Biru</option>
+                                                                    <option value="green">Hijau</option>
+                                                                    <option value="orange">Oranye</option>
+                                                                    <option value="purple">Ungu</option>
+                                                                </select>
+                                                                <div id="mix-b-box" class="mix-color-box mt-2"></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-3">
+                                                            <label class="form-label mb-1 small">Hasil campuran:</label>
+                                                            <div id="mix-result-box" class="mix-result-box"></div>
+                                                        </div>
+
+                                                        <div
+                                                            class="text-center mt-3 d-flex justify-content-center gap-2 flex-wrap">
+                                                            <button class="btn btn-brand btn-sm px-3" type="button"
+                                                                onclick="mixSimulate()">
+                                                                <i class="bi bi-magic me-1"></i> Lihat Warna Campuran
+                                                            </button>
+                                                            <button class="btn btn-outline-secondary btn-sm"
+                                                                type="button" onclick="mixReset()">
+                                                                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                                                                Refresh
+                                                            </button>
+                                                        </div>
+
+                                                        <div id="mix-result-text"
+                                                            class="alert alert-light border mt-3 d-none mb-0"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- /row -->
+
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                </section>
+
+
+
+            </div>
+            </section>
+    </main>
+
+
+
+    <!-- CTA tetap di atas footer -->
+    <div class="sticky-cta">
+        <div class="container">
+            <div class="col-12 col-md-10 content-col content-with-fixed mx-auto">
+                <div class="d-flex justify-content-center align-items-center flex-wrap gap-2 w-100">
+                    <a class="btn btn-outline-secondary" href="KoreksiWarna.html"><i class="bi bi-arrow-left"></i>
+                        Sebelumnya</a>
+                    <a class="btn btn-brand" href="WarnaDinginHangat.html">Berikutnya <i
+                            class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="footer fixed-bottom py-2">
+        <div class="container d-flex justify-content-between align-items-center small">
+            <span>SMKS ISFI BANJARMASIN • Hair Coloring</span>
+            <span class="text-muted">© 2025 • Single Application</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ====== SCRIPT UNTUK KEDUA SIMULATOR ====== -->
+
+    <script>
+        // Simulasi MODIFIKASI WARNA (berdampingan)
+        function modSimulate() {
+            const main = document.getElementById("mod-main").value;
+            const side = document.getElementById("mod-side").value;
+
+            const mainBox = document.getElementById("mod-main-box");
+            const sideBox = document.getElementById("mod-side-box");
+            const combo = document.getElementById("mod-combo");
+            const out = document.getElementById("mod-result");
+
+            // tampilkan warna
+            mainBox.style.background = main;
+            sideBox.style.background = side;
+            combo.style.background =
+                "linear-gradient(90deg," + main + " 0 50%," + side + " 50% 100%)";
+
+            // reset animasi
+            mainBox.classList.remove("mod-active");
+            sideBox.classList.remove("mod-active");
+            combo.classList.remove("pulse");
+            void mainBox.offsetWidth; // reflow
+
+            mainBox.classList.add("mod-active");
+            sideBox.classList.add("mod-active");
+            combo.classList.add("pulse");
+
+            // aturan penjelasan sesuai materi buku
+            let teks = "";
+
+            if (main === "green" && side === "blue") {
+                teks =
+                    "Saat hijau berdampingan dengan biru, hijau tampak lebih kuning, " +
+                    "sedangkan biru tampak lebih ungu. Hal ini karena di dalam biru " +
+                    "tidak ada unsur kuning, sehingga unsur kuning dalam hijau lebih menonjol.";
+            } else if (main === "red" && side === "green") {
+                teks =
+                    "Rambut atau objek berwarna merah di dekat warna hijau akan tampak " +
+                    "lebih menonjol, karena hijau tidak memiliki unsur merah. Kontras ini " +
+                    "membuat merah terlihat lebih kuat.";
+            } else if (main === side) {
+                teks =
+                    "Jika kedua warna sama, modifikasi visual hampir tidak terlihat karena " +
+                    "mata tidak memiliki warna pembanding yang berbeda.";
+            } else {
+                teks =
+                    "Warna <strong>" + main +
+                    "</strong> akan sedikit berubah kesan tampilannya ketika diletakkan " +
+                    "berdampingan dengan warna <strong>" + side +
+                    "</strong>. Mata kita selalu membandingkan warna di sekitarnya, " +
+                    "sehingga salah satu unsur warna dapat tampak lebih menonjol.";
+            }
+
+            out.classList.remove("d-none");
+            out.innerHTML = "<strong>Penjelasan:</strong> " + teks;
+        }
+
+        // Simulasi CAMPURAN DUA WARNA
+        function mixSimulate() {
+            const A = document.getElementById("mix-a").value;
+            const B = document.getElementById("mix-b").value;
+
+            const boxA = document.getElementById("mix-a-box");
+            const boxB = document.getElementById("mix-b-box");
+            const boxR = document.getElementById("mix-result-box");
+            const text = document.getElementById("mix-result-text");
+
+            boxA.style.background = A;
+            boxB.style.background = B;
+
+            boxA.classList.remove("mix-active");
+            boxB.classList.remove("mix-active");
+            boxR.classList.remove("mix-active");
+            void boxA.offsetWidth;
+
+            boxA.classList.add("mix-active");
+            boxB.classList.add("mix-active");
+
+            // aturan campuran sederhana (pigmen)
+            const rules = {
+                "red+yellow": "orange",
+                "yellow+red": "orange",
+
+                "red+blue": "purple",
+                "blue+red": "purple",
+
+                "blue+yellow": "green",
+                "yellow+blue": "green",
+
+                "red+green": "brown",
+                "green+red": "brown",
+
+                "blue+orange": "brown",
+                "orange+blue": "brown",
+
+                "yellow+purple": "brown",
+                "purple+yellow": "brown"
+            };
+
+            const key = A + "+" + B;
+            const hasil = rules[key] || "gray"; // netral bila tidak didefinisikan
+
+            boxR.style.background = hasil;
+            boxR.classList.add("mix-active");
+
+            let namaHasil = hasil;
+            if (hasil === "gray") namaHasil = "abu-abu netral";
+
+            text.classList.remove("d-none");
+            text.innerHTML =
+                "<strong>Hasil campuran:</strong> Warna <b>" + A +
+                "</b> dicampur dengan <b>" + B +
+                "</b> menghasilkan warna <b>" + namaHasil +
+                "</b>. Ini adalah contoh pencampuran pigmen, berbeda dengan modifikasi " +
+                "warna berdampingan yang hanya mengubah kesan visual.";
+        }
+
+        function modReset() {
+            const mainSel = document.getElementById("mod-main");
+            const sideSel = document.getElementById("mod-side");
+            const mainBox = document.getElementById("mod-main-box");
+            const sideBox = document.getElementById("mod-side-box");
+            const combo = document.getElementById("mod-combo");
+            const out = document.getElementById("mod-result");
+
+            // kembali ke pilihan awal
+            mainSel.selectedIndex = 0;
+            sideSel.selectedIndex = 0;
+
+            // reset tampilan kotak
+            const baseBg = "#fafafa";
+            mainBox.style.background = baseBg;
+            sideBox.style.background = baseBg;
+            combo.style.background =
+                "linear-gradient(90deg, #f5f5f5 0 50%, #e5e5e5 50% 100%)";
+
+            mainBox.classList.remove("mod-active");
+            sideBox.classList.remove("mod-active");
+            combo.classList.remove("pulse");
+
+            // sembunyikan teks hasil
+            out.classList.add("d-none");
+            out.innerHTML = "";
+        }
+
+        function mixReset() {
+            const selA = document.getElementById("mix-a");
+            const selB = document.getElementById("mix-b");
+            const boxA = document.getElementById("mix-a-box");
+            const boxB = document.getElementById("mix-b-box");
+            const boxR = document.getElementById("mix-result-box");
+            const text = document.getElementById("mix-result-text");
+
+            // kembali ke pilihan awal
+            selA.selectedIndex = 0;
+            selB.selectedIndex = 0;
+
+            const baseBg = "#fafafa";
+            boxA.style.background = baseBg;
+            boxB.style.background = baseBg;
+            boxR.style.background = baseBg;
+
+            boxA.classList.remove("mix-active");
+            boxB.classList.remove("mix-active");
+            boxR.classList.remove("mix-active");
+
+            text.classList.add("d-none");
+            text.innerHTML = "";
+        }
+
+
+    </script>
+</body>
+
+</html>

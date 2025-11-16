@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Apersepsi • Materi</title>
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet"><!-- opsional -->
+
+    <style>
+        :root {
+            --navbar-h: 55px;
+            --footer-h: 40px;
+            /* footer sedikit lebih tinggi agar nyaman */
+            --brand: #ff3f8e;
+            --sidebar-w: 255px;
+            --line: #e5e7eb;
+            --card: #ffffff;
+            --card-border: #eeeeee;
+
+            /* samakan dengan lebar sidebar */
+            --sidebar-gap: 1px;
+            /* jarak konten dari sidebar */
+            --brand-600: #e2367f;
+            --brand-700: #c82e71;
+            --brand-50: #fff5f9;
+            --brand-100: #ffe7f1;
+            --brand-200: #ffd0e3;
+
+            --ink: #1f2937;
+            --muted: #6b7280;
+            --line: #ebe8ee;
+            --bg: #fafafb;
+            --card: #ffffff;
+        }
+
+
+        /* ===== App shell ===== */
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            padding-bottom: var(--footer-h);
+            background: #fff;
+        }
+
+        .main-pad {
+            padding-top: var(--navbar-h);
+        }
+
+        main.app-shell {
+            height: calc(100vh - var(--navbar-h) - var(--footer-h));
+            overflow: hidden;
+        }
+
+        /* ===== Navbar & Footer ===== */
+        .navbar,
+        .footer {
+            background: #fff;
+        }
+
+        .footer {
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== Grid helpers ===== */
+        .no-top-gap>[class^="col-"],
+        .no-top-gap>aside,
+        .no-top-gap>section {
+            padding-top: 0 !important;
+        }
+
+        /* ===== Sidebar ===== */
+        .menu-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+        }
+
+        .menu-title {
+            padding: .75rem 1rem;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            display: block;
+            padding: .6rem 1rem;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .menu-item:hover {
+            background: #fafafa;
+        }
+
+        .menu-item.active {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+
+
+
+        @media (min-width:768px) {
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100vh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+        }
+
+
+
+
+        /* Pusatkan isi di dalam sticky-cta */
+        .sticky-cta .content-with-fixed .d-flex {
+            justify-content: center;
+            /* pusat */
+            align-items: center;
+            gap: .5rem;
+            /* jarak antar tombol */
+            flex-wrap: wrap;
+            /* responsif di layar kecil */
+            width: 100%;
+        }
+
+        /* ====== RESPONSIVE LAYOUT FIXES (override) ====== */
+
+        /* 1) Mobile: biarkan halaman memanjang normal */
+        @media (max-width: 767.98px) {
+
+            /* jangan kunci tinggi halaman di HP */
+            main.app-shell {
+                height: auto;
+                overflow: visible;
+            }
+
+            .content-col,
+            .content-scroll {
+                height: auto;
+                overflow: visible;
+            }
+
+            /* kartu ikut tinggi natural agar isi tidak terpotong */
+            .materi-card {
+                height: auto;
+            }
+
+            .materi-card .card-body.scrollable {
+                min-height: 0;
+                max-height: none;
+                overflow: visible;
+            }
+
+            /* sidebar muncul di atas konten, tidak fixed */
+            .sidebar-fixed {
+                position: static;
+                width: 100%;
+                height: auto;
+                overflow: visible;
+            }
+
+            /* sticky CTA biar rapi penuh di HP */
+            .sticky-cta {
+                position: static;
+                margin-top: .5rem;
+            }
+        }
+
+        /* 2) Tablet & Desktop: pakai 100dvh agar akurat vs toolbar browser */
+        @media (min-width: 768px) {
+            main.app-shell {
+                height: calc(100dvh - var(--navbar-h) - var(--footer-h));
+                overflow: hidden;
+            }
+
+            /* sidebar tetap fixed, konten bergeser */
+            .sidebar-fixed {
+                position: fixed;
+                top: var(--navbar-h);
+                left: 0;
+                width: var(--sidebar-w);
+                height: calc(100dvh - var(--navbar-h));
+                overflow-y: auto;
+            }
+
+            .content-with-fixed {
+                margin-left: calc(var(--sidebar-w) + var(--sidebar-gap));
+            }
+
+            /* area isi: hanya body card yang scroll */
+            .content-col,
+            .content-scroll {
+                height: 100%;
+                overflow: hidden;
+            }
+
+            /* tinggi kartu fleksibel, tidak kaku 580px */
+            .materi-card {
+                height: clamp(480px, 66vh, 760px);
+                /* enak di berbagai layar */
+            }
+
+            .materi-card .card-body.scrollable {
+                flex: 1 1 auto;
+                min-height: 0;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* CTA melayang rapi */
+            .sticky-cta {
+                position: fixed;
+                bottom: calc(var(--footer-h) + 8px);
+                left: calc(var(--sidebar-w) + var(--sidebar-gap));
+                right: 12px;
+                z-index: 1030;
+                /* di atas card */
+            }
+        }
+
+        /* 3) Large desktop: beri napas ekstra pada konten */
+        @media (min-width: 1200px) {
+            .materi-card {
+                height: clamp(570px, 62vh, 820px);
+            }
+        }
+
+        .container-narrow {
+            max-width: 1000px
+        }
+
+        /* Pink buttons */
+        .btn-brand {
+            background: var(--brand);
+            color: #fff;
+            border: 1px solid var(--brand);
+            border-radius: 12px;
+        }
+
+        .btn-brand:hover {
+            background: var(--brand-600);
+            border-color: var(--brand-600);
+            color: #fff
+        }
+
+        .btn-outline-brand {
+            background: transparent;
+            color: var(--brand);
+            border: 2px solid var(--brand);
+            border-radius: 12px;
+        }
+
+        .btn-outline-brand:hover {
+            background: var(--brand);
+            color: #fff
+        }
+
+        /* Progress mini */
+        .progress-mini {
+            height: 10px;
+            background: var(--brand-100);
+            border-radius: 999px;
+            overflow: hidden
+        }
+
+        .progress-mini>span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--brand), var(--brand-600));
+            transition: width .35s ease
+        }
+
+        /* Accordion – aktif jadi pink */
+        .accordion-button {
+            font-weight: 600;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: var(--brand-50);
+            color: var(--ink);
+            border-bottom: 1px solid var(--brand-100);
+            box-shadow: none;
+        }
+
+        .accordion-button:focus {
+            box-shadow: 0 0 0 .2rem rgba(255, 63, 142, .18);
+            border-color: var(--brand-200);
+        }
+
+        /* Figure (gambar) */
+        .figure img {
+            border-radius: 12px;
+            border: 1px solid var(--brand-100);
+            cursor: pointer
+        }
+
+        .figure-caption {
+            color: var(--muted)
+        }
+
+        /* Chips & Drops */
+        .chip {
+            border: 1px solid var(--brand-200);
+            border-radius: 12px;
+            background: #fff;
+            padding: .45rem .7rem;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .drop {
+            min-height: 70px;
+            border: 2px dashed var(--brand-200);
+            border-radius: 12px;
+            padding: .5rem;
+            background: #fff;
+            transition: border-color .2s, background .2s;
+        }
+
+        .drop.drag-over {
+            border-color: var(--brand);
+            background: var(--brand-50)
+        }
+
+        .drop.correct {
+            border-color: #198754;
+            background: rgba(25, 135, 84, .08)
+        }
+
+        /* Small helpers */
+        .link-brand {
+            color: var(--brand)
+        }
+
+        .link-brand:hover {
+            color: var(--brand-700)
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-light navbar-expand-lg fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+                <i class="bi bi-brush" style="font-size:1.25rem; color:var(--brand)"></i>
+                <strong>Pewarnaan Rambut</strong> <span class="fw-normal">• Single Application</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navs">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navs">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-semibold" style="color:var(--brand)"
+                            aria-current="page" href="./apersepsi.html">Materi</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../latihan.html">Latihan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../kd.html">Tujuan Pembelajaran</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../peta.html">Peta Konsep</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KONTEN: hanya area card yang scroll -->
+    <main class="main-pad app-shell">
+        <div class="container-fluid ">
+            <div class="row g-1 no-top-gap h-100">
+                <!-- SIDEBAR -->
+                <aside class="col-12 col-md-auto order-1 order-md-0 p-0">
+
+                    <nav class="menu-card sidebar-fixed shadow-sm">
+                        <div class="menu-title"><i class="bi bi-journal-bookmark"></i> Materi</div>
+
+                        <a class="menu-item" href="PengetahuanDasarRambut.html"><i class="bi bi-lightbulb"></i>
+                            Pengetahuan Dasar
+                            Rambut</a>
+
+                        <!-- TOMBOL INDUK TERBUKA TEORI-->
+                        <div class="menu-item active">
+                            <button class=" d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#submenu-teori" aria-expanded="true"
+                                aria-controls="submenu-teori" href="./peralatan.html">
+
+                                <span class="me-2"><i class="bi bi-droplet-half"></i></span>
+                                <span class="flex-grow-1 text-start" aria-current="page">A. Pewarnaan
+                                    Rambut</span>
+                                <i class="bi bi-chevron-down small"></i>
+                            </button>
+                        </div>
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-teori"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+
+                                    <a class="menu-item py-1 active" aria-current="page" href="Sejarah.html"><span>1.
+                                            Sejarah</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengertianPewarnaan.html"><span>2. Pengertian
+                                            Pewarnaan </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="TujuanPewarnaan.html">3. Tujuan Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1" href="TipePewarnaan.html">4. Tipe Pewarnaan</a>
+                                </li>
+                                <li>
+                                    <a class="menu-item py-1 active" href="Desainteknik.html">5. Istilah Desain dan
+                                        Teknik
+                                        Pewarnaan</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL INDUK TERBUKA PERALATAN-->
+                        <button class="menu-item d-flex align-items-center w-100 border-0 bg-transparent" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#submenu-peralatan" aria-expanded="true"
+                            aria-controls="submenu-peralatan">
+                            <span class="me-2"><i class="bi bi-scissors"></i></span>
+                            <span class="flex-grow-1 text-start">B. Teori Warna</span>
+                            <i class="bi bi-chevron-down small"></i>
+                            <a>
+                        </button>
+
+                        <!-- SUBMENU TERBUKA -->
+                        <div class="collapse show" id="submenu-peralatan"> <!-- penting -->
+                            <ul class="nav flex-column ps-4 my-1">
+                                <li>
+                                    <a class="menu-item py-1" href="PengetahuanWarna.html"><span>1. Pengetahuan
+                                            Warna</span></a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KegunaanSegitiga.html"> <span>2. Kegunaan
+                                            Segitiga</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="KoreksiWarna.html"> <span>3. Koreksi Warna</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <!-- ITEM SEDANG DIBACA -->
+                                    <a class="menu-item py-1" href="PengaruhModifikasi.html"> <span>3. Pengaruh
+                                            Modifikasi</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </nav>
+                </aside>
+
+                <!-- KANAN (scroll) -->
+                <section class="col-12 col-md-9 col-xl-10 content-col content-with-fixed order-2 order-md-0">
+                    <div class="content-scroll">
+                        <div class="card shadow-sm materi-card">
+                            <div class="card-header d-flex align-items-center gap-2">
+                                <i class="bi bi-lightbulb" style="color:var(--brand); font-size:1.25rem;"></i>
+                                <div class="d-flex flex-wrap align-items-baseline gap-2">
+                                    <h3 class="h5 mb-0 fw-bold">Pengetahuan Dasar Pewarnaan Rambut</h3>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="card-body scrollable flex-grow-1 min-vh-0" id="apersepsi-hair-coloring">
+                                <!--  -->
+                                <!-- ACCORDION MATERI a–o  -->
+                                <div class="accordion mb-4" id="acc">
+
+                                    <!-- a -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" data-bs-toggle="collapse"
+                                                data-bs-target="#a">a) Bleaching</button>
+                                        </h2>
+                                        <div id="a" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Proses kimia untuk <strong>menghilangkan/memudarkan pigmen
+                                                    alami</strong> rambut sehingga warna asli lebih terang.
+                                                Dilakukan agar pigmen warna baru dapat masuk ke batang rambut.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- b -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#b">b) Toning</button>
+                                        </h2>
+                                        <div id="b" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Menggunakan toner khusus/pewarna lembut <em>tanpa amonia</em> untuk
+                                                <strong>menetralkan nada</strong> (mis. kuning/oranye)
+                                                setelah bleaching. Melapisi ringan tanpa membuka kutikula sehingga
+                                                rambut tetap lembut.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- c -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#c">c) Balayage</button>
+                                        </h2>
+                                        <div id="c" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Teknik Prancis dengan sapuan lembut menghasilkan <strong>gradasi
+                                                    natural</strong> dari akar ke ujung (sering di bagian ujung/
+                                                tipping).
+                                                <figure class="figure mt-2">
+                                                    <img src="/mnt/data/f39780a4-86bd-4fa0-be11-c55279972c96.png"
+                                                        class="img-fluid" alt="Highlight Rambut"
+                                                        data-full="/mnt/data/f39780a4-86bd-4fa0-be11-c55279972c96.png">
+                                                    <figcaption class="figure-caption">Gambar 1.8 Highlight Rambut
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- d -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#d">d) Sombre</button>
+                                        </h2>
+                                        <div id="d" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Varian lembut dari ombre: <strong>transisi lebih halus</strong> antara
+                                                warna gelap & terang sehingga tampak alami.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- e -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#e">e) Ombre</button>
+                                        </h2>
+                                        <div id="e" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Memberikan <strong>efek gradasi</strong> dari satu warna ke warna lain —
+                                                biasanya <em>gelap → terang</em> dari akar ke ujung.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- f -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#f">f) Highlight</button>
+                                        </h2>
+                                        <div id="f" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Mencerahkan <strong>bagian-bagian tertentu</strong> rambut untuk memberi
+                                                kilau & dimensi sehingga tampak tebal dan hidup.
+                                                <figure class="figure mt-2">
+                                                    <img src="/mnt/data/f39780a4-86bd-4fa0-be11-c55279972c96.png"
+                                                        class="img-fluid" alt="Highlight Rambut">
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- g -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#g">g) Lowlight</button>
+                                        </h2>
+                                        <div id="g" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Kebalikan highlight: menambahkan warna <strong>lebih gelap</strong> dari
+                                                warna alami untuk kedalaman & dimensi (cokelat, hitam).
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- h -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#h">h) Foiling</button>
+                                        </h2>
+                                        <div id="h" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Mewarnai helai demi helai lalu <strong>dibungkus aluminium foil</strong>
+                                                agar tidak bercampur. Highlight bisa memakai <em>hair cap</em> atau
+                                                <em>foiling</em>.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- i -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#i">i) Money Piece</button>
+                                        </h2>
+                                        <div id="i" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Fokus di <strong>bagian depan</strong> untuk membingkai wajah (variasi
+                                                highlight).
+                                                <figure class="figure mt-2">
+                                                    <img src="/mnt/data/4e8583f5-ebd1-4eba-89ab-6da7a7a70621.png"
+                                                        class="img-fluid" alt="Money Piece"
+                                                        data-full="/mnt/data/4e8583f5-ebd1-4eba-89ab-6da7a7a70621.png">
+                                                    <figcaption class="figure-caption">Gambar 1.9 Money Piece
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- j -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#j">j) Splashlight</button>
+                                        </h2>
+                                        <div id="j" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Memberi efek <strong>“garis cahaya” horizontal</strong> di tengah rambut
+                                                (sun-kissed). Dapat divariasikan dengan warna vibrant (pink, hijau,
+                                                kuning).
+                                                <figure class="figure mt-2">
+                                                    <img src="/mnt/data/9f2f2752-67d1-41a4-9883-9579175bef71.png"
+                                                        class="img-fluid" alt="Splashlight"
+                                                        data-full="/mnt/data/9f2f2752-67d1-41a4-9883-9579175bef71.png">
+                                                    <figcaption class="figure-caption">Gambar 1.10 Teknik Splashlight
+                                                    </figcaption>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- k -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#k">k) Rainbow / Unicorn Hair</button>
+                                        </h2>
+                                        <div id="k" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Tren multiwarna cerah/pastel — sering berpola unik atau gradasi pelangi.
+                                                Sangat ekspresif.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- l -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#l">l) Mermaid Hair</button>
+                                        </h2>
+                                        <div id="l" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Terinspirasi laut: kombinasi biru, hijau, ungu, turkis — nuansa sejuk
+                                                berkilau.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- m -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#m">m) Pewarnaan Rambut Berdimensi</button>
+                                        </h2>
+                                        <div id="m" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Menggabungkan beberapa warna berbeda untuk memberikan <strong>dimensi &
+                                                    kedalaman</strong> pada rambut.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- n -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#n">n) Two Tone Hair</button>
+                                        </h2>
+                                        <div id="n" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Dua warna yang <strong>kontras</strong>; sering kali satu warna di atas
+                                                & warna berbeda di bawah/di bagian sisi kanan–kiri.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- o -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#o">o) Peekaboo Hair</button>
+                                        </h2>
+                                        <div id="o" class="accordion-collapse collapse" data-bs-parent="#acc">
+                                            <div class="accordion-body">
+                                                Pewarnaan <strong>tersembunyi</strong> di bagian belakang/bawah rambut —
+                                                baru terlihat ketika rambut diangkat.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- INTERAKTIF: DRAG & DROP -->
+                                <section class="card mb-4 shadow-sm">
+                                    <div class="card-body">
+                                        <h2 class="h6 text-uppercase small-muted mb-2">Cocokkan Teknik ↔ Deskripsi</h2>
+                                        <div class="row g-3">
+                                            <div class="col-md-5">
+                                                <div id="pool" class="vstack gap-2">
+                                                    <div class="chip" draggable="true" data-key="ombre">Ombre</div>
+                                                    <div class="chip" draggable="true" data-key="bleach">Bleaching</div>
+                                                    <div class="chip" draggable="true" data-key="highlight">Highlight
+                                                    </div>
+                                                    <div class="chip" draggable="true" data-key="money">Money Piece
+                                                    </div>
+                                                    <div class="chip" draggable="true" data-key="sombre">Sombre</div>
+                                                    <div class="chip" draggable="true" data-key="splash">Splashlight
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="vstack gap-3">
+                                                    <div>
+                                                        <small class="small-muted d-block mb-1">Transisi gradasi dari
+                                                            gelap ke terang dengan batas jelas dari akar ke
+                                                            ujung</small>
+                                                        <div class="drop" data-accept="ombre" aria-label="drop ombre">
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <small class="small-muted d-block mb-1">Mengangkat/memudarkan
+                                                            pigmen alami agar warna baru bisa masuk</small>
+                                                        <div class="drop" data-accept="bleach"
+                                                            aria-label="drop bleaching"></div>
+                                                    </div>
+                                                    <div>
+                                                        <small class="small-muted d-block mb-1">Mencerahkan sebagian
+                                                            helai untuk kilau dan dimensi</small>
+                                                        <div class="drop" data-accept="highlight"
+                                                            aria-label="drop highlight"></div>
+                                                    </div>
+                                                    <div>
+                                                        <small class="small-muted d-block mb-1">Sorot di bagian depan
+                                                            untuk membingkai wajah</small>
+                                                        <div class="drop" data-accept="money"
+                                                            aria-label="drop money piece"></div>
+                                                    </div>
+                                                    <div>
+                                                        <small class="small-muted d-block mb-1">Versi ombre yang lebih
+                                                            lembut & natural</small>
+                                                        <div class="drop" data-accept="sombre" aria-label="drop sombre">
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <small class="small-muted d-block mb-1">Garis cahaya horizontal
+                                                            terang di tengah rambut</small>
+                                                        <div class="drop" data-accept="splash"
+                                                            aria-label="drop splashlight"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 d-flex gap-2">
+                                            <button class="btn btn-brand btn-sm" id="check"><i
+                                                    class="bi bi-check2-circle me-1"></i>Periksa</button>
+                                            <button class="btn btn-outline-brand btn-sm" id="reset"><i
+                                                    class="bi bi-arrow-counterclockwise me-1"></i>Reset</button>
+                                        </div>
+                                        <div id="fb" class="small mt-2"></div>
+                                    </div>
+                                </section>
+
+                                <!-- INTERAKTIF: KUIS -->
+                                <section class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h2 class="h6 text-uppercase small-muted mb-2">Kuis Cepat (Benar/Salah)</h2>
+                                        <ol id="quiz">
+                                            <li class="mb-2">Bleaching menambah pigmen tanpa mengubah warna asli.
+                                                <div>
+                                                    <label class="me-2"><input type="radio" name="q1" value="B">
+                                                        Benar</label>
+                                                    <label><input type="radio" name="q1" value="S"> Salah</label>
+                                                </div>
+                                            </li>
+                                            <li class="mb-2">Highlight menambahkan warna lebih gelap untuk kedalaman.
+                                                <div>
+                                                    <label class="me-2"><input type="radio" name="q2" value="B">
+                                                        Benar</label>
+                                                    <label><input type="radio" name="q2" value="S"> Salah</label>
+                                                </div>
+                                            </li>
+                                            <li class="mb-2">Money Piece fokus pada bagian depan rambut.
+                                                <div>
+                                                    <label class="me-2"><input type="radio" name="q3" value="B">
+                                                        Benar</label>
+                                                    <label><input type="radio" name="q3" value="S"> Salah</label>
+                                                </div>
+                                            </li>
+                                            <li class="mb-2">Sombre adalah versi ombre yang lebih lembut.
+                                                <div>
+                                                    <label class="me-2"><input type="radio" name="q4" value="B">
+                                                        Benar</label>
+                                                    <label><input type="radio" name="q4" value="S"> Salah</label>
+                                                </div>
+                                            </li>
+                                            <li class="mb-2">Splashlight menaruh warna terang di bagian tengah rambut.
+                                                <div>
+                                                    <label class="me-2"><input type="radio" name="q5" value="B">
+                                                        Benar</label>
+                                                    <label><input type="radio" name="q5" value="S"> Salah</label>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                        <button class="btn btn-brand btn-sm" id="qCheck"><i
+                                                class="bi bi-clipboard2-check me-1"></i>Nilai</button>
+                                        <div id="qFb" class="small mt-2"></div>
+                                    </div>
+                                </section>
+                            </div>
+                </section>
+    </main>
+
+
+
+    <!-- CTA tetap di atas footer -->
+    <div class="sticky-cta">
+        <div class="container">
+            <div class="col-12 col-md-10 content-col content-with-fixed mx-auto">
+                <div class="d-flex justify-content-center align-items-center flex-wrap gap-2 w-100">
+                    <a class="btn btn-outline-secondary" href="TipePewarnaan.html"><i class="bi bi-arrow-left"></i>
+                        Sebelumnya</a>
+                    <a class="btn btn-brand" href="AyoLakukanA.html">Berikutnya <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="footer fixed-bottom py-2">
+        <div class="container d-flex justify-content-between align-items-center small">
+            <span>SMKS ISFI BANJARMASIN • Hair Coloring</span>
+            <span class="text-muted">© 2025 • Single Application</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            const KEY = 'desain-pewarnaan-v1';
+
+            const get = () => JSON.parse(localStorage.getItem(KEY) || '{}');
+            const set = (o) => localStorage.setItem(KEY, JSON.stringify(o));
+            const saveState = (updater) => {
+                const d = get();
+                updater(d);
+                set(d);
+            };
+
+            const ok = (t) => `<div class="alert alert-success mb-0">${t}</div>`;
+            const warn = (t) => `<div class="alert alert-warning mb-0">${t}</div>`;
+            const $ = (s) => document.querySelector(s);
+            const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+            function updateBar() {
+                const barEl = $('#bar');
+                if (!barEl) return; // kalau progress bar tidak ada, jangan error
+
+                const d = get();
+                let done = 0;
+                if (d.matchOk) done++;
+                if (typeof d.quizScore === 'number') done++;
+
+                barEl.style.width = Math.round((done / 2) * 100) + '%';
+            }
+
+            /* ===================== LIGHTBOX GAMBAR (aman kalau modal tak ada) ===================== */
+            const imgModal = $('#imgModal');
+            const imgFull = $('#imgFull');
+
+            if (imgModal && imgFull && window.bootstrap && bootstrap.Modal) {
+                $$('.figure img').forEach((i) => {
+                    i.addEventListener('click', () => {
+                        imgFull.src = i.dataset.full || i.src;
+                        new bootstrap.Modal(imgModal).show();
+                    });
+                });
+            }
+
+            /* ===================== DRAG & DROP: COCOKKAN TEKNIK ===================== */
+
+            const pool = $('#pool');
+            let dragRef = null;
+
+            function snapshotLayout(d) {
+                const zones = {};
+                $$('.drop').forEach((z) => {
+                    const k = z.dataset.accept || '';
+                    zones[k] = Array.from(z.querySelectorAll('.chip')).map((ch) => ch.dataset.key);
+                });
+                const poolKeys = Array.from(pool.querySelectorAll('.chip')).map((ch) => ch.dataset.key);
+                d.layout = { zones, pool: poolKeys };
+                d.matchFb = $('#fb').innerHTML;
+            }
+
+            document.addEventListener('dragstart', (e) => {
+                if (e.target.classList.contains('chip')) {
+                    dragRef = e.target;
+                    e.dataTransfer.setData('text/plain', e.target.dataset.key);
+                }
+            });
+
+            $$('.drop').forEach((z) => {
+                ['dragenter', 'dragover'].forEach((ev) =>
+                    z.addEventListener(ev, (e) => {
+                        e.preventDefault();
+                        z.classList.add('drag-over');
+                    }),
+                );
+                ['dragleave', 'drop'].forEach((ev) =>
+                    z.addEventListener(ev, () => {
+                        z.classList.remove('drag-over');
+                    }),
+                );
+                z.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    if (!dragRef) return;
+                    z.innerHTML = '';
+                    z.appendChild(dragRef);
+
+                    // setiap drop, simpan tata letak
+                    saveState((d) => {
+                        snapshotLayout(d);
+                        // kalau sebelumnya sudah dinilai, tapi susunan berubah → anggap belum fix lagi
+                        d.matchOk = false;
+                    });
+                    $('#fb').innerHTML = '';
+                });
+            });
+
+            $('#check').addEventListener('click', () => {
+                let benar = 0;
+                const total = $$('.drop').length;
+
+                $$('.drop').forEach((z) => {
+                    z.classList.remove('correct');
+                    const c = z.querySelector('.chip');
+                    if (c && c.dataset.key === z.dataset.accept) {
+                        benar++;
+                        z.classList.add('correct');
+                    }
+                });
+
+                const allOk = benar === total;
+                $('#fb').innerHTML = allOk
+                    ? ok('Semua cocok! 🎉')
+                    : warn(`Benar ${benar}/${total}. Coba lagi ya.`);
+
+                saveState((d) => {
+                    d.matchOk = allOk;
+                    snapshotLayout(d);
+                });
+                updateBar();
+            });
+
+            $('#reset').addEventListener('click', () => {
+                const allChips = $$('.chip');
+                allChips.forEach((c) => pool.appendChild(c));
+                $$('.drop').forEach((z) => z.classList.remove('correct', 'drag-over'));
+                $('#fb').innerHTML = '';
+
+                saveState((d) => {
+                    delete d.matchOk;
+                    delete d.layout;
+                    delete d.matchFb;
+                });
+                updateBar();
+            });
+
+            /* ===================== KUIS BENAR/SALAH ===================== */
+
+            // Kunci berdasar teks soal:
+            // 1 Bleaching menambah pigmen → SALAH
+            // 2 Highlight menambah warna lebih gelap → SALAH
+            // 3 Money piece fokus depan → BENAR
+            // 4 Sombre versi ombre lembut → BENAR
+            // 5 Splashlight terang di tengah rambut → BENAR
+            const kunci = { q1: 'S', q2: 'S', q3: 'B', q4: 'B', q5: 'B' };
+
+            $('#qCheck').addEventListener('click', () => {
+                let benar = 0;
+                const total = Object.keys(kunci).length;
+                const answers = {};
+
+                Object.keys(kunci).forEach((name) => {
+                    const sel = document.querySelector(`input[name="${name}"]:checked`);
+                    if (sel) {
+                        answers[name] = sel.value;
+                        if (sel.value === kunci[name]) benar++;
+                    }
+                });
+
+                const score = Math.round((benar / total) * 100);
+                $('#qFb').innerHTML = ok(`Skor ${score}/100 (${benar}/${total})`);
+
+                saveState((d) => {
+                    d.quizScore = score;
+                    d.quizAnswers = answers;
+                    d.quizFb = $('#qFb').innerHTML;
+                });
+                updateBar();
+            });
+
+            /* ===================== EKSPOR / IMPOR (opsional, aman kalau elemen tidak ada) ===================== */
+
+            const btnExport = $('#btnExport');
+            if (btnExport) {
+                btnExport.addEventListener('click', () => {
+                    const blob = new Blob([JSON.stringify(get(), null, 2)], {
+                        type: 'application/json',
+                    });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'progres-desain.json';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                });
+            }
+
+            const btnImport = $('#btnImport');
+            if (btnImport) {
+                btnImport.addEventListener('change', (e) => {
+                    const f = e.target.files?.[0];
+                    if (!f) return;
+                    const r = new FileReader();
+                    r.onload = () => {
+                        try {
+                            const data = JSON.parse(r.result);
+                            if (data && typeof data === 'object') {
+                                set(data);
+                                location.reload();
+                            }
+                        } catch {
+                            alert('File tidak valid');
+                        }
+                    };
+                    r.readAsText(f);
+                });
+            }
+
+            /* ===================== RESTORE STATE SAAT LOAD ===================== */
+
+            window.addEventListener('DOMContentLoaded', () => {
+                const d = get();
+
+                // Restore tata letak drag & drop
+                if (d.layout) {
+                    const allChips = $$('.chip');
+                    // semua chip balik dulu ke pool
+                    allChips.forEach((c) => pool.appendChild(c));
+
+                    const zones = d.layout.zones || {};
+                    $$('.drop').forEach((z) => {
+                        const key = z.dataset.accept || '';
+                        const keys = zones[key] || [];
+                        keys.forEach((k) => {
+                            const chip = allChips.find((c) => c.dataset.key === k);
+                            if (chip) z.appendChild(chip);
+                        });
+                    });
+
+                    // urutan chip di pool
+                    if (Array.isArray(d.layout.pool)) {
+                        d.layout.pool.forEach((k) => {
+                            const chip = allChips.find((c) => c.dataset.key === k);
+                            if (chip && chip.parentElement !== pool) {
+                                pool.appendChild(chip);
+                            }
+                        });
+                    }
+
+                    if (d.matchFb) {
+                        $('#fb').innerHTML = d.matchFb;
+                    }
+
+                    if (d.matchOk) {
+                        $$('.drop').forEach((z) => {
+                            const chip = z.querySelector('.chip');
+                            if (chip && chip.dataset.key === z.dataset.accept) {
+                                z.classList.add('correct');
+                            }
+                        });
+                    }
+                }
+
+                // Restore jawaban kuis
+                if (d.quizAnswers) {
+                    Object.entries(d.quizAnswers).forEach(([name, val]) => {
+                        const inp = document.querySelector(`input[name="${name}"][value="${val}"]`);
+                        if (inp) inp.checked = true;
+                    });
+                }
+                if (d.quizFb) {
+                    $('#qFb').innerHTML = d.quizFb;
+                }
+
+                updateBar();
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
